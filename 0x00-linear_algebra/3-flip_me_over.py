@@ -4,9 +4,6 @@ contains matrix_transpose
 """
 
 
-from turtle import width
-
-
 def matrix_transpose(matrix):
     """
     returns the transpose of a 2D matrix without using transpose numpy method
