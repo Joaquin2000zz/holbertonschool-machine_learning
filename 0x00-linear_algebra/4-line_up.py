@@ -3,13 +3,15 @@
 contains add_arrays function
 """
 
-import numpy as np
-
 
 def add_arrays(arr1, arr2):
     """
-    returns matrix addition from two arrays
+    returns matrix addition from two arrays without numpy
     """
-    arr1 = np.array(arr1)
-    arr2 = np.array(arr2)
-    return list(arr1 + arr2) if arr1.shape == arr2.shape else None
+    length = len(arr1)
+    if length != len(arr2):
+        return None
+    add = []
+    i = 0
+    while (i < length): add.append(arr1[i] + arr2[i]); i += 1
+    return add
