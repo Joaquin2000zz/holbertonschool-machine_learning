@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-contains np_shape and rec functions
+contains np_shape
 """
 
 def np_shape(matrix):
