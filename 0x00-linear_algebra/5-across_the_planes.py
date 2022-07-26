@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """
-contains add_matrices2D function
+contains add_matrices 2D function
 """
-
-import numpy as np
-
 
 def add_matrices2D(mat1, mat2):
     """
-    returns matrix addition from two matrices
+    returns matrix addition from two 2D matrices without numpy
     """
-    m1 = np.array(mat1)
-    m2 = np.array(mat2)
-    return [list(
-            item) for item in list(
-                              m1 + m2)] if m1.shape == m2.shape else None
+    height = len(mat1)
+    add = []
+    for i in range(height):
+        width = len(mat1[i])
+        if width != len(mat2[i]):
+            return None
+        child = []
+        j = 0
+        while (j < width): child.append(mat1[i][j] + mat2[i][j]); j += 1
+        add.append(child)
+    return add
