@@ -10,7 +10,6 @@ def rec(mat1, mat2):
     """
     if type(mat1) is list and type(mat2) is list:
         if type(mat1[0][0]) is int and type(mat2[0][0]) is int:
-            #return [i + j for i, j in zip(mat1, mat2)]
             app = []
             for k in range(len(mat1)):
                 app.append([i + j for i, j in zip(mat1[k], mat2[k])])
