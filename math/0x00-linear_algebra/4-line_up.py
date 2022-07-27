@@ -13,5 +13,7 @@ def add_arrays(arr1, arr2):
         return None
     add = []
     i = 0
-    while (i < length): add.append(arr1[i] + arr2[i]); i += 1
+    while i < length:
+        add.append(arr1[i] + arr2[i])
+        i += 1
     return add
