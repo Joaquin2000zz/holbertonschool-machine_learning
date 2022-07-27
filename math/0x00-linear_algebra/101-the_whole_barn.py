@@ -17,6 +17,7 @@ def rec(mat1, mat2):
         ret = rec(mat1[0], mat2[0])
         return ret
 
+
 def add_matrices(mat1, mat2):
     """
     adds until 3D matrices
