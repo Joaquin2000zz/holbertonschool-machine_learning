@@ -35,7 +35,6 @@ def add_matrices(mat1, mat2):
     if i == 1:
         return [i + j for i, j in zip(mat1, mat2)]
 
-    print(f"dimensiones {i}")
     if i == 2:
         ret = rec(mat1, mat2)
     if i == 4:
