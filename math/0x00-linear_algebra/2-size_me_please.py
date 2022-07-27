@@ -10,5 +10,8 @@ def matrix_shape(matrix):
     """
 
     ls = []
-    while (type(matrix) is list): ls.append(len(matrix)); matrix = matrix[0]
+
+    while type(matrix) is list:
+        ls.append(len(matrix))
+        matrix = matrix[0]
     return ls
