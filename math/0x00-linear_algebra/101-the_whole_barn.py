@@ -2,6 +2,7 @@
 """
 module which contains add_matrices
 """
+import numpy as np
 
 
 def rec(mat1, mat2):
