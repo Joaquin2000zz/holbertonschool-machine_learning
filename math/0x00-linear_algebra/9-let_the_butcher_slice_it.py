@@ -3,7 +3,7 @@ import numpy as np
 matrix = np.array([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12],
                    [13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24]])
 mat1 =  matrix[int((len(matrix) / 2)) - 1: int((len(matrix) / 2)) + 1]
-mat2 =  [item[int((len(item) / 2)) - 1: int((len(item) / 2)) + 1] for item in matrix]
+mat2 =  [item[2: 4] for item in matrix]
 mat3 =  [item[-3:] for item in matrix]
 print("The middle two rows of the matrix are:\n{}".format(mat1))
 print("The middle two columns of the matrix are:\n{}".format(mat2))
