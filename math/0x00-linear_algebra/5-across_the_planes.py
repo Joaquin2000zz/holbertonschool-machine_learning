@@ -15,6 +15,8 @@ def add_matrices2D(mat1, mat2):
             return None
         child = []
         j = 0
-        while (j < width): child.append(mat1[i][j] + mat2[i][j]); j += 1
+        while j < width:
+            child.append(mat1[i][j] + mat2[i][j])
+            j += 1
         add.append(child)
     return add
