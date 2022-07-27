@@ -9,4 +9,3 @@ def np_matmul(mat1, mat2):
     matrices multiplication
     """
     return mat1 @ mat2
-    
