@@ -11,9 +11,12 @@ def cat_matrices2D(mat1, mat2, axis=0):
 
     mat1copy = list(map(list, mat1))
     if not axis:
-        for item in mat2:
-            mat1copy.append(item)
-        return mat1copy
+        len1 = len(mat1copy[0])
+        len2 = len(mat2[0])
+        if len1 == len2:
+            for item in mat2:
+                mat1copy.append(item)
+            return mat1copy
     if axis == 1:
         len1 = len(mat1copy)
         len2 = len(mat2)
