@@ -20,7 +20,6 @@ def cat_matrices2D(mat1, mat2, axis=0):
         if width == n:
             i = 0
             for item in mat2:
-                
                 mat1copy[i] = mat1copy[i]
                 mat1copy[i] = mat1copy[i] + item
                 i += 1
