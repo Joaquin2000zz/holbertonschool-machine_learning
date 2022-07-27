@@ -23,7 +23,4 @@ def cat_matrices2D(mat1, mat2, axis=0):
                 mat1copy[i] = mat1copy[i] + item
                 i += 1
             return mat1copy
-
-        return None
-    else:
-        return None
+    return None
