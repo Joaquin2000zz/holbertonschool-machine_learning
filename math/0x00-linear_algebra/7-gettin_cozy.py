@@ -15,9 +15,9 @@ def cat_matrices2D(mat1, mat2, axis=0):
             mat1copy.append(item)
         return mat1copy
     if axis == 1:
-        width = len(mat1copy[0]) if type(mat1copy) is list else None
-        n = len(mat2)
-        if width == n:
+        len1 = len(mat1copy)
+        len2 = len(mat2)
+        if len1 == len2:
             i = 0
             for item in mat2:
                 mat1copy[i] = mat1copy[i] + item
