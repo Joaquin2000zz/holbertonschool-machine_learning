@@ -37,17 +37,5 @@ def add_matrices(mat1, mat2):
 
     if i == 2:
         ret = rec(mat1, mat2)
-    if i == 4:
-        ret0 = []
-        ret1 = []
-        wtf = {}
-        for j in range(len(mat1[0])):
-            wtf[j] = rec(mat1[0][j], mat2[0][j])
-            if wtf.get(j):
-                wtf[j].append(rec(mat1[1][j], mat2[1][j]))
-        for i in range(len(wtf.keys())):
-            ret0.append([wtf[i][0], wtf[i][1]])
-            ret1.append(wtf[i][2])
-        ret = [ret0, ret1]
 
     return ret
