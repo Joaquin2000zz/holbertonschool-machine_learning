@@ -25,7 +25,7 @@ def add_matrices(mat1, mat2):
     aux1 = mat1
     aux2 = mat2
     i = 0
-    while type(aux1) != int:
+    while type(aux1) == list:
         if type(aux1) is list and type(aux2) is list:
             if len(aux1) != len(aux2):
                 return None
