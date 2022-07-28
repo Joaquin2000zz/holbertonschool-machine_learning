@@ -33,7 +33,7 @@ def add_matrices(mat1, mat2):
             aux2 = aux2[0]
             i += 1
     if i == 1:
-        return [i + j for i, j in zip(mat1, mat2)]
+        ret = [i + j for i, j in zip(mat1, mat2)]
 
     if i == 2:
         ret = rec(mat1, mat2)
@@ -49,5 +49,4 @@ def add_matrices(mat1, mat2):
             ret0.append([wtf[i][0], wtf[i][1]])
             ret1.append(wtf[i][2])
         ret = [ret0, ret1]
-
     return ret
