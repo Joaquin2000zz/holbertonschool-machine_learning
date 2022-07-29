@@ -51,7 +51,9 @@ def cat_matrices(mat1, mat2, axis=0):
     aux1 = mat1
     aux2 = mat2
     i = 0
-    while type(aux1) == list:
+    while type(aux1) == list or aux2 == list:
+        if type(aux1) is list and type(aux2) is int or type(aux2) is list and type(aux1) is int:
+            return None
         if type(aux1) is list and type(aux2) is list:
             if len(aux1) != len(aux2):
                 return None
@@ -61,4 +63,15 @@ def cat_matrices(mat1, mat2, axis=0):
     if i == 1:
         return add_arrays(mat1, mat2)
     if i == 2:
-        return cat_matrices2D(mat1, mat2, axis=0)
+        return cat_matrices2D(mat1, mat2, axis)
+    if i == 4:
+        matcopy1 = list(map(lambda x: list(map(list, x)), mat1))
+        len1 = len(mat1)
+        len2 = len(mat1[0])
+        len3 = len(mat1[0][0])
+        if axis == 3:
+            for i in range(len1):
+                for j in range(len2):
+                    for k in range(len3):
+                        matcopy1[i][j][k] += mat2[i][j][k]
+            return matcopy1
