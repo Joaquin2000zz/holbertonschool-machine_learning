@@ -17,7 +17,7 @@ def np_slice(matrix, axes={}):
             elif length == 3:
                 ret = ret[value[0]:value[1]:value[2]]
             else:
-                ret = ret[value[0]:]
+                ret = ret[:value[0]]
         if key == 1:
             length = len(value)
             if length == 2:
@@ -25,7 +25,7 @@ def np_slice(matrix, axes={}):
             elif length == 3:
                 ret = ret[:, value[0]:value[1]:value[2]]
             else:
-                ret = ret[:, value[0]:]
+                ret = ret[:, :value[0]]
         if key == 2:
             length = len(value)
             if length == 2:
@@ -33,5 +33,5 @@ def np_slice(matrix, axes={}):
             elif length == 3:
                 ret = ret[:, :, value[0]:value[1]:value[2]]
             else:
-                ret = ret[:, :, value[0]:]
+                ret = ret[:, :, :value[0]]
     return ret
