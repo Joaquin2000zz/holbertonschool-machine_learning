@@ -67,6 +67,8 @@ def cat_matrices(mat1, mat2, axis=0):
         len1 = len(mat1)
         len2 = len(mat1[0])
         len3 = len(mat1[0][0])
+        if axis == 0:
+            return matcopy1 + mat2
         if axis == 1:
             for i in range(len1):
                 for j in range(len2):
