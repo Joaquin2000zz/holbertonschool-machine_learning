@@ -8,6 +8,7 @@ def rec(mat1, mat2):
     """
     recursion needed to the addition
     """
+    ret = None
     if type(mat1) is list and type(mat2) is list:
         if type(mat1[0][0]) is int and type(mat2[0][0]) is int:
             app = []
@@ -25,6 +26,7 @@ def add_matrices(mat1, mat2):
     aux1 = mat1
     aux2 = mat2
     i = 0
+    ret = None
     while type(aux1) == list:
         if type(aux1) is list and type(aux2) is list:
             if len(aux1) != len(aux2):
