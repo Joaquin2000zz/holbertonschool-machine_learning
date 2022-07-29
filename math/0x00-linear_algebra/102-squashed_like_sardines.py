@@ -52,8 +52,6 @@ def cat_matrices(mat1, mat2, axis=0):
     aux2 = mat2
     i = 0
     while type(aux1) == list or aux2 == list:
-        if type(aux1) is list and type(aux2) is int or type(aux2) is list and type(aux1) is int:
-            return None
         if type(aux1) is list and type(aux2) is list:
             if len(aux1) != len(aux2):
                 return None
