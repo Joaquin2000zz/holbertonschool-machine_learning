@@ -18,7 +18,6 @@ def poly_integral(poly, C=0):
     the polynomial
     The returned list should be as small as possible
     """
-    print(poly)
     i = 1
     ret = [0]
     for mono in poly:
