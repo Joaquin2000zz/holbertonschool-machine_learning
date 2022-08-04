@@ -11,9 +11,6 @@ def summation_i_squared(n):
     recursion needed to don't use any loop
     as the task says
     """
-    flag = str(n)
-    if flag.replace('.', '', 1).isnumeric() is False:
+    if not n or isinstance(n, int):
         return None
-    if n == 0:
-        return 0
-    return summation_i_squared(n - 1) + n ** 2
+    return int((n * ((n + 1) * (2 * n + 1))) / 6)
