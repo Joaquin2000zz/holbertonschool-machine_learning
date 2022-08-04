@@ -19,8 +19,17 @@ def poly_integral(poly, C=0):
     The returned list should be as small as possible
     """
     i = 1
-    ret = [0]
+    if (not poly  or type(poly) != list or
+           (type(C) != int and type(C) != float)):
+        return None
+    ret = [C]
     for mono in poly:
-        ret.append(mono / i) if mono != 0 else ret.append(mono)
+        if mono != 0:
+            if int(mono / i) != float(mono / i):
+                ret.append(mono / i)
+            else:
+                ret.append(int(mono / i))
+        else:
+            ret.append(mono)
         i += 1
     return ret
