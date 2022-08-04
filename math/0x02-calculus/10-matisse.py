@@ -13,8 +13,14 @@ def poly_derivative(poly):
     """
     i = 0
     ret = []
+    if not poly or type(poly) != list:
+        return None
+
     for mono in poly:
         if i > 0:
             ret.append(i * mono)
         i += 1
+    res = all(ele == 0 for ele in ret)
+    if res:
+        return [0]
     return ret
