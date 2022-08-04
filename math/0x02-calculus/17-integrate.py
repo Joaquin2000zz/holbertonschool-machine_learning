@@ -19,8 +19,8 @@ def poly_integral(poly, C=0):
     The returned list should be as small as possible
     """
     i = 1
-    if (not poly  or type(poly) != list or
-           (type(C) != int and type(C) != float)):
+    if (not poly or type(poly) != list or
+        (type(C) != int and type(C) != float)):
         return None
     ret = [C]
     for mono in poly:
