@@ -14,7 +14,6 @@ def summation_i_squared(n):
     flag = str(n)
     if flag.replace('.', '', 1).isnumeric() is False:
         return None
-    print(n)
     if n == 0:
         return 0
     return summation_i_squared(n - 1) + n ** 2
