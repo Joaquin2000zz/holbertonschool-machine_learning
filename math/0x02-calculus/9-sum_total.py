@@ -11,6 +11,6 @@ def summation_i_squared(n):
     recursion needed to don't use any loop
     as the task says
     """
-    if not n or isinstance(n, int) or n < 1:
+    if not n or type(n) != int or n < 1:
         return None
     return int((n * ((n + 1) * (2 * n + 1))) / 6)
