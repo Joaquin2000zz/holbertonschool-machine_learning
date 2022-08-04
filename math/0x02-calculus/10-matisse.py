@@ -14,7 +14,6 @@ def poly_derivative(poly):
     i = 0
     ret = []
     for mono in poly:
-
         if i > 0:
             ret.append(i * mono)
         i += 1
