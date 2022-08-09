@@ -4,9 +4,6 @@ module which contains the Normal class
 """
 
 
-import math
-
-
 class Normal():
     """
     represents an normal distribution
@@ -34,7 +31,7 @@ class Normal():
             sigma = 0
             for x in data:
                 sigma += (x - self.mean) * (x - self.mean)
-            self.stddev = math.sqrt(sigma / i)#self.HeronMethod(sigma / i)
+            self.stddev = self.HeronMethod(sigma / i)
 
         else:
             if stddev > 0:
@@ -52,14 +49,10 @@ class Normal():
         x = p
         # seed
         xn = p / 2
-        i = 0
         while 1:
             xn = 0.5 * (xn + (p / xn))
-            print(f"xn: {xn}")
             if xn == x:
-                if i == 10:
-                    break
-                i += 1
+                break
             x = xn
         return float(x)
 
