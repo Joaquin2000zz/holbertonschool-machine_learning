@@ -31,3 +31,14 @@ class Poisson():
                 self.lambtha = float(lambtha)
             else:
                 raise ValueError('lambtha must be a positive value')
+
+    def pmf(self, k):
+        """
+        Calculates the value of the PMF for a given number of “successes”
+        """
+        e = 2.7182818285
+        k = int(k)
+        kFactorial = 1
+        for i in range(2, k + 1):
+            kFactorial *= i
+        return (e ** -self.lambtha) * (self.lambtha ** k)/ kFactorial
