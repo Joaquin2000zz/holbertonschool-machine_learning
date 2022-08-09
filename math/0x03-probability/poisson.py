@@ -23,7 +23,7 @@ class Poisson():
             for value in data:
                 p += value
                 i += 1
-            self.lambtha = p / i
+            self.lambtha = float(p / i)
         else:
             if lambtha > 0:
                 self.lambtha = float(lambtha)
