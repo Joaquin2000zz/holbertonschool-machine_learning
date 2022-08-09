@@ -61,7 +61,7 @@ class Poisson():
         """
         sigma = 0
         k = int(k)
-        if k < 1:
+        if k < 0:
             return 0
 
         for i in range(0, k + 1):
