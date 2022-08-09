@@ -41,4 +41,4 @@ class Poisson():
         kFactorial = 1
         for i in range(2, k + 1):
             kFactorial *= i
-        return (e ** -self.lambtha) * (self.lambtha ** k)/ kFactorial
+        return (e ** -self.lambtha) * (self.lambtha ** k) / kFactorial
