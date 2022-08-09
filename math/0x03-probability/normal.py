@@ -4,9 +4,6 @@ module which contains the Normal class
 """
 
 
-from argparse import ONE_OR_MORE
-
-
 class Normal():
     """
     represents an normal distribution
