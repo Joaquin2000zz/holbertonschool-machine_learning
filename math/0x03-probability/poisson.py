@@ -21,6 +21,8 @@ class Poisson():
             i = 0
             p = 0
             for value in data:
+                if not isinstance(value, int) and not isinstance(value, float):
+                    raise ValueError('the values of list must be integers or floats')
                 p += value
                 i += 1
             self.lambtha = float(p / i)
