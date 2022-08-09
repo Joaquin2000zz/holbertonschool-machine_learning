@@ -15,7 +15,7 @@ class Poisson():
         initializes poisson distribution
         """
         p = None
-        if data:
+        if data or data is not None:
             if not isinstance(data, list):
                 raise TypeError('data must be a list')
             if len(data) < 2:
