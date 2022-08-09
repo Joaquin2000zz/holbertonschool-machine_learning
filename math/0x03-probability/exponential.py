@@ -38,5 +38,7 @@ class Exponential():
         """
         Calculates the value of the PDF for a given time period
         """
+        if x < 0:
+            return 0
         return self.lambtha * self.e ** (-self.lambtha * x)
 
