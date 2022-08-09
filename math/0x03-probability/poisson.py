@@ -8,6 +8,8 @@ class Poisson():
     """
     represents a poisson distribution
     """
+    e = 2.7182818285
+
     def __init__(self, data=None, lambtha=1.):
         """
         initializes poisson distribution
@@ -32,13 +34,36 @@ class Poisson():
             else:
                 raise ValueError('lambtha must be a positive value')
 
+    def factorial(self, n):
+        """
+        calculates the factorial of n
+        """
+        if n == 0:
+            return 1
+        kFactorial = 1
+        for i in range(2, n + 1):
+            kFactorial *= i
+        return kFactorial
+
     def pmf(self, k):
         """
         Calculates the value of the PMF for a given number of “successes”
         """
-        e = 2.7182818285
         k = int(k)
-        kFactorial = 1
-        for i in range(2, k + 1):
-            kFactorial *= i
-        return (e ** -self.lambtha) * (self.lambtha ** k) / kFactorial
+        if k < 1:
+            return 0
+
+        return (self.e ** -self.lambtha) * (self.lambtha ** k) / self.factorial(k)
+
+    def cdf(self, k):
+        """
+        Calculates the value of the CDF for a given number of “successes”
+        """
+        sigma = 0
+        k = int(k)
+        if k < 1:
+            return 0
+
+        for i in range(0, k + 1):
+            sigma += (self.lambtha ** k) / self.factorial(i)
+        return (self.e ** -self.lambtha) * sigma
