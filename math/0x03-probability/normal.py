@@ -8,12 +8,12 @@ class Normal():
     """
     represents an normal distribution
     """
-
+    π = 3.1415926536
+    e = 2.7182818285
     def __init__(self, data=None, mean=0., stddev=1.):
         """
         initializes the normal object
         """
-        p = None
         if data or data is not None:
             if not isinstance(data, list):
                 raise TypeError('data must be a list')
@@ -30,7 +30,7 @@ class Normal():
             sigma = 0
             for x in data:
                 sigma += (x - self.mean) * (x - self.mean)
-            self.stddev = self.HeronMethod(sigma / i)
+            self.stddev = self.heron(sigma / i)
 
         else:
             if stddev > 0:
@@ -39,7 +39,7 @@ class Normal():
                 raise ValueError('stddev must be a positive value')
             self.mean = float(mean)
 
-    def HeronMethod(self, p):
+    def heron(self, p):
         """
         heron - method which calculates the srqt of a number
         @p: number to find their square root
@@ -66,3 +66,10 @@ class Normal():
         Calculates the x-value of a given z-score
         """
         return self.stddev * z + self.mean
+
+    def pdf(self, x):
+        """
+        Calculates the value of the PDF for a given x-value
+        """
+        first = ((1 / (self.stddev * self.heron(self.π * 2))))
+        return  first * self.e ** (- 0.5 * (((x - self.mean) / self.stddev) ** 2))
