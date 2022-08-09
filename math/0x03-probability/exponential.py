@@ -33,3 +33,10 @@ class Exponential():
                 self.lambtha = float(lambtha)
             else:
                 raise ValueError('lambtha must be a positive value')
+
+    def pdf(self, x):
+        """
+        Calculates the value of the PDF for a given time period
+        """
+        return self.lambtha * self.e ** (-self.lambtha * x)
+
