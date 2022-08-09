@@ -8,12 +8,13 @@ class Exponential():
     """
     represents an exponential distribution
     """
+    e = 2.7182818285
     def __init__(self, data=None, lambtha=1.):
         """
         initializes the exponential object
         """
         p = None
-        if data:
+        if data or data is not None:
             if not isinstance(data, list):
                 raise TypeError('data must be a list')
             if len(data) < 2:
@@ -25,7 +26,7 @@ class Exponential():
                     raise ValueError('list values must be integers or floats')
                 p += value
                 i += 1
-            self.lambtha = float(p / i)
+            self.lambtha = float(1 / (p / i))
         else:
             if lambtha > 0:
                 self.lambtha = float(lambtha)
