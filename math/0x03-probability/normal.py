@@ -10,6 +10,7 @@ class Normal():
     """
     π = 3.1415926536
     e = 2.7182818285
+
     def __init__(self, data=None, mean=0., stddev=1.):
         """
         initializes the normal object
@@ -72,4 +73,5 @@ class Normal():
         Calculates the value of the PDF for a given x-value
         """
         first = ((1 / (self.stddev * self.heron(self.π * 2))))
-        return  first * self.e ** (- 0.5 * (((x - self.mean) / self.stddev) ** 2))
+        second = self.e ** (- 0.5 * (((x - self.mean) / self.stddev) ** 2))
+        return  first * second
