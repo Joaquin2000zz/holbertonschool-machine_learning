@@ -48,4 +48,6 @@ class Exponential():
         """
         if x < 0:
             return 0
+        if not isinstance(x, int) and not isinstance(x, float):
+            x = int(x)
         return 1 - self.e ** -self.lambtha * x
