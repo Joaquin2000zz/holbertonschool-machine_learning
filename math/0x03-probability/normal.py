@@ -8,7 +8,6 @@ class Normal():
     """
     represents an normal distribution
     """
-    e = 2.7182818285
 
     def __init__(self, data=None, mean=0., stddev=1.):
         """
@@ -56,18 +55,14 @@ class Normal():
             x = xn
         return float(x)
 
-    def pdf(self, x):
+    def z_score(self, x):
         """
-        Calculates the value of the PDF for a given time period
+        Calculates the z-score of a given x-value
         """
-        if x < 0:
-            return 0
-        return self.lambtha * self.e ** -self.lambtha * x
+        return (x - self.mean) / self.stddev
 
-    def cdf(self, x):
+    def x_value(self, z):
         """
-        Calculates the value of the CDF for a given time period
+        Calculates the x-value of a given z-score
         """
-        if x < 0:
-            return 0
-        return (1 - (self.e ** (-self.lambtha * x)))
+        return self.stddev * z + self.mean
