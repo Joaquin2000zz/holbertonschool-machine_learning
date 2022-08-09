@@ -49,7 +49,8 @@ class Poisson():
         """
         Calculates the value of the PMF for a given number of “successes”
         """
-        k = int(k)
+        if not isinstance(k, int):
+            k = int(k)
         if k < 1:
             return 0
         num = (self.e ** -self.lambtha) * (self.lambtha ** k)
@@ -59,11 +60,11 @@ class Poisson():
         """
         Calculates the value of the CDF for a given number of “successes”
         """
-        sigma = []
+        sigma = 0
         if not isinstance(k, int):
             k = int(k)
         if k < 0:
             return 0
         for i in range(0, k + 1):
-            sigma.append(self.pmf(i))
-        return sum(sigma)
+            sigma += self.pmf(i)
+        return sigma
