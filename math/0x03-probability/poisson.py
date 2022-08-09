@@ -60,7 +60,8 @@ class Poisson():
         Calculates the value of the CDF for a given number of “successes”
         """
         sigma = 0
-        k = int(k)
+        if not isinstance(k, int):
+            k = int(k)
         if k < 0:
             return 0
 
