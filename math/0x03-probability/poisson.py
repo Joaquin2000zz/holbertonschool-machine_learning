@@ -52,8 +52,8 @@ class Poisson():
         k = int(k)
         if k < 1:
             return 0
-
-        return (self.e ** -self.lambtha) * (self.lambtha ** k) / self.factorial(k)
+        num = (self.e ** -self.lambtha) * (self.lambtha ** k)
+        return num / self.factorial(k)
 
     def cdf(self, k):
         """
@@ -65,5 +65,5 @@ class Poisson():
             return 0
 
         for i in range(0, k + 1):
-            sigma += (self.lambtha ** k) / self.factorial(i)
-        return (self.e ** -self.lambtha) * sigma
+            sigma += self.pmf(i)
+        return sigma
