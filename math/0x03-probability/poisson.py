@@ -51,7 +51,7 @@ class Poisson():
         """
         if not isinstance(k, int):
             k = int(k)
-        if k < 1:
+        if k < 0:
             return 0
         num = (self.e ** -self.lambtha) * (self.lambtha ** k)
         return num / self.factorial(k)
