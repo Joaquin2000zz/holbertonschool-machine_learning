@@ -74,4 +74,4 @@ class Normal():
         """
         first = ((1 / (self.stddev * self.heron(self.π * 2))))
         second = self.e ** (- 0.5 * (((x - self.mean) / self.stddev) ** 2))
-        return  first * second
+        return first * second
