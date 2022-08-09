@@ -4,6 +4,9 @@ module which contains the Normal class
 """
 
 
+from argparse import ONE_OR_MORE
+
+
 class Normal():
     """
     represents an normal distribution
@@ -75,3 +78,19 @@ class Normal():
         first = ((1 / (self.stddev * self.heron(self.π * 2))))
         second = self.e ** (- 0.5 * (((x - self.mean) / self.stddev) ** 2))
         return first * second
+
+    def erf(self, x):
+        """
+        error function approximation
+        """
+        one = (x ** 3) / 3
+        two = (x ** 5) / 10
+        tree = (x ** 7) / 42
+        four = (x ** 9) / 216
+        return (2 / self.heron(self.π)) * (x - one + two - tree + four)
+
+    def cdf(self, x):
+        """
+        Calculates the value of the CDF for a given x-value
+        """
+        return 0.5 * (1 + self.erf((x - self.mean) / (self.stddev * self.heron(2))))
