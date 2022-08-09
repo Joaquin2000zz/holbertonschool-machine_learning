@@ -59,12 +59,11 @@ class Poisson():
         """
         Calculates the value of the CDF for a given number of “successes”
         """
-        sigma = 0
+        sigma = []
         if not isinstance(k, int):
             k = int(k)
         if k < 0:
             return 0
-
         for i in range(0, k + 1):
-            sigma += self.pmf(i)
-        return sigma
+            sigma.append(self.pmf(i))
+        return sum(sigma)
