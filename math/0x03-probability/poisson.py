@@ -14,7 +14,7 @@ class Poisson():
         """
         p = None
         if data:
-            if not isinstance(data, list):
+            if type(data) != list:
                 raise TypeError('data must be a list')
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
