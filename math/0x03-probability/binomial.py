@@ -5,14 +5,10 @@ module which contains the Binomial class
 
 
 class Binomial:
-    """
-    class Binomial that represents a binomial distribution
-    """
+    """class Binomial that represents a binomial distribution"""
 
     def __init__(self, data=None, n=1, p=0.5):
-        """
-        Class contructor
-        """
+        """Class contructor"""
         if data or data is not None:
             if type(data) is not list:
                 raise TypeError("data must be a list")
@@ -39,39 +35,18 @@ class Binomial:
             self.n = n
             self.p = p
 
-    def pmf(self, k):
-        """
-        Calculates the value of the PMF for a given number of “successes”
-        """
-        if not isinstance(k, int):
-            k = int(k)
-        if k < 0 or k > self.n:
-            return 0
-        nFact = self.factorial(self.n)
-        comb = nFact / (self.factorial(self.n - k) * self.factorial(k))
-        return comb * ((self.p ** k) * (1 - self.p) ** (self.n - k))
-
-    def cdf(self, k):
-        """
-        Calculates the value of the CDF for a given number of successes
-        """
-        if not isinstance(k, int):
-            k = int(k)
-        if k < 0 or k > self.n:
-            return 0
-        sigma = 0
-        for i in range(k + 1):
-            sigma += self.pmf(i)
-        return sigma
-
-    def factorial(self, n):
-        """
-        calculates the factorial of n
-        """
-        k = int(k)
-        if n == 0:
+    def factorial(self, x):
+        """factorial function"""
+        if x == 0:
             return 1
-        kFactorial = 1
-        for i in range(2, n + 1):
-            kFactorial *= i
-        return kFactorial
+        return (self.factorial(x - 1) * x)
+
+    def pmf(self, k):
+        """Calculates the value of the PMF for a given number of successes"""
+        if type(k) is not int:
+            k = int(k)
+        if k < 0 or k > self.n:
+            return 0
+        com = self.factorial(self.n) / (self.factorial
+                                        (self.n - k) * self.factorial(k))
+        return (com * (self.p ** k) * ((1 - self.p) ** (self.n - k)))
