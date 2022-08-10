@@ -34,6 +34,27 @@ class Binomial():
                 raise ValueError('p must be greater than 0 and less than 1')
             self.p = float(p)
 
+    def pmf(self, k):
+        """
+        Calculates the value of the PMF for a given number of “successes”
+        """
+        if k < 0:
+            return 0
+
+        combinations = self.factorial(self.n) / (self.factorial(self.n - k) * self.factorial(k))
+        return combinations * ((self.p ** k) * (1 - self.p) ** (self.n - k))
+
+    def factorial(self, n):
+        """
+        calculates the factorial of n
+        """
+        if n == 0:
+            return 1
+        kFactorial = 1
+        for i in range(2, n + 1):
+            kFactorial *= i
+        return kFactorial
+
     def reduce(self, n):
         """
         function to reduce numbers to values
