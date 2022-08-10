@@ -19,12 +19,22 @@ class Binomial():
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
             res = 0
-            self.n = round(len(data) / 2)
+            i = 0
             for value in data:
                 if not isinstance(value, int) and not isinstance(value, float):
                     raise ValueError('list values must be integers or floats')
                 res += value
-            self.p = float(round(self.reduce(res / self.n), 3))
+                i += 1
+
+            mu = res / i
+            variation = 0
+
+            for x in data:
+                variation += (x - mu) ** 2
+            variation /= i
+            self.p = 1 - (variation / mu)
+            self.n = round(mu / self.p)
+            self.p = mu / self.n
         else:
             if n > 0:
                 self.n = int(n)
