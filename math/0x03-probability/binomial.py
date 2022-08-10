@@ -75,16 +75,3 @@ class Binomial():
         for i in range(2, n + 1):
             kFactorial *= i
         return kFactorial
-
-    def reduce(self, n):
-        """
-        function to reduce numbers to values
-        between 0 and 1
-        """
-        if n < 0:
-            return None
-        if n <= 1:
-            return float(n)
-        ret = self.reduce(n / 10)
-
-        return float(ret)
