@@ -48,7 +48,8 @@ class Binomial():
         """
         Calculates the value of the PMF for a given number of “successes”
         """
-        k = int(k)
+        if not isinstance(k , int):
+            k = int(k)
         if k < 0 or k > self.n:
             return 0
         nFact = self.factorial(self.n)
@@ -59,7 +60,8 @@ class Binomial():
         """
         Calculates the value of the CDF for a given number of successes
         """
-        k = int(k)
+        if not isinstance(k , int):
+            k = int(k)
         if k < 0 or k > self.n:
             return 0
         sigma = 0
