@@ -44,6 +44,17 @@ class Binomial():
         comb = nFact / (self.factorial(self.n - k) * self.factorial(k))
         return comb * ((self.p ** k) * (1 - self.p) ** (self.n - k))
 
+    def cdf(self, k):
+        """
+        Calculates the value of the CDF for a given number of successes
+        """
+        if k < 0:
+            return 0
+        sigma = 0
+        for i in range(k + 1):
+            sigma += self.pmf(i)
+        return sigma
+
     def factorial(self, n):
         """
         calculates the factorial of n
