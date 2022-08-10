@@ -19,7 +19,7 @@ class Binomial():
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
             res = 0
-            self.n = int(len(data) / 2)
+            self.n = round(len(data) / 2)
             for value in data:
                 if not isinstance(value, int) and not isinstance(value, float):
                     raise ValueError('list values must be integers or floats')
@@ -42,7 +42,7 @@ class Binomial():
         if n < 0:
             return None
         if n <= 1:
-            return n
+            return float(n)
         ret = self.reduce(n / 10)
 
-        return ret
+        return float(ret)
