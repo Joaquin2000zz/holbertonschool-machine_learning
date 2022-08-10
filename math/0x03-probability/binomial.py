@@ -50,3 +50,16 @@ class Binomial:
         com = self.factorial(self.n) / (self.factorial
                                         (self.n - k) * self.factorial(k))
         return (com * (self.p ** k) * ((1 - self.p) ** (self.n - k)))
+
+    def cdf(self, k):
+        """
+        Calculates the value of the CDF for a given number of successes
+        """
+        if not isinstance(k, int):
+            k = int(k)
+        if k < 0 or k > self.n:
+            return 0
+        sigma = 0
+        for i in range(k + 1):
+            sigma += self.pmf(i)
+        return sigma
