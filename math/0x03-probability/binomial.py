@@ -25,16 +25,14 @@ class Binomial():
                     raise ValueError('list values must be integers or floats')
                 res += value
                 i += 1
-
             mu = res / i
             variation = 0
-
             for x in data:
                 variation += (x - mu) ** 2
             variation /= i
             self.p = 1 - (variation / mu)
             self.n = round(mu / self.p)
-            self.p = mu / self.n
+            self.p = float(mu / self.n)
         else:
             if n > 0:
                 self.n = int(n)
@@ -48,7 +46,7 @@ class Binomial():
         """
         Calculates the value of the PMF for a given number of “successes”
         """
-        if type(k) is not int:
+        if not isinstance(k, int):
             k = int(k)
         if k < 0 or k > self.n:
             return 0
@@ -60,7 +58,7 @@ class Binomial():
         """
         Calculates the value of the CDF for a given number of successes
         """
-        if type(k) is not int:
+        if not isinstance(k, int):
             k = int(k)
         if k < 0 or k > self.n:
             return 0
