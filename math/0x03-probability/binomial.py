@@ -9,9 +9,6 @@ class Binomial():
     represents a binomial distribution
     """
 
-class Binomial:
-    """class Binomial that represents a binomial distribution"""
-
     def __init__(self, data=None, n=1, p=0.5):
         """Class contructor"""
         if data or data is not None:
