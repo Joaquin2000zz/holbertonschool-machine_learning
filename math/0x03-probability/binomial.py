@@ -30,17 +30,17 @@ class Binomial():
             for x in data:
                 variation += (x - mu) ** 2
             variation /= i
-            self.p = 1 - (variation / mu)
+            self.p = float(1 - (variation / mu))
             self.n = round(mu / self.p)
             self.p = float(mu / self.n)
         else:
             if n > 0:
-                self.n = int(n)
+                self.n = n
             else:
                 raise ValueError('n must be a positive value')
             if p <= 0 or p >= 1:
                 raise ValueError('p must be greater than 0 and less than 1')
-            self.p = float(p)
+            self.p = p
 
     def pmf(self, k):
         """
