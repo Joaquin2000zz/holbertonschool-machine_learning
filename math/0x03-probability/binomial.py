@@ -4,13 +4,15 @@ module which contains the Binomial class
 """
 
 
-class Binomial():
+class Binomial:
     """
-    represents a binomial distribution
+    class Binomial that represents a binomial distribution
     """
 
     def __init__(self, data=None, n=1, p=0.5):
-        """Class contructor"""
+        """
+        Class contructor
+        """
         if data or data is not None:
             if type(data) is not list:
                 raise TypeError("data must be a list")
@@ -37,7 +39,7 @@ class Binomial():
             self.n = n
             self.p = p
 
-def pmf(self, k):
+    def pmf(self, k):
         """
         Calculates the value of the PMF for a given number of “successes”
         """
