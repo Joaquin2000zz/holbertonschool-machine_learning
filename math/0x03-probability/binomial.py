@@ -24,7 +24,7 @@ class Binomial():
                 if not isinstance(value, int) and not isinstance(value, float):
                     raise ValueError('list values must be integers or floats')
                 res += value
-            self.p = float(self.reduce(res / self.n))
+            self.p = float(round(self.reduce(res / self.n), 3))
         else:
             if n > 0:
                 self.n = int(n)
