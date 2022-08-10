@@ -40,9 +40,9 @@ class Binomial():
         """
         if k < 0:
             return 0
-
-        combinations = self.factorial(self.n) / (self.factorial(self.n - k) * self.factorial(k))
-        return combinations * ((self.p ** k) * (1 - self.p) ** (self.n - k))
+        nFact = self.factorial(self.n)
+        comb = nFact / (self.factorial(self.n - k) * self.factorial(k))
+        return comb * ((self.p ** k) * (1 - self.p) ** (self.n - k))
 
     def factorial(self, n):
         """
