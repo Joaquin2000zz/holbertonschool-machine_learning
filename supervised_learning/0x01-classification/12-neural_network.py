@@ -70,6 +70,7 @@ class NeuralNetwork:
         getter method
         """
         return self.__A2
+
     def forward_prop(self, X):
         """
         forward propagation of the neural network
@@ -79,7 +80,6 @@ class NeuralNetwork:
 
         Z = self.__W2 @ self.__A1 + self.__b1
         self.__A2 = (1 / (1 + np.e ** -Z))[: 1]
-
 
         return self.__A1, self.__A2
 
