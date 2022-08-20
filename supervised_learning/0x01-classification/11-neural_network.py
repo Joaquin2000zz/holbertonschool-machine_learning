@@ -82,7 +82,6 @@ class NeuralNetwork:
         Z2 = self.__W2 @ self.__A1 + self.__b2
         self.__A2 = (1 / (1 + np.e ** -Z2))[: 1]
 
-
         return self.__A1, self.__A2
 
     def cost(self, Y, A):
@@ -92,4 +91,4 @@ class NeuralNetwork:
         a = (Y * np.log(A))
         b = ((1 - Y) * np.log(1.0000001 - (A)))
         sigma = a + b
-        return (- 1 / Y.shape[1]) * np.sum(sigma)
+        return (-1 / Y.shape[1]) * np.sum(sigma)
