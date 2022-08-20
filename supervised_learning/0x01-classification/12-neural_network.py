@@ -94,7 +94,7 @@ class NeuralNetwork:
 
     def evaluate(self, X, Y):
         """
-        Evaluates neuron’s predictions performing binary classification
+        Evaluates neuron predictions performing binary classification
         """
         _, A = self.forward_prop(X)
         return np.where(A >= 0.5, 1, 0), self.cost(Y, A)
