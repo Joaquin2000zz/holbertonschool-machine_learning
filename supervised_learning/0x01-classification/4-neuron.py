@@ -3,7 +3,7 @@
 module which contains neuron class
 """
 import numpy as np
-from math import e
+
 
 class Neuron:
     """
@@ -44,8 +44,8 @@ class Neuron:
         Calculates the forward propagation of the neuron
         using a sigmoid function as trigger
         """
-        Z = np.dot(self.__W, X) + self.__b
-        self.__A = 1 / (1 + e ** Z)
+        Z = self.__W @ X + self.__b
+        self.__A = 1 / (1 + np.e ** -Z)
         return self.__A
 
     def cost(self, Y, A):
@@ -59,7 +59,7 @@ class Neuron:
 
     def evaluate(self, X, Y):
         """
-        Evaluates the neuron’s predictions performing binary classification
+        Evaluates neuron’s predictions performing binary classification
         """
-        Z = np.dot(self.__W, X) + self.__b
-        return np.where(Z >= 0.5, 1, 0), self.cost(Y, self.forward_prop(X))
+        A = self.forward_prop(X)
+        return np.where(A >= 0.5, 1, 0), self.cost(Y, A)

@@ -3,6 +3,7 @@
 module which contains neuron class
 """
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Neuron:
@@ -44,7 +45,7 @@ class Neuron:
         Calculates the forward propagation of the neuron
         using a sigmoid function as trigger
         """
-        Z = self.__W @ X + self.__b
+        Z = np.dot(self.__W, X) + self.__b
         self.__A = 1 / (1 + np.e ** -Z)
         return self.__A
 
@@ -71,3 +72,39 @@ class Neuron:
         """
         self.__W = self.__W - ((alpha / X.shape[1]) * (A - Y) @ X.transpose())
         self.__b = self.__b - (alpha / X.shape[1]) * np.sum((A - Y))
+
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+        """
+        Trains the neuron performing binary classification
+        """
+        if not isinstance(iterations, int):
+            raise TypeError('iterations must be an integer')
+        if iterations < 0:
+            raise ValueError('iterations must be a positive integer')
+        if not isinstance(alpha, float):
+            raise TypeError('alpha must be a float')
+        if alpha < 0:
+            raise ValueError('alpha must be positive')
+        if (verbose or graph) and not isinstance(step, int):
+            raise TypeError('step must be an integer')
+        if (verbose or graph) and (step < 0 or step > iterations):
+            raise ValueError('step must be positive and <= iterations')
+
+
+        toPlot = []
+        for i in range(iterations):
+            A, cost = self.evaluate(X, Y)
+            if i <= step:
+                print(f'Cost after {i} iterations: {cost}')
+            self.gradient_descent(X, Y, self.__A, alpha)
+
+            toPlot.append(cost)
+        if graph:
+            toPlot = np.array(toPlot)
+            plt.plot(toPlot)
+            plt.axis([None, 3000, None, 4])
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title("Training Cost")
+            plt.show()
+        return A, cost
