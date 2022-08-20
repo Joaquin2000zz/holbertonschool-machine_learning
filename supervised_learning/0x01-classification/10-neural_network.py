@@ -75,9 +75,9 @@ class NeuralNetwork:
         """
         forward propagation of the neural network
         """
-        Z = self.__W1 @ X + self.__b1
-        self.__A1 = 1 / (1 + np.e ** -Z)
+        Z1 = self.__W1 @ X + self.__b1
+        self.__A1 = 1 / (1 + np.e ** -Z1)
 
-        Z = self.__W2 @ (self.__A1 + self.__b1)
-        self.__A2 = (1 / (1 + np.e ** -Z))[: 1]
+        Z2 = self.__W2 @ (self.__A1 + self.__b1)
+        self.__A2 = (1 / (1 + np.e ** -Z2))
         return self.__A1, self.__A2
