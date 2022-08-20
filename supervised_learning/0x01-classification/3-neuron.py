@@ -52,7 +52,7 @@ class Neuron:
         """
         Calculates the cost of the model using logistic regression
         """
-        a = (Y @ np.log(A).transpose())
-        b = ((1 - Y) @ np.log(1 - A).transpose())
+        a = (Y * np.log(A))
+        b = ((1 - Y) * np.log(1.0000001 - A))
         sigma = a + b
         return (- 1 / Y.shape[1]) * np.sum(sigma)
