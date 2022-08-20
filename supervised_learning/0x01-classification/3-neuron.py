@@ -45,7 +45,7 @@ class Neuron:
         using a sigmoid function as trigger
         """
         Z = self.__W @ X + self.__b
-        self.__A = 1 / (1 + np.e ** -Z)
+        self.__A = 1 / (1 + np.exp(-Z))
         return self.__A
 
     def cost(self, Y, A):
