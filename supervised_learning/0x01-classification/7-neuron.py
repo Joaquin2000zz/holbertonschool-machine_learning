@@ -70,8 +70,12 @@ class Neuron:
         Calculates one pass of gradient descent on the neuron
         performing binary classification
         """
-        self.__W = self.__W - ((alpha / X.shape[1]) * (A - Y) @ X.transpose())
-        self.__b = self.__b - (alpha / X.shape[1]) * np.sum((A - Y))
+        m = X.shape[1]
+        dw = ((A - Y) @ X.T) / m
+        db = np.sum((A - Y)) / m
+
+        self.__W = self.__W - (alpha * dw)
+        self.__b = self.__b - (alpha * db)
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """
