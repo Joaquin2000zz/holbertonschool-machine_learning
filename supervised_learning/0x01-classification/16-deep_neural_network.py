@@ -25,5 +25,5 @@ class DeepNeuralNetwork:
         for i in range(1, self.L):
             if layers[i - 1] < 0:
                 raise ValueError("layers must be a positive integer")
-            self.weights[f'b{i - 1}'] = np.zeros(shape=(layers[i - 1], 1))
-            self.weights[f'W{i - 1}'] = np.random.randn(layers[i - 1], nx)
+            self.weights[f'b{i}'] = np.zeros(shape=(layers[i - 1], 1))
+            self.weights[f'W{i}'] = np.random.randn(layers[i - 1], nx)
