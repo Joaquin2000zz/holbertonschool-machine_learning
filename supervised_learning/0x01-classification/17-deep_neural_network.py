@@ -23,7 +23,7 @@ class DeepNeuralNetwork:
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
-        for i in range(0, self.L):
+        for i in range(0, self.__L):
             if layers[i] < 0 or not isinstance(layers[i], int):
                 raise TypeError("layers must be a list of positive integers")
             self.__weights[f'b{i + 1}'] = np.zeros(shape=(layers[i], 1))
