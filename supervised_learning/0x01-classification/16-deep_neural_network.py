@@ -3,8 +3,8 @@
 module which contains DeepNeuralNetwork class
 """
 
-
 import numpy as np
+
 
 class DeepNeuralNetwork:
     """
