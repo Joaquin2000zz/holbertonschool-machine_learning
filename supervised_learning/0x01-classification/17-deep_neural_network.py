@@ -36,18 +36,21 @@ class DeepNeuralNetwork:
                 Wn = np.random.randn(layers[i], nx) * he_et_al
                 self.__weights[f'W{i + 1}'] = Wn
 
+    @property
     def L(self):
         """
         getter method
         """
         return self.__L
 
+    @property
     def cache(self):
         """
         getter method
         """
         return self.__cache
 
+    @property
     def weights(self):
         """
         getter method
