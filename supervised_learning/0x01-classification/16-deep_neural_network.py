@@ -21,14 +21,7 @@ class DeepNeuralNetwork:
             raise ValueError("layers must be a positive integer")
         self.L = len(layers)
         self.cache = {}
-        self.weights = self.start(nx , layers, self.L)
-
-    def start(self, nx, layers, i):
-        """
-        initializes wheights and biases of DNN
-        """
-        if not i:
-            return
-        self.cache[f'b{i}'] = np.zeros(shape=(layers[i - 1], 1))
-        self.cache[f'W{i}'] = np.random.randn(layers[i - 1], nx)
-        self.start(nx, layers, i - 1)
+        self.weights = {}
+        for i in range(1, self.L):
+            self.weights[f'b{i - 1}'] = np.zeros(shape=(layers[i - 1], 1))
+            self.weights[f'W{i - 1}'] = np.random.randn(layers[i - 1], nx)
