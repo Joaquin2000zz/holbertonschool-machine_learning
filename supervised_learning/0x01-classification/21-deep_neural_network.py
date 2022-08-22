@@ -101,26 +101,18 @@ class DeepNeuralNetwork:
         Calculates one pass of gradient descent on the neural network
         """
         m = Y.shape[1]
+        
         for i in range(self.__L, 0, -1):
             if i == self.__L:
-                dZl = cache["A{}".format(i)] - Y
-                dWl = (dZl @ cache["A{}".format(i - 1)].T) / m
-                dbl = np.sum(dZl, axis=1, keepdims=True) / m
-                dZnext = dZl
-
-                Wl = self.__weights['W{}'.format(i)]
-                bl = self.__weights['b{}'.format(i)]
-                self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
-                self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
+                dZ = cache["A{}".format(self.__L)] - Y
             else:
                 Wnext = self.__weights['W{}'.format(i + 1)]
-                Al = cache['A{}'.format(i)]
-                dZl = (Wnext.T @ dZnext) * Al * (1 - Al)
-                dWl = (dZl @ self.__cache['A{}'.format(i - 1)].T) / m
-                dbl = 1 / m * np.sum(dZl, axis=1, keepdims=True)
+                A = cache['A{}'.format(i)]
+                dZ = Wnext.T @ dZ * (A * (1 - A))
 
-                Wl = self.__weights['W{}'.format(i)]
-                bl = self.__weights['b{}'.format(i)]
-                self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
-                self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
-                dZnext = dZl
+            X = self.__cache['A{}'.format(i - 1)]
+            dW = (dZ @ X.T) / m
+            self.__weights['W{}'.format(i)] -= alpha * dW
+
+            db = np.sum(dZ, axis=1, keepdims=True) / m
+            self.__weights['b{}'.format(i)] -= alpha * db
