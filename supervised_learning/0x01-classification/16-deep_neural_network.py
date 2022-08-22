@@ -10,6 +10,7 @@ class DeepNeuralNetwork:
     defines a deep neural network performing binary classificaiton
     He-et-al Initialization to the weights
     """
+
     def __init__(self, nx, layers):
         """
         constructor method
