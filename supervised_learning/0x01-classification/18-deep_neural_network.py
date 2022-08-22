@@ -64,13 +64,17 @@ class DeepNeuralNetwork:
         """
         Calculation of forward propagation of DeepNeuralNetwork
         """
-        if not 'A0' in self.__cache:
+        if 'A0' not in self.__cache:
             self.__cache['A0'] = X
         for i in range(1, self.__L + 1):
             if i == 1:
-                Zn = self.__weights.get('W{}'.format(i)) @ X + self.__weights.get('b{}'.format(i))
+                W = self.__weights.get('W{}'.format(i))
+                b = self.__weights.get('b{}'.format(i))
+                Zn = W @ X + b
             else:
-                Zn = self.__weights.get('W{}'.format(i)) @ self.__cache.get('A{}'.format(i - 1))
+                W = self.__weights.get('W{}'.format(i))
+                X = self.__cache.get('A{}'.format(i - 1))
+                Zn = W @ X
                 Zn += self.__weights.get('b{}'.format(i))
             self.__cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
         return self.__cache['A{}'.format(i)], self.__cache
