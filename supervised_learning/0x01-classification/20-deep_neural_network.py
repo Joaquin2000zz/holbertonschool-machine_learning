@@ -93,4 +93,5 @@ class DeepNeuralNetwork:
         Evaluates neuron’s predictions performing binary classification
         """
         _, A = self.forward_prop(X)
-        return np.where(A.get(f'A{self.__L}') >= 0.5, 1, 0), self.cost(Y, A.get(f'A{self.__L}'))
+        cost = self.cost(Y, A.get(f'A{self.__L}'))
+        return np.where(A.get(f'A{self.__L}') >= 0.5, 1, 0), cost
