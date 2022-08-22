@@ -25,7 +25,7 @@ class DeepNeuralNetwork:
         self.cache = {}
         self.weights = {}
         for i in range(0, self.L):
-            if layers[i] < 0 or not isinstance(layers[i], int):
+            if layers[i] < 0:
                 raise TypeError("layers must be a list of positive integers")
             self.weights[f'b{i + 1}'] = np.zeros(shape=(layers[i], 1))
             if i - 1 > - 1:
