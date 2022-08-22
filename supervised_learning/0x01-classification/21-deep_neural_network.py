@@ -101,17 +101,17 @@ class DeepNeuralNetwork:
         Calculates one pass of gradient descent on the neural network
         """
         m = Y.shape[1]
-        dZ = cache[f"A{self.L}"] - Y
+        dZ = cache["A{}".format(self.L)] - Y
 
-        for lay in range(self.L, 0, -1):
+        for i in range(self.L, 0, -1):
             # this is because you need to use the dZ of the prev iteration
             db = np.sum(dZ, axis=1, keepdims=True) / m
 
-            A = self.cache[f"A{lay - 1}"]
+            A = self.cache["A{}".format(i - 1)]
             dW = dZ @ A.T / m
 
             # preparing dZ to the next iteration
-            dZ = (self.weights[f"W{lay}"].T @ dZ) * (A * (1 - A))
+            dZ = (self.weights["W{}".format(i)].T @ dZ) * (A * (1 - A))
 
-            self.__weights[f"W{lay}"] -= dW * alpha
-            self.__weights[f"b{lay}"] -= db * alpha
+            self.__weights["W{}".format(i)] -= dW * alpha
+            self.__weights["b{}".format(i)] -= db * alpha
