@@ -68,9 +68,9 @@ class DeepNeuralNetwork:
             self.__cache['A0'] = X
         for i in range(1, self.__L + 1):
             if i == 1:
-                Zn = self.__weights.get(f'W{i}') @ X + self.__weights.get(f'b{i}')
+                Zn = self.__weights.get('W{}'.format(i)) @ X + self.__weights.get('b{}'.format(i))
             else:
-                Zn = self.__weights.get(f'W{i}') @ self.__cache.get(f'A{i - 1}')
-                Zn += self.__weights.get(f'b{i}')
-            self.__cache[f'A{i}'] = 1 / (1 + np.exp(-Zn))
-        return self.__cache[f'A{i}'], self.__cache
+                Zn = self.__weights.get('W{}'.format(i)) @ self.__cache.get('A{}'.format(i - 1))
+                Zn += self.__weights.get('b{}'.format(i))
+            self.__cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
+        return self.__cache['A{}'.format(i)], self.__cache
