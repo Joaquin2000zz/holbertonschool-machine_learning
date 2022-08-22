@@ -101,8 +101,9 @@ class DeepNeuralNetwork:
         Calculates one pass of gradient descent on the neural network
         """
         m = Y.shape[1]
+        print(f"antes del for {self.__weights}")
         for i in range(self.__L, 0, -1):
-            if i != 1:
+            if i == self.__L:
                 print("en iteracion{} , layers {}".format(i, self.__L))
                 dZl = cache["A{}".format(i)] - Y
                 dWl = (dZl @ cache["A{}".format(i - 1)].T) / m
@@ -113,15 +114,18 @@ class DeepNeuralNetwork:
                 bl = self.__weights['b{}'.format(i)]
                 self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
                 self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
+                #print(f"el bias loko {bl - (alpha * dbl)}")
             else:
                 print("en else iteracion{} , layers {}".format(i, self.__L))
                 Wnext = self.__weights['W{}'.format(i + 1)]
                 Al = cache['A{}'.format(i)]
+                print(f"Wnext.T{Wnext.T.shape} dZnext {dZnext.shape} Al {Al.shape}")
                 dZl = (Wnext.T @ dZnext) * Al * (1 - Al)
-                dWl = (dZl @ self.__cache['A0'].T) / m
+                dWl = (dZl @ self.__cache['A{}'.format(i - 1)].T) / m
                 dbl = 1 / m * np.sum(dZl, axis=1, keepdims=True)
 
                 Wl = self.__weights['W{}'.format(i)]
                 bl = self.__weights['b{}'.format(i)]
                 self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
                 self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
+                dZnext = dZl
