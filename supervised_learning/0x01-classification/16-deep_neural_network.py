@@ -28,12 +28,12 @@ class DeepNeuralNetwork:
         for i in range(0, self.L):
             if layers[i] < 0 or not isinstance(layers[i], int):
                 raise TypeError("layers must be a list of positive integers")
-            self.weights[f'b{i + 1}'] = np.zeros(shape=(layers[i], 1))
+            self.weights['b{}'.format(i + 1)] = np.zeros(shape=(layers[i], 1))
             if i - 1 > - 1:
                 he_et_al = np.sqrt(2 / layers[i - 1])
                 Wn = np.random.randn(layers[i], layers[i - 1]) * he_et_al
-                self.weights[f'W{i + 1}'] = Wn
+                self.weights['W{}'.format(i + 1)] = Wn
             else:
                 he_et_al = np.sqrt(2 / nx)
                 Wn = np.random.randn(layers[i], nx) * he_et_al
-                self.weights[f'W{i + 1}'] = Wn
+                self.weights['W{}'.format(i + 1)] = Wn
