@@ -101,7 +101,7 @@ class DeepNeuralNetwork:
         Calculates one pass of gradient descent on the neural network
         """
         m = Y.shape[1]
-        
+
         for i in range(self.__L, 0, -1):
             if i == self.__L:
                 dZ = cache["A{}".format(self.__L)] - Y
