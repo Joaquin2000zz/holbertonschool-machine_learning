@@ -15,7 +15,7 @@ class DeepNeuralNetwork:
         """
         constructor method
         """
-        if not isinstance(nx, int):
+        if type(nx) != int:
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
@@ -26,7 +26,7 @@ class DeepNeuralNetwork:
         self.cache = {}
         self.weights = {}
         for i in range(0, self.L):
-            if layers[i] < 0 or not isinstance(layers[i], int):
+            if layers[i] < 0 or type(layers[i]) != int:
                 raise TypeError("layers must be a list of positive integers")
             self.weights[f'b{i + 1}'] = np.zeros(shape=(layers[i], 1))
             if i - 1 > - 1:
