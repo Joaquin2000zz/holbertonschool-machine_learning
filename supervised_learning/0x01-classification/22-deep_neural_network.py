@@ -116,7 +116,6 @@ class DeepNeuralNetwork:
             self.__weights["W{}".format(i)] -= dW * alpha
             self.__weights["b{}".format(i)] -= db * alpha
 
-
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """
         Trains the neural networx performing binary classification
