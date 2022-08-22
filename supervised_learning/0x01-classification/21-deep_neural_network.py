@@ -101,10 +101,8 @@ class DeepNeuralNetwork:
         Calculates one pass of gradient descent on the neural network
         """
         m = Y.shape[1]
-        print(f"antes del for {self.__weights}")
         for i in range(self.__L, 0, -1):
             if i == self.__L:
-                print("en iteracion{} , layers {}".format(i, self.__L))
                 dZl = cache["A{}".format(i)] - Y
                 dWl = (dZl @ cache["A{}".format(i - 1)].T) / m
                 dbl = np.sum(dZl, axis=1, keepdims=True) / m
@@ -114,12 +112,9 @@ class DeepNeuralNetwork:
                 bl = self.__weights['b{}'.format(i)]
                 self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
                 self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
-                #print(f"el bias loko {bl - (alpha * dbl)}")
             else:
-                print("en else iteracion{} , layers {}".format(i, self.__L))
                 Wnext = self.__weights['W{}'.format(i + 1)]
                 Al = cache['A{}'.format(i)]
-                print(f"Wnext.T{Wnext.T.shape} dZnext {dZnext.shape} Al {Al.shape}")
                 dZl = (Wnext.T @ dZnext) * Al * (1 - Al)
                 dWl = (dZl @ self.__cache['A{}'.format(i - 1)].T) / m
                 dbl = 1 / m * np.sum(dZl, axis=1, keepdims=True)
@@ -129,21 +124,3 @@ class DeepNeuralNetwork:
                 self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
                 self.__weights['b{}'.format(i)] = bl - (alpha * dbl)
                 dZnext = dZl
-                print(f"el bias loko en else {bl - (alpha * dbl)}")
-"""
-m = Y.shape[1]
-
-        dZ2 = A2 - Y
-        dW2 = (dZ2 @ A1.T) / m
-        db2 = np.sum(dZ2, axis=1, keepdims=True) / m
-
-        dZ1 = (self.__W2.T @ dZ2) * A1 * (1 - A1)
-        dW1 = (dZ1 @ X.T) / m
-        db1 = 1 / m * np.sum(dZ1, axis=1, keepdims=True)
-
-        self.__W1 = self.__W1 - (alpha * dW1)
-        self.__b1 = self.__b1 - (alpha * db1)
-
-        self.__W2 = self.__W2 - (alpha * dW2)
-        self.__b2 = self.__b2 - (alpha * db2)
-"""
