@@ -121,7 +121,6 @@ class DeepNeuralNetwork:
                 dWl = (dZl @ self.__cache['A0'].T) / m
                 dbl = 1 / m * np.sum(dZl, axis=1, keepdims=True)
 
-
                 Wl = self.__weights['W{}'.format(i)]
                 bl = self.__weights['b{}'.format(i)]
                 self.__weights['W{}'.format(i)] = Wl - (alpha * dWl)
