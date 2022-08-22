@@ -10,6 +10,7 @@ class DeepNeuralNetwork:
     defines a deep neural network performing binary classificaiton
     He-et-al Initialization to the weights
     """
+
     def __init__(self, nx, layers):
         """
         constructor method
@@ -20,21 +21,23 @@ class DeepNeuralNetwork:
             raise ValueError("nx must be a positive integer")
         if not isinstance(layers, list) or not layers:
             raise TypeError("layers must be a list of positive integers")
+
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
-        for i in range(0, self.__L):
+        for i in range(0, self.L):
             if layers[i] < 0 or not isinstance(layers[i], int):
                 raise TypeError("layers must be a list of positive integers")
-            self.__weights[f'b{i + 1}'] = np.zeros(shape=(layers[i], 1))
+            self.__weights['b{}'.format(i + 1)] = np.zeros(shape=(layers[i],
+                                                                  1))
             if i - 1 > - 1:
                 he_et_al = np.sqrt(2 / layers[i - 1])
                 Wn = np.random.randn(layers[i], layers[i - 1]) * he_et_al
-                self.__weights[f'W{i + 1}'] = Wn
+                self.__weights['W{}'.format(i + 1)] = Wn
             else:
                 he_et_al = np.sqrt(2 / nx)
                 Wn = np.random.randn(layers[i], nx) * he_et_al
-                self.__weights[f'W{i + 1}'] = Wn
+                self.__weights['W{}'.format(i + 1)] = Wn
 
     @property
     def L(self):
@@ -61,16 +64,20 @@ class DeepNeuralNetwork:
         """
         Calculation of forward propagation of DeepNeuralNetwork
         """
-        if not 'A0' in self.__cache:
+        if 'A0' not in self.__cache:
             self.__cache['A0'] = X
         for i in range(1, self.__L + 1):
             if i == 1:
-                Zn = self.__weights.get(f'W{i}') @ X + self.__weights.get(f'b{i}')
+                W = self.__weights.get('W{}'.format(i))
+                b = self.__weights.get('b{}'.format(i))
+                Zn = W @ X + b
             else:
-                Zn = self.__weights.get(f'W{i}') @ self.__cache.get(f'A{i - 1}')
-                Zn += self.__weights.get(f'b{i}')
-            self.__cache[f'A{i}'] = 1 / (1 + np.exp(-Zn))
-        return self.__cache[f'A{i}'], self.__cache
+                W = self.__weights.get('W{}'.format(i))
+                X = self.__cache.get('A{}'.format(i - 1))
+                Zn = W @ X
+                Zn += self.__weights.get('b{}'.format(i))
+            self.__cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
+        return self.__cache['A{}'.format(i)], self.__cache
 
     def cost(self, Y, A):
         """
