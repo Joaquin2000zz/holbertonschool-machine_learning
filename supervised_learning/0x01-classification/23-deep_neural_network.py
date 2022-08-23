@@ -145,7 +145,7 @@ class DeepNeuralNetwork:
         if graph:
             toPlot = np.array(toPlot)
             plt.plot(toPlot)
-            plt.axis([None, 3000, None, 4])
+            plt.axis([None, 5000, None, 0.7])
             plt.xlabel('iteration')
             plt.ylabel('cost')
             plt.title("Training Cost")
