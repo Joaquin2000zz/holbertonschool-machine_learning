@@ -172,5 +172,5 @@ class DeepNeuralNetwork:
             with open(filename, 'rb') as f:
                 obj = pickle.load(f)
             return obj
-        except Exception as e:
+        except FileNotFoundError:
             return None
