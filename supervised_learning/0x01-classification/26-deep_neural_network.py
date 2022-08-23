@@ -117,7 +117,6 @@ class DeepNeuralNetwork:
             self.__weights["W{}".format(i)] -= dW * alpha
             self.__weights["b{}".format(i)] -= db * alpha
 
-
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
               graph=True, step=100):
         '''
@@ -142,7 +141,7 @@ class DeepNeuralNetwork:
             _, cost = self.evaluate(X, Y)
             self.forward_prop(X)
             self.gradient_descent(Y, self.__cache, alpha)
-            if i <= step:
+            if i % step == 0:
                 iteration.append(i)
                 costlist.append(cost)
                 if verbose:
