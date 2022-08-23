@@ -141,7 +141,7 @@ class DeepNeuralNetwork:
             _, cost = self.evaluate(X, Y)
             self.forward_prop(X)
             self.gradient_descent(Y, self.__cache, alpha)
-            if i % step == 0:
+            if i <= step:
                 iteration.append(i)
                 costlist.append(cost)
                 if verbose:
