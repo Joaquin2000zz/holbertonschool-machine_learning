@@ -4,7 +4,6 @@ module which contains DeepNeuralNetwork class
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import pickle
 
 
 class DeepNeuralNetwork:
@@ -158,6 +157,7 @@ class DeepNeuralNetwork:
         """
         Saves the instance object to a file in pickle format
         """
+        import pickle
         if filename[-4:] != '.pkl':
             filename = filename + '.pkl'
         with open(filename, 'wb') as f:
@@ -168,6 +168,7 @@ class DeepNeuralNetwork:
         """
         Loads a pickled DeepNeuralNetwork object
         """
+        import pickle
         try:
             with open(filename, 'rb') as f:
                 ret = pickle.load(f)
