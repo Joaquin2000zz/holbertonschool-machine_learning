@@ -171,7 +171,7 @@ class DeepNeuralNetwork:
         import pickle
         try:
             with open(filename, 'rb') as f:
-                fOpen = pickle.load(f)
-            return fOpen
+                obj = pickle.load(f)
+            return obj
         except Exception as e:
             return None
