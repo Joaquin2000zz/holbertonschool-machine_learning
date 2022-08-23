@@ -10,9 +10,10 @@ def one_hot_encode(Y, classes):
     """
     converts a numeric label vector into a one-hot matrix
     """
-    if Y.shape == 0 or classes < 1:
+    try:
+        M = np.zeros(shape=(Y.shape[0], classes))
+        for i in range(classes):
+            M[Y[i]][i] = 1
+        return M
+    except Exception as e:
         return None
-    M = np.zeros(shape=(Y.shape[0], classes))
-    for i in range(classes):
-        M[Y[i]][i] = 1
-    return M
