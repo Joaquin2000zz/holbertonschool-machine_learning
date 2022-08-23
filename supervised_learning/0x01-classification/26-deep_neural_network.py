@@ -134,7 +134,6 @@ class DeepNeuralNetwork:
         if (verbose or graph) and (step < 0 or step > iterations):
             raise ValueError('step must be positive and <= iterations')
 
-
         toPlot = []
         for i in range(iterations):
             A, cost = self.evaluate(X, Y)
