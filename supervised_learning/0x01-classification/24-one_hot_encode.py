@@ -13,7 +13,7 @@ def one_hot_encode(Y, classes):
     try:
         M = np.zeros(shape=(classes, Y.shape[0]))
         for i in range(classes):
-            M[Y[i], i] = 1
+            M[Y[i]][i] = 1
         return M
     except Exception as e:
         return None
