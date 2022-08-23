@@ -3,6 +3,7 @@
 module which contains DeepNeuralNetwork class
 """
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class DeepNeuralNetwork:
@@ -118,7 +119,7 @@ class DeepNeuralNetwork:
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """
-        Trains the neural network performing binary classification
+        Trains the neuron performing binary classification
         """
         if not isinstance(iterations, int):
             raise TypeError('iterations must be an integer')
@@ -133,8 +134,20 @@ class DeepNeuralNetwork:
         if (verbose or graph) and (step < 0 or step > iterations):
             raise ValueError('step must be positive and <= iterations')
 
-        for _ in range(iterations):
-            self.forward_prop(X)
-            self.gradient_descent(Y, self.cache, alpha)
 
-        return self.evaluate(X, Y)
+        toPlot = []
+        for i in range(iterations):
+            A, cost = self.evaluate(X, Y)
+            if i <= step:
+                print(f'Cost after {i} iterations: {cost}')
+            self.gradient_descent(Y, self.cache, alpha)
+            toPlot.append(cost)
+        if graph:
+            toPlot = np.array(toPlot)
+            plt.plot(toPlot)
+            plt.axis([None, 3000, None, 4])
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title("Training Cost")
+            plt.show()
+        return A, cost
