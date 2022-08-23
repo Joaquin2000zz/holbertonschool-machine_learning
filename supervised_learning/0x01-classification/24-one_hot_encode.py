@@ -11,7 +11,7 @@ def one_hot_encode(Y, classes):
     converts a numeric label vector into a one-hot matrix
     """
     try:
-        if classes < np.max(Y) + 1:
+        if classes < np.unique(Y).shape[0]:
             return None
         M = np.zeros(shape=(classes, Y.shape[0]))
         for i in range(classes):
