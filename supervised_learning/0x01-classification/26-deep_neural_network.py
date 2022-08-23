@@ -153,6 +153,7 @@ class DeepNeuralNetwork:
             plt.show()
         return A, cost
 
+    @staticmethod
     def save(self, filename):
         """
         Saves the instance object to a file in pickle format
