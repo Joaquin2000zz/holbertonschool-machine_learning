@@ -2,6 +2,7 @@
 """
 module which contains DeepNeuralNetwork class
 """
+import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 
@@ -117,9 +118,10 @@ class DeepNeuralNetwork:
             self.__weights["W{}".format(i)] -= dW * alpha
             self.__weights["b{}".format(i)] -= db * alpha
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         """
-        Trains the neural networx performing binary classification
+        Trains the neuron performing binary classification
         """
         if not isinstance(iterations, int):
             raise TypeError('iterations must be an integer')
@@ -129,13 +131,29 @@ class DeepNeuralNetwork:
             raise TypeError('alpha must be a float')
         if alpha < 0:
             raise ValueError('alpha must be positive')
+        if (verbose or graph) and not isinstance(step, int):
+            raise TypeError('step must be an integer')
+        if (verbose or graph) and (step < 0 or step > iterations):
+            raise ValueError('step must be positive and <= iterations')
 
-        for _ in range(iterations):
-            self.forward_prop(X)
+        toPlot = []
+        for i in range(iterations):
+            A, cost = self.evaluate(X, Y)
+            if i <= step:
+                print(f'Cost after {i} iterations: {cost}')
             self.gradient_descent(Y, self.cache, alpha)
+            toPlot.append(cost)
+        if graph:
+            toPlot = np.array(toPlot)
+            plt.plot(toPlot)
+            plt.axis([None, 5000, None, 0.7])
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title("Training Cost")
+            plt.show()
+        return A, cost
 
-        return self.evaluate(X, Y)
-
+    @staticmethod
     def save(self, filename):
         """
         Saves the instance object to a file in pickle format
