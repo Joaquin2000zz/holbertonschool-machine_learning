@@ -3,6 +3,7 @@
 module which contains DeepNeuralNetwork class
 """
 import numpy as np
+import pickle
 import matplotlib.pyplot as plt
 
 
@@ -117,7 +118,8 @@ class DeepNeuralNetwork:
             self.__weights["W{}".format(i)] -= dW * alpha
             self.__weights["b{}".format(i)] -= db * alpha
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         """
         Trains the neuron performing binary classification
         """
@@ -155,7 +157,6 @@ class DeepNeuralNetwork:
         """
         Saves the instance object to a file in pickle format
         """
-        import pickle
         if filename[: -4] != '.pkl':
             filename += '.pkl'
 
@@ -167,7 +168,6 @@ class DeepNeuralNetwork:
         """
         Loads a pickled DeepNeuralNetwork object
         """
-        import pickle
         try:
             with open(filename, 'rb') as f:
                 obj = pickle.load(f)
