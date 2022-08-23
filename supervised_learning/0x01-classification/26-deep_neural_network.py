@@ -136,6 +136,7 @@ class DeepNeuralNetwork:
 
         return self.evaluate(X, Y)
 
+    @staticmethod
     def save(self, filename):
         """
         Saves the instance object to a file in pickle format
