@@ -155,7 +155,6 @@ class DeepNeuralNetwork:
         import pickle
         try:
             with open(filename, 'rb') as f:
-                ret = pickle.load(f)
-            return ret
+                return pickle.load(f)
         except FileNotFoundError:
             return None
