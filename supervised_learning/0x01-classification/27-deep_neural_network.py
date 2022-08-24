@@ -99,7 +99,8 @@ class DeepNeuralNetwork:
                 Zn += self.__weights.get('b{}'.format(i))
             if self.__L - 1 == i:
                 e = np.exp(Zn)
-                self.__cache['A{}'.format(i)] =  e / np.sum(e ,axis=0, keepdims=True) 
+                self.__cache['A{}'.format(i)] = e / np.sum(e, axis=0,
+                                                           keepdims=True)
             else:
                 self.__cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
         return self.__cache['A{}'.format(i)], self.__cache
@@ -132,8 +133,6 @@ class DeepNeuralNetwork:
 
             A = self.cache["A{}".format(i - 1)]
             dW = dZ @ A.T / m
-            #xTO = A * (Y - self.__cache["A{}".format(self.__L)])
-            #dW = - (np.sum(xTO, axis=1, keepdims=True) / m)
 
             # preparing dZ to the next iteration
             dZ = (self.weights["W{}".format(i)].T @ dZ) * (A * (1 - A))
