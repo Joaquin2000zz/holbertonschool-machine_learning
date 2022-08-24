@@ -62,26 +62,28 @@ class DeepNeuralNetwork:
         return self.__weights
 
     def forward_prop(self, X):
-        '''
-        Calculates the forward propagation
-        of the neural network
-        '''
-        m = self.__L
-        self.__cache['A0'] = X
-        for i in range(m):
-            w = 'W' + str(i + 1)
-            b = 'b' + str(i + 1)
-            a = 'A' + str(i + 1)
-            a_0 = 'A' + str(i)
-            out_Z = np.matmul(self.__weights[w],
-                              self.__cache[a_0]) + self.weights[b]
-            if i == self.__L - 1:
-                e = np.exp(out_Z)
-                out_A = np.exp(out_Z) / np.sum(e, axis=0, keepdims=True)
+        """
+        Calculation of forward propagation of DeepNeuralNetwork
+        """
+        if 'A0' not in self.__cache:
+            self.__cache['A0'] = X
+        for i in range(1, self.__L + 1):
+            if i == 1:
+                W = self.__weights.get('W{}'.format(i))
+                b = self.__weights.get('b{}'.format(i))
+                Zn = W @ X + b
             else:
-                out_A = 1 / (1 + np.exp(-out_Z))
-            self.__cache[a] = out_A
-        return out_A, self.__cache
+                W = self.__weights.get('W{}'.format(i))
+                X = self.__cache.get('A{}'.format(i - 1))
+                Zn = W @ X
+                Zn += self.__weights.get('b{}'.format(i))
+            if self.__L - 1 == i:
+                e = np.exp(Zn)
+                self.__cache['A{}'.format(i)] = e / np.sum(e, axis=0,
+                                                           keepdims=True)
+            else:
+                self.__cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
+        return self.__cache['A{}'.format(self.__L)], self.__cache
 
     def cost(self, Y, A):
         """
