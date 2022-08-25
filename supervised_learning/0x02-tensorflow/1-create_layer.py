@@ -14,8 +14,13 @@ def create_layer(prev, n, activation):
     each layer should be given the name layer
     Returns: the tensor output of the layer
     """
+
+    #  implement He-et-al initialization for the layer weights
+    het_et_al = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+
+    # kernel_initializer=het_et_al
     linear_model = tf.layers.Dense(name="layer", units=n,
-                                   activation=activation)
+                                   activation=activation,
+                                   kernel_initializer=het_et_al)
     layer = linear_model(prev)
-    tf.keras.initializers.VarianceScaling(mode='fan_avg')
     return layer
