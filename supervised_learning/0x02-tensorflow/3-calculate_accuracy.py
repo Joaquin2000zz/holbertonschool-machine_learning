@@ -17,4 +17,11 @@ def calculate_accuracy(y, y_pred):
     y_pred = tf.math.argmax(input=y_pred, axis=1)
     y = tf.math.argmax(input=y, axis=1)
 
-    return tf.reduce_mean(y_pred / y, axis=1)
+    # returns the truth value of (y_pred == y) element-wise.
+    equal = tf.math.equal(y_pred, y)
+
+    # casting to avoid this error
+    # **TypeError: Value passed to parameter 'input'
+    # has DataType bool not in list of allowed values**
+    cast = tf.cast(equal, dtype=tf.float32)
+    return tf.reduce_mean(cast)
