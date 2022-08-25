@@ -13,4 +13,5 @@ def calculate_accuracy(y, y_pred):
     y_pred is a tensor containing the network’s predictions
     Returns: a tensor containing the decimal accuracy of the prediction
     """
-    return tf.reduce_mean(y_pred / y)
+    
+    return tf.reduce_mean(y_pred / y, axis=1)
