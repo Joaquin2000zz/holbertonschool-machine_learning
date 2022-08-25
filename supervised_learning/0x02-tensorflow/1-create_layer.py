@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 module which contains create_layer
 """
@@ -19,7 +20,8 @@ def create_layer(prev, n, activation):
     het_et_al = tf.keras.initializers.VarianceScaling(mode='fan_avg')
 
     # kernel_initializer=het_et_al
-    linear_model = tf.layers.Dense(name="layer", units=n,
+    linear_model = tf.layers.Dense(name="layer",
+                                   units=n,
                                    activation=activation,
                                    kernel_initializer=het_et_al)
     layer = linear_model(prev)
