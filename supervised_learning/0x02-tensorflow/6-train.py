@@ -19,16 +19,16 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     Y_train is a numpy.ndarray containing the training labels
     X_valid is a numpy.ndarray containing the validation input data
     Y_valid is a numpy.ndarray containing the validation labels
-    
+
     layer_sizes is a list containing the number of nodes in each layer of the network
     activations is a list containing the activation functions for each layer of the network
-    
+
     alpha is the learning rate
     iterations is the number of iterations to train over
     save_path designates where to save the model
-    
+
     Add the following to the graph’s collection
-    
+
     placeholders: x and y
     tensors: y_pred, loss and accuracy
     operation: train_op
@@ -47,16 +47,15 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     accuracy = calculate_accuracy(y, y_pred)
     # tensor containing the loss of the prediction
     loss = calculate_loss(y, y_pred)
-    
+
     # operation that trains the network using gradient descent
     train_op = create_train_op(loss, alpha)
-    
+
     # instance of tf.train.Saver() to save
     saver = tf.train.Saver()
 
     # allocates the memory for the Variable and sets its initial values.
     init = tf.global_variables_initializer()
-
 
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
@@ -76,11 +75,11 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
                                     feed_dict={x : X_train, y : Y_train})
             accuracyTrain = session.run(accuracy,
                                     feed_dict={x : X_train, y : Y_train})
-            
+
             # back propagation
             lossValid = session.run(loss,
                                     feed_dict={x : X_valid, y : Y_valid})
-            
+
             accuracyValid = session.run(accuracy,
                                     feed_dict={x : X_valid, y : Y_valid})
             if i < 100 == 0 or i == 0:
