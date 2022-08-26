@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains calculate_loss
+this module contain train function
 """
 import tensorflow.compat.v1 as tf
 calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
@@ -13,7 +13,7 @@ forward_prop = __import__('2-forward_prop').forward_prop
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
           activations, alpha, iterations, save_path="/tmp/model.ckpt"):
     """
-    that builds, trains, and saves a neural network classifier:
+    builds, trains, and saves a neural network classifier:
 
     X_train is a numpy.ndarray containing the training input data
     Y_train is a numpy.ndarray containing the training labels
@@ -53,18 +53,18 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     # operation that trains the network using gradient descent
     train_op = create_train_op(loss, alpha)
 
-    # instance of tf.train.Saver() to save
-    saver = tf.train.Saver()
-
-    # allocates the memory for the Variable and sets its initial values.
-    init = tf.global_variables_initializer()
-
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
     tf.add_to_collection('y_pred', y_pred)
     tf.add_to_collection('loss', loss)
     tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('train_op', train_op)
+
+    # instance of tf.train.Saver() to save
+    saver = tf.train.Saver()
+
+    # allocates the memory for the Variable and sets its initial values.
+    init = tf.global_variables_initializer()
 
     # tf.Session object encapsulates the environment
     # in which Operation objects are executed
@@ -73,20 +73,20 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     with tf.Session() as session:
         session.run(init)
 
-        for i in range(iterations):
+        for i in range(iterations + 1):
             # foward propagation
             lossTrain = session.run(loss,
                                     feed_dict={x: X_train, y: Y_train})
-            accuracyTrain = session.run(accuracy,
-                                        feed_dict={x: X_train, y: Y_train})
-
-            # back propagation
             lossValid = session.run(loss,
                                     feed_dict={x: X_valid, y: Y_valid})
+            
+            # back propagation
+            accuracyTrain = session.run(accuracy,
+                                        feed_dict={x: X_train, y: Y_train})
             accuracyValid = session.run(accuracy,
                                         feed_dict={x: X_valid, y: Y_valid})
-            if i < 100 == 0 or i == 0:
-                print("After {} iterations:".format(i + 1))
+            if i % 100 == 0 or i == iterations:
+                print("After {} iterations:".format(i))
                 print("\tTraining Cost: {}".format(lossTrain))
                 print("\tTraining Accuracy: {}".format(accuracyTrain))
                 print("\tValidation Cost: {}".format(lossValid))

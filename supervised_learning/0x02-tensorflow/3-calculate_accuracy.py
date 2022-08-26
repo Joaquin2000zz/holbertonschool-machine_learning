@@ -18,7 +18,7 @@ def calculate_accuracy(y, y_pred):
     y = tf.math.argmax(input=y, axis=1)
 
     # returns the truth value of (y_pred == y) element-wise.
-    equal = tf.math.equal(y_pred, y)
+    equal = tf.math.equal(y, y_pred)
 
     # casting to avoid this error
     # **TypeError: Value passed to parameter 'input'
