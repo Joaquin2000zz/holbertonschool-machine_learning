@@ -19,35 +19,80 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     Y_train is a numpy.ndarray containing the training labels
     X_valid is a numpy.ndarray containing the validation input data
     Y_valid is a numpy.ndarray containing the validation labels
+    
     layer_sizes is a list containing the number of nodes in each layer of the network
     activations is a list containing the activation functions for each layer of the network
+    
     alpha is the learning rate
     iterations is the number of iterations to train over
     save_path designates where to save the model
+    
     Add the following to the graph’s collection
-    placeholders x and y
-    tensors y_pred, loss, and accuracy
-    operation train_op
+    
+    placeholders: x and y
+    tensors: y_pred, loss and accuracy
+    operation: train_op
     """
-    x, y = create_placeholders(X_train.shape[1],
-                               Y_train.shape[1])
+    # x: is the placeholder for the input data
+    # to the neural network
+    # y: is the placeholder for the one-hot labels
+    # for the input data
+    x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
 
-    y_pred = forward_prop(x, layer_sizes,
-                              activations)
+    # TENSORS:
 
-    accuracy = calculate_accuracy(Y_train, y)
+    # y_pred: the prediction of the network in tensor form
+    y_pred = forward_prop(x, layer_sizes, activations)
+    # tensor containing the decimal accuracy of the prediction (mean)
+    accuracy = calculate_accuracy(y, y_pred)
+    # tensor containing the loss of the prediction
+    loss = calculate_loss(y, y_pred)
     
-    loss = calculate_loss(y, activation)
+    # operation that trains the network using gradient descent
+    train_op = create_train_op(loss, alpha)
     
-    train = create_train_op(loss, alpha)
-    
+    # instance of tf.train.Saver() to save
+    saver = tf.train.Saver()
+
+    # allocates the memory for the Variable and sets its initial values.
     init = tf.global_variables_initializer()
 
+
+    tf.add_to_collection('x', x)
+    tf.add_to_collection('y', y)
+    tf.add_to_collection('y_pred', y_pred)
+    tf.add_to_collection('loss', loss)
+    tf.add_to_collection('accuracy', accuracy)
+    tf.add_to_collection('train_op', train_op)
+
+    # tf.Session object encapsulates the environment in which Operation objects are executed
+    # and Tensor objects are evaluated
     with tf.Session() as session:
         session.run(init)
 
+        for i in range(iterations):
+            # foward propagation
+            lossTrain = session.run(loss,
+                                    feed_dict={x : X_train, y : Y_train})
+            accuracyTrain = session.run(accuracy,
+                                    feed_dict={x : X_train, y : Y_train})
+            
+            # back propagation
+            lossValid = session.run(loss,
+                                    feed_dict={x : X_valid, y : Y_valid})
+            
+            accuracyValid = session.run(accuracy,
+                                    feed_dict={x : X_valid, y : Y_valid})
+            if i < 100 == 0 or i == 0:
+                print("After {} iterations:".format(i + 1))
+                print("\tTraining Cost: {}".format(lossTrain))
+                print("\tTraining Accuracy: {}".format(accuracyTrain))
+                print("\tValidation Cost: {}".format(lossValid))
+                print("\tValidation Accuracy: {}".format(accuracyValid))
+                session.run(train_op,
+                            feed_dict={x : X_train, y : Y_train})
 
-
-        for _ in range(iterations):
-            _, loss_value = session.run((train, loss))
-            print(loss_value)
+        # This method runs the ops added by the constructor for saving variables.
+        # It requires a session in which the graph was launched.
+        # The variables to save must also have been initialized.
+        return saver.save(session, save_path)
