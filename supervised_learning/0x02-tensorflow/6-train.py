@@ -76,16 +76,16 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
         for i in range(iterations):
             # foward propagation
             lossTrain = session.run(loss,
-                                    feed_dict={x : X_train, y : Y_train})
+                                    feed_dict={x: X_train, y: Y_train})
             accuracyTrain = session.run(accuracy,
-                                    feed_dict={x : X_train, y : Y_train})
+                                    feed_dict={x: X_train, y: Y_train})
 
             # back propagation
             lossValid = session.run(loss,
-                                    feed_dict={x : X_valid, y : Y_valid})
+                                    feed_dict={x: X_valid, y: Y_valid})
 
             accuracyValid = session.run(accuracy,
-                                    feed_dict={x : X_valid, y : Y_valid})
+                                    feed_dict={x: X_valid, y: Y_valid})
             if i < 100 == 0 or i == 0:
                 print("After {} iterations:".format(i + 1))
                 print("\tTraining Cost: {}".format(lossTrain))
@@ -93,7 +93,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
                 print("\tValidation Cost: {}".format(lossValid))
                 print("\tValidation Accuracy: {}".format(accuracyValid))
                 session.run(train_op,
-                            feed_dict={x : X_train, y : Y_train})
+                            feed_dict={x: X_train, y: Y_train})
 
         # This method runs the ops added by the constructor
         # for saving variables.
