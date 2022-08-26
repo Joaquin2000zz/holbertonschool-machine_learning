@@ -20,7 +20,7 @@ def evaluate(X, Y, save_path):
         # this is used to open the metadata of a training
         saver = tf.train.import_meta_graph('{}.meta'.format(save_path))
         saver.restore(sess, '{}'.format(save_path))
-        graph = tf.get_default_graph()       
+        graph = tf.get_default_graph()
 
         # obtaining y_pred, x, y, loss and accuracy
         y_pred = graph.get_collection('y_pred')[0]
