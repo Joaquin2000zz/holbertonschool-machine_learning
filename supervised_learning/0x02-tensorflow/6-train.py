@@ -79,7 +79,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
                                     feed_dict={x: X_train, y: Y_train})
             lossValid = session.run(loss,
                                     feed_dict={x: X_valid, y: Y_valid})
-            
+
             # back propagation
             accuracyTrain = session.run(accuracy,
                                         feed_dict={x: X_train, y: Y_train})
