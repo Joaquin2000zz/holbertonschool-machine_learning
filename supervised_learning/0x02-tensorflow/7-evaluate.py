@@ -28,8 +28,7 @@ def evaluate(X, Y, save_path):
         y = graph.get_collection('y')[0]
         accuracy = graph.get_collection('accuracy')[0]
         loss = graph.get_collection('loss')[0]
-        
-        
+                
         # training session
         prediction = sess.run(y_pred, feed_dict={x: X, y: Y})
         precision = sess.run(accuracy, feed_dict={x: X, y: Y})
