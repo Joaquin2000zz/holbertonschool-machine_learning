@@ -21,14 +21,14 @@ def evaluate(X, Y, save_path):
         saver = tf.train.import_meta_graph('{}.meta'.format(save_path))
         saver.restore(sess, '{}'.format(save_path))
         graph = tf.get_default_graph()       
-        
+
         # obtaining y_pred, x, y, loss and accuracy
         y_pred = graph.get_collection('y_pred')[0]
         x = graph.get_collection('x')[0]
         y = graph.get_collection('y')[0]
         accuracy = graph.get_collection('accuracy')[0]
         loss = graph.get_collection('loss')[0]
-                
+
         # training session
         prediction = sess.run(y_pred, feed_dict={x: X, y: Y})
         precision = sess.run(accuracy, feed_dict={x: X, y: Y})
