@@ -66,7 +66,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('train_op', train_op)
 
-    # tf.Session object encapsulates the environment 
+    # tf.Session object encapsulates the environment
     # in which Operation objects are executed
 
     # and Tensor objects are evaluated
@@ -78,14 +78,13 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
             lossTrain = session.run(loss,
                                     feed_dict={x: X_train, y: Y_train})
             accuracyTrain = session.run(accuracy,
-                                    feed_dict={x: X_train, y: Y_train})
+                                        feed_dict={x: X_train, y: Y_train})
 
             # back propagation
             lossValid = session.run(loss,
                                     feed_dict={x: X_valid, y: Y_valid})
-
             accuracyValid = session.run(accuracy,
-                                    feed_dict={x: X_valid, y: Y_valid})
+                                        feed_dict={x: X_valid, y: Y_valid})
             if i < 100 == 0 or i == 0:
                 print("After {} iterations:".format(i + 1))
                 print("\tTraining Cost: {}".format(lossTrain))
