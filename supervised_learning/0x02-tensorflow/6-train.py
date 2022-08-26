@@ -20,8 +20,10 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     X_valid is a numpy.ndarray containing the validation input data
     Y_valid is a numpy.ndarray containing the validation labels
 
-    layer_sizes is a list containing the number of nodes in each layer of the network
-    activations is a list containing the activation functions for each layer of the network
+        *layer_sizes is a list containing the number of
+        nodes in each layer of the network
+        *activations is a list containing the
+        activation functions for each layer of the network
 
     alpha is the learning rate
     iterations is the number of iterations to train over
@@ -64,7 +66,9 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('train_op', train_op)
 
-    # tf.Session object encapsulates the environment in which Operation objects are executed
+    # tf.Session object encapsulates the environment 
+    # in which Operation objects are executed
+
     # and Tensor objects are evaluated
     with tf.Session() as session:
         session.run(init)
@@ -91,7 +95,8 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
                 session.run(train_op,
                             feed_dict={x : X_train, y : Y_train})
 
-        # This method runs the ops added by the constructor for saving variables.
+        # This method runs the ops added by the constructor
+        # for saving variables.
         # It requires a session in which the graph was launched.
         # The variables to save must also have been initialized.
         return saver.save(session, save_path)
