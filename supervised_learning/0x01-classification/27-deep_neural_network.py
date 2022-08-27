@@ -113,12 +113,12 @@ class DeepNeuralNetwork:
             db = np.sum(dZ, axis=1, keepdims=True) / m
 
             A = self.cache["A{}".format(i - 1)]
-            dW = dZ @ A.T / m
+            dW = (A @ dZ.T) / m
 
             # preparing dZ to the next iteration
             dZ = (self.weights["W{}".format(i)].T @ dZ) * (A * (1 - A))
 
-            self.__weights["W{}".format(i)] -= dW * alpha
+            self.__weights["W{}".format(i)] -=  alpha * dW.T
             self.__weights["b{}".format(i)] -= db * alpha
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
