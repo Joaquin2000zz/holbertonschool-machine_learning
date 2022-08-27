@@ -90,7 +90,7 @@ class DeepNeuralNetwork:
         Calculates the cost of the model using logistic regression
         """
         m = - (1 / Y.shape[1])
-        Hto = - np.sum(Y * np.log(A))
+        Hto = np.sum(Y * np.log(A))
         return m * Hto
 
     def evaluate(self, X, Y):
