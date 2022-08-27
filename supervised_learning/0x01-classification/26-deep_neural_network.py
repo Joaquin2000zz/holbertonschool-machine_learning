@@ -144,7 +144,7 @@ class DeepNeuralNetwork:
             if i <= step:
                 iteration.append(i)
                 costlist.append(cost)
-                if verbose and (i == 0 or i % 100 == 0):
+                if verbose and (i == 0 or i % step == 0):
                     print('Cost after {} iterations: {}'.format(i, cost))
         if graph:
             plt.plot(iteration, costlist, 'b')
