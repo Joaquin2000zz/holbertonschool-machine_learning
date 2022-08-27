@@ -144,11 +144,13 @@ class DeepNeuralNetwork:
         for i in range(iterations + 1):
             _, cost = self.evaluate(X, Y)
             self.forward_prop(X)
-            self.gradient_descent(Y, self.__cache, alpha)
+
+            if i < iterations:
+                self.gradient_descent(Y, self.__cache, alpha)
             if i <= step:
                 iteration.append(i)
                 costlist.append(cost)
-                if verbose:
+                if verbose and (i == 0 or i % step == 0):
                     print('Cost after {} iterations: {}'.format(i, cost))
         if graph:
             plt.plot(iteration, costlist, 'b')
@@ -158,14 +160,13 @@ class DeepNeuralNetwork:
             plt.show()
         return self.evaluate(X, Y)
 
-    @staticmethod
     def save(self, filename):
         """
         Saves the instance object to a file in pickle format
         """
         import pickle
         if filename[-4:] != '.pkl':
-            filename = filename + '.pkl'
+            filename += '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
 
