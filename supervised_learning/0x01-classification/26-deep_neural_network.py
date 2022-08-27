@@ -144,7 +144,7 @@ class DeepNeuralNetwork:
             if i <= step:
                 iteration.append(i)
                 costlist.append(cost)
-                if verbose:
+                if verbose and (i == 0 or i % 100 == 0):
                     print('Cost after {} iterations: {}'.format(i, cost))
         if graph:
             plt.plot(iteration, costlist, 'b')
@@ -154,7 +154,6 @@ class DeepNeuralNetwork:
             plt.show()
         return self.evaluate(X, Y)
 
-    @staticmethod
     def save(self, filename):
         """
         Saves the instance object to a file in pickle format
