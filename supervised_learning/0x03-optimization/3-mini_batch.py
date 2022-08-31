@@ -51,8 +51,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     * You should use shuffle_data = __import__('2-shuffle_data').shuffle_data
     """
     with tf.Session() as session:
-        # instance of tf.train.Saver() to save
-        saver = tf.train.Saver()
         # this is used to open the metadata of a training
         load = tf.train.import_meta_graph('{}.meta'.format(load_path))
         load.restore(session, '{}'.format(load_path))
@@ -64,6 +62,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         accuracy = graph.get_collection('accuracy')[0]
         loss = graph.get_collection('loss')[0]
         train_op = graph.get_collection('train_op')[0]
+
+        # instance of tf.train.Saver() to save
+        saver = tf.train.Saver()
 
         l_batch = int(X_train.shape[1] / batch_size)
         for i in range(epochs):
