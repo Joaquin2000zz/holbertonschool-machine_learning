@@ -2,7 +2,6 @@
 """
 module which contains create_momentum_op function
 """
-import numpy as np
 import tensorflow.compat.v1 as tf
 
 
