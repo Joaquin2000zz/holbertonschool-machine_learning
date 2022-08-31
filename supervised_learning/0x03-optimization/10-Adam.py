@@ -2,7 +2,6 @@
 """
 module which contains create_Adam_op function
 """
-import numpy as np
 import tensorflow.compat.v1 as tf
 
 
@@ -18,7 +17,7 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     * epsilon is a small number to avoid division by zero
     Returns: the Adam optimization operation
     """
-    Adam = tf.train.AdamOptimizer(learning_rate=alpha,
-                                  beta1=beta1, beta2=beta2,
-                                  epsilon=epsilon)
-    return Adam.compute_gradients(loss)
+    Adam = tf.train.RMSPropOptimizer(learning_rate=alpha,
+                                     decay=beta1, momentum=beta2,
+                                     epsilon=epsilon)
+    return Adam.minimize(loss)
