@@ -14,6 +14,11 @@ def shuffle_data(X, Y):
     * Y is the second numpy.ndarray of shape (m, ny) to shuffle
         - m is the same number of data points as in X
         - ny is the number of features in Y
+    * random.permutation(x)
+        Randomly permute a sequence, or return a permuted range.
+        If x is a multi-dimensional array,
+        it is only shuffled along its first index.
     Returns: the shuffled X and Y matrices
     """
-    return np.random.permutation(X), np.random.permutation(Y)
+    r_permuted = np.random.permutation(X.shape[0])
+    return X[r_permuted], Y[r_permuted]
