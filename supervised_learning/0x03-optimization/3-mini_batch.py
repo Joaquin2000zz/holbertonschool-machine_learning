@@ -65,10 +65,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         loss = graph.get_collection('loss')[0]
         train_op = graph.get_collection('train_op')[0]
 
-        l = int(X_train.shape[1] / batch_size)
+        l_batch = int(X_train.shape[1] / batch_size)
         for i in range(epochs):
             j = 0
-            for k in range(l):
+            for k in range(l_batch):
                 X_t_batch = X_train[j: j + batch_size + 1]
                 Y_t_batch = Y_train[j: j + batch_size + 1]
                 X_t_batch, Y_t_batch = shuffle_data(X_t_batch, Y_t_batch)
