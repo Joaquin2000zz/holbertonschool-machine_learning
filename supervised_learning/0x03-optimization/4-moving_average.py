@@ -14,10 +14,9 @@ def moving_average(data, beta):
     Returns: a list containing the moving averages of data
     """
     new = data.copy()
-    for i, item in enumerate(new):
-        if i == 0:
-            new[i] = float(item)
-        else:
-            vt = (beta * new[i - 1]) + ((1 - beta) * item)
-            new[i] = vt / 1 - (beta ** i)
+    vt = 0
+    for i, alpha in enumerate(new):
+        vt = (beta * vt) + ((1 - beta) * alpha)
+        bias = (1 - (beta ** (i + 1)))
+        new[i] = vt / bias
     return new
