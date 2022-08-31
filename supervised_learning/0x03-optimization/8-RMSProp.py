@@ -2,7 +2,6 @@
 """
 module which contains create_RMSProp_op function
 """
-import numpy as np
 import tensorflow.compat.v1 as tf
 
 
@@ -20,4 +19,4 @@ def create_RMSProp_op(loss, alpha, beta2, epsilon):
     RMS = tf.train.RMSPropOptimizer(learning_rate=alpha,
                                     momentum=beta2,
                                     epsilon=epsilon)
-    return RMS.compute_gradients(loss)
+    return RMS.minimize(loss)
