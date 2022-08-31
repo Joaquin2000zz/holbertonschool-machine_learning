@@ -14,11 +14,11 @@ def calculate_accuracy(y, y_pred):
     Returns: a tensor containing the decimal accuracy of the prediction
     """
     # returns the index with the largest value across axes of a tensor
-    y_pred = tf.math.argmax(input=y_pred, axis=1)
-    y = tf.math.argmax(input=y, axis=1)
+    y_pred = tf.argmax(input=y_pred, axis=1)
+    y = tf.argmax(input=y, axis=1)
 
     # returns the truth value of (y_pred == y) element-wise.
-    equal = tf.math.equal(y, y_pred)
+    equal = tf.equal(y, y_pred)
 
     # casting to avoid this error
     # **TypeError: Value passed to parameter 'input'
