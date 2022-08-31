@@ -21,9 +21,11 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
              and the new second moment, respectively
     """
     Vd = (beta1 * v) + ((1 - beta1) * grad)
-    Vdc = Vdc / ((1 - (beta1 ** t)) + epsilon)
+    Vdc = Vd / ((1 - (beta1 ** t)) + epsilon)
 
     Sd = (beta2 * s) + (1 - beta2) * (grad ** 2)
-    Sdc = Sdc / ((1 - (beta2 ** t)) + epsilon)
+    Sdc = Sd / ((1 - (beta2 ** t)) + epsilon)
 
-    return var - alpha * (Vd / (np.sqrt(Sd) + epsilon)), Vd, Sd
+    adam = var - alpha * (Vdc / (np.sqrt(Sdc) + epsilon))
+
+    return adam, Vd, Sd
