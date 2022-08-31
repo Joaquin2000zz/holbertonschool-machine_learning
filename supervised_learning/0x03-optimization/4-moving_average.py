@@ -2,7 +2,6 @@
 """
 module which contains moving_average function
 """
-import numpy as np
 
 
 def moving_average(data, beta):
