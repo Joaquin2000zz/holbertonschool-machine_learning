@@ -15,4 +15,4 @@ def create_momentum_op(loss, alpha, beta1):
     Returns: the momentum optimization operation
     """
     momentum = tf.compat.v1.train.MomentumOptimizer(alpha, beta1)
-    return momentum.compute_gradients(loss)
+    return momentum.minimize(loss)
