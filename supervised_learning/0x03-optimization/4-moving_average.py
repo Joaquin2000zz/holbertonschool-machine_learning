@@ -13,10 +13,10 @@ def moving_average(data, beta):
     Your moving average calculation should use bias correction
     Returns: a list containing the moving averages of data
     """
-    new = data.copy()
+    new = []
     vt = 0
-    for i, alpha in enumerate(new):
+    for i, alpha in enumerate(data):
         vt = (beta * vt) + ((1 - beta) * alpha)
         bias = (1 - (beta ** (i + 1)))
-        new[i] = vt / bias
+        new.append(vt / bias)
     return new
