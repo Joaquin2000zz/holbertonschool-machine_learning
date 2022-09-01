@@ -2,8 +2,8 @@
 """
 module which contains shuffle_data function
 """
-shuffle_data = __import__('2-shuffle_data').shuffle_data
 import tensorflow.compat.v1 as tf
+shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
