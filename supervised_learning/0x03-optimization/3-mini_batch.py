@@ -2,6 +2,7 @@
 """
 module which contains shuffle_data function
 """
+from tracemalloc import start
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
@@ -65,36 +66,43 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         # instance of tf.train.Saver() to save
         saver = tf.train.Saver()
 
-        l_batch = int(X_train.shape[1] / batch_size)
+        l_batch = int(X_train.shape[0] / batch_size)
         for i in range(epochs):
-            j = 0
-            for k in range(l_batch):
-                X_t_batch = X_train[j: j + batch_size + 1]
-                Y_t_batch = Y_train[j: j + batch_size + 1]
-                X_t_batch, Y_t_batch = shuffle_data(X_t_batch, Y_t_batch)
-                X_v_batch = X_train[j: j + batch_size + 1]
-                Y_v_batch = Y_train[j: j + batch_size + 1]
-                X_v_batch, Y_v_batch = shuffle_data(X_v_batch, Y_v_batch)
+            t_cost = session.run(loss, feed_dict={x: X_train, y: Y_train})
+            t_precision = session.run(accuracy, feed_dict={x: X_train, y: Y_train})
 
-                # training session
-                t_precision = session.run(accuracy, feed_dict={x: X_t_batch,
-                                                               y: Y_t_batch})
-                t_cost = session.run(loss, feed_dict={x: X_t_batch,
-                                                      y: Y_t_batch})
-                v_precision = session.run(accuracy, feed_dict={x: X_v_batch,
-                                                               y: Y_v_batch})
-                v_cost = session.run(loss, feed_dict={x: X_v_batch,
-                                                      y: Y_v_batch})
-                train = session.run(train_op, feed_dict={x: X_t_batch,
-                                                         y: Y_t_batch})
-                j += batch_size
-                if k % 100 == 0 and k != 0:
-                    print("\tStep {}:".format(k))
-                    print("\t\tCost: {}".format(t_cost))
-                    print("\t\tAccuracy: {}".format(t_precision))
+            v_cost = session.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            v_precision = session.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
+
             print("After {} epochs".format(i))
             print("\tTraining Cost: {}".format(t_cost))
             print("\tTraining Accuracy: {}".format(t_precision))
             print("\tTraining Cost: {}".format(v_cost))
             print("\tTraining Accuracy: {}".format(v_precision))
+
+            X_shuffle, Y_shuffle = shuffle_data(X_train, Y_train)
+
+            for j in range(l_batch):
+                start = j * batch_size
+                end = (j + 1) * batch_size
+
+                if end > X_train.shape[0]:
+                    end = X_train.shape[0]
+
+                X_t_batch = X_shuffle[start: end]
+                Y_t_batch = Y_shuffle[start: end]
+                X_t_batch, Y_t_batch = shuffle_data(X_t_batch, Y_t_batch)
+
+                session.run(train_op, feed_dict={x: X_t_batch,
+                                                 y: Y_t_batch})
+
+                if j + 1 % 100 == 0 and j != 0:
+                    t_precision = session.run(accuracy, feed_dict={x: X_t_batch,
+                                                                   y: Y_t_batch})
+                    t_cost = session.run(loss, feed_dict={x: X_valid,
+                                                          y: Y_valid})
+                
+                    print("\tStep {}:".format(j + 1))
+                    print("\t\tCost: {}".format(t_cost))
+                    print("\t\tAccuracy: {}".format(t_precision))
         return saver.save(session, save_path)
