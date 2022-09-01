@@ -2,7 +2,6 @@
 """
 module which contains shuffle_data function
 """
-from tracemalloc import start
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
