@@ -50,19 +50,15 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     """
     with tf.Session() as session:
         # this is used to open the metadata of a training
-        load = tf.train.import_meta_graph('{}.meta'.format(load_path))
-        load.restore(session, '{}'.format(load_path))
-        graph = tf.get_default_graph()
+        saver = tf.train.import_meta_graph(load_path + ".meta")
+        saver.restore(session, load_path)
 
-        # obtaining y_pred, x, y, loss and accuracy
-        x = graph.get_collection('x')[0]
-        y = graph.get_collection('y')[0]
-        accuracy = graph.get_collection('accuracy')[0]
-        loss = graph.get_collection('loss')[0]
-        train_op = graph.get_collection('train_op')[0]
+        x = tf.get_collection("x")[0]
+        y = tf.get_collection("y")[0]
+        accuracy = tf.get_collection("accuracy")[0]
+        loss = tf.get_collection("loss")[0]
+        train_op = tf.get_collection("train_op")[0]
 
-        # instance of tf.train.Saver() to save
-        saver = tf.train.Saver()
 
         l_batch = int(X_train.shape[0] / batch_size)
         for i in range(epochs):
