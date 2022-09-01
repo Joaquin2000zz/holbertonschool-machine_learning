@@ -11,7 +11,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                      load_path="/tmp/model.ckpt",
                      save_path="/tmp/model.ckpt"):
     """
-    trains a loaded neural network model using mini-batch gradient descent:
+    trains a loaded neural network model
+    using mini-batch gradient descent:
     * X_train contains the training data
     * Y_train contains the training labels
     * X_valid contains the validation data
@@ -19,23 +20,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     * batch_size is the number of data points in a batch
     * epochs: number of times the training pass through the whole dataset
     * load_path is the path from which to load the model
-    * save_path is the path to where the model should
-      be saved after training
+    * save_path = where the model should be saved after training
     * Returns: the path where the model was saved
-    * 1) import meta graph and restore session
-    * 2) Get the following tensors and ops from the collection restored
-        - x is a placeholder for the input data
-        - y is a placeholder for the labels
-        - accuracy is an op to calculate the accuracy of the model
-        - loss is an op to calculate the cost of the model
-        - train_op is an op to perform one pass of
-          gradient descent on the model
-    * 3) loop over epochs:
-        - shuffle data
-        - loop over the batches:
-            + get X_batch and Y_batch from data
-            + train your model
-    * 4) Save session
     """
     with tf.Session() as session:
         # this is used to open the metadata of a training
