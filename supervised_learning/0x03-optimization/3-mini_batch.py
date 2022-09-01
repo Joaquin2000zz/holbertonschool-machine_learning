@@ -68,10 +68,12 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         l_batch = int(X_train.shape[0] / batch_size)
         for i in range(epochs):
             t_cost = session.run(loss, feed_dict={x: X_train, y: Y_train})
-            t_precision = session.run(accuracy, feed_dict={x: X_train, y: Y_train})
+            t_precision = session.run(accuracy, feed_dict={x: X_train,
+                                                           y: Y_train})
 
             v_cost = session.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            v_precision = session.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
+            v_precision = session.run(accuracy, feed_dict={x: X_valid,
+                                                           y: Y_valid})
 
             print("After {} epochs".format(i))
             print("\tTraining Cost: {}".format(t_cost))
@@ -96,8 +98,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                                                  y: Y_t_batch})
 
                 if j + 1 % 100 == 0 and j != 0:
-                    t_precision = session.run(accuracy, feed_dict={x: X_t_batch,
-                                                                   y: Y_t_batch})
+                    t_precision = session.run(accuracy,
+                                              feed_dict={x: X_t_batch,
+                                                         y: Y_t_batch})
                     t_cost = session.run(loss, feed_dict={x: X_valid,
                                                           y: Y_valid})
                 
