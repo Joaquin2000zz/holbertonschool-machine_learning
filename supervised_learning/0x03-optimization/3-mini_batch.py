@@ -103,7 +103,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                                                          y: Y_t_batch})
                     t_cost = session.run(loss, feed_dict={x: X_valid,
                                                           y: Y_valid})
-                
+
                     print("\tStep {}:".format(j + 1))
                     print("\t\tCost: {}".format(t_cost))
                     print("\t\tAccuracy: {}".format(t_precision))
