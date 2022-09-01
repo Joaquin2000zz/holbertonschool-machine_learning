@@ -2,8 +2,8 @@
 """
 module which contains shuffle_data function
 """
-shuffle_data = __import__('2-shuffle_data').shuffle_data
 import tensorflow.compat.v1 as tf
+shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
@@ -23,10 +23,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     * save_path = where the model should be saved after training
     * Returns: the path where the model was saved
     """
-    with tf.Session() as session:
+    with tf.Session() as sess:
         # this is used to open the metadata of a training
         saver = tf.train.import_meta_graph(load_path + ".meta")
-        saver.restore(session, load_path)
+        saver.restore(sess, load_path)
 
         x = tf.get_collection("x")[0]
         y = tf.get_collection("y")[0]
@@ -36,50 +36,48 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
 
         m = X_train.shape[0]
         # avoid border case if whole batch size is odd
+        # // perform floor division
         if m % batch_size == 0:
-            l_batch = m // batch_size
+            n_batches = m // batch_size
         else:
-            l_batch = m // batch_size + 1
-
+            n_batches = m // batch_size + 1
 
         for i in range(epochs + 1):
-            t_cost = session.run(loss, feed_dict={x: X_train, y: Y_train})
-            t_precision = session.run(accuracy, feed_dict={x: X_train,
-                                                           y: Y_train})
-
-            v_cost = session.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            v_precision = session.run(accuracy, feed_dict={x: X_valid,
-                                                           y: Y_valid})
-
-            print("After {} epochs".format(i))
+            t_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+            t_precision = sess.run(accuracy,
+                                   feed_dict={x: X_train, y: Y_train})
+            v_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            v_precision = sess.run(accuracy,
+                                   feed_dict={x: X_valid, y: Y_valid})
+            print("After {} epochs:".format(i))
             print("\tTraining Cost: {}".format(t_cost))
             print("\tTraining Accuracy: {}".format(t_precision))
             print("\tValidation Cost: {}".format(v_cost))
             print("\tValidation Accuracy: {}".format(v_precision))
-            if i < epochs:
-                X_shuffle, Y_shuffle = shuffle_data(X_train, Y_train)
 
-                for j in range(l_batch):
+            if i < epochs:
+                shuffled_X, shuffled_Y = shuffle_data(X_train, Y_train)
+
+                # mini batches
+                for j in range(n_batches):
                     start = j * batch_size
                     end = (j + 1) * batch_size
-
                     if end > m:
                         end = m
+                    X_mini_batch = shuffled_X[start:end]
+                    Y_mini_batch = shuffled_Y[start:end]
 
-                    X_t_batch = X_shuffle[start: end]
-                    Y_t_batch = Y_shuffle[start: end]
-
-                    session.run(train_op, feed_dict={x: X_t_batch,
-                                                     y: Y_t_batch})
+                    sess.run(train_op, feed_dict={x: X_mini_batch,
+                                                  y: Y_mini_batch})
 
                     if (j + 1) % 100 == 0 and j != 0:
-                        t_precision = session.run(accuracy,
-                                                  feed_dict={x: X_t_batch,
-                                                             y: Y_t_batch})
-                        t_cost = session.run(loss, feed_dict={x: X_t_batch,
-                                                              y: Y_t_batch})
-
+                        t_cost = sess.run(loss, feed_dict={x: X_mini_batch,
+                                                           y: Y_mini_batch})
+                        t_precision = sess.run(accuracy,
+                                               feed_dict={x: X_mini_batch,
+                                                          y: Y_mini_batch})
                         print("\tStep {}:".format(j + 1))
                         print("\t\tCost: {}".format(t_cost))
                         print("\t\tAccuracy: {}".format(t_precision))
-        return saver.save(session, save_path)
+
+        return saver.save(sess, save_path)
