@@ -54,8 +54,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
             print("After {} epochs".format(i))
             print("\tTraining Cost: {}".format(t_cost))
             print("\tTraining Accuracy: {}".format(t_precision))
-            print("\tTraining Cost: {}".format(v_cost))
-            print("\tTraining Accuracy: {}".format(v_precision))
+            print("\tValidation Cost: {}".format(v_cost))
+            print("\tValidation Accuracy: {}".format(v_precision))
             if i < epochs:
                 X_shuffle, Y_shuffle = shuffle_data(X_train, Y_train)
 
