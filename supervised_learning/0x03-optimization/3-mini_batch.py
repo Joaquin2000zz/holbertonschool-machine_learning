@@ -70,14 +70,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     Y_t_batch = Y_shuffle[start: end]
 
                     session.run(train_op, feed_dict={x: X_t_batch,
-                                                    y: Y_t_batch})
+                                                     y: Y_t_batch})
 
-                    if j + 1 % 100 == 0 and j != 0:
+                    if (j + 1) % 100 == 0 and j != 0:
                         t_precision = session.run(accuracy,
                                                   feed_dict={x: X_t_batch,
                                                              y: Y_t_batch})
-                        t_cost = session.run(loss, feed_dict={x: X_valid,
-                                                              y: Y_valid})
+                        t_cost = session.run(loss, feed_dict={x: X_t_batch,
+                                                              y: Y_t_batch})
 
                         print("\tStep {}:".format(j + 1))
                         print("\t\tCost: {}".format(t_cost))
