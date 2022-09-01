@@ -12,7 +12,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                      save_path="/tmp/model.ckpt"):
     """
     trains a loaded neural network model using mini-batch gradient descent:
-
     * X_train is a numpy.ndarray of shape (m, 784)
       containing the training data
         - m is the number of data points
