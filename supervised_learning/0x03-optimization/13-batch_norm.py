@@ -24,4 +24,4 @@ def batch_norm(Z, gamma, beta, epsilon):
     var = np.var(Z, axis=0)
     Znorm = (Z - mu) / np.sqrt(var + epsilon)
     Ztolder = gamma * Znorm + beta
-    return Ztolder 
+    return Ztolder
