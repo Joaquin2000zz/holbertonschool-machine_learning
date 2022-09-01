@@ -34,7 +34,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
-        l_batch = int(X_train.shape[0] / batch_size)
+        m = X_train.shape[0]
+        # avoid border case if whole batch size is odd
+        if m % batch_size == 0:
+            l_batch = m // batch_size
+        else:
+            l_batch = m // batch_size + 1
+
+
         for i in range(epochs + 1):
             t_cost = session.run(loss, feed_dict={x: X_train, y: Y_train})
             t_precision = session.run(accuracy, feed_dict={x: X_train,
@@ -56,22 +63,21 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     start = j * batch_size
                     end = (j + 1) * batch_size
 
-                    if end > X_train.shape[0]:
-                        end = X_train.shape[0]
+                    if end > m:
+                        end = m
 
                     X_t_batch = X_shuffle[start: end]
                     Y_t_batch = Y_shuffle[start: end]
-                    X_t_batch, Y_t_batch = shuffle_data(X_t_batch, Y_t_batch)
 
                     session.run(train_op, feed_dict={x: X_t_batch,
                                                     y: Y_t_batch})
 
                     if j + 1 % 100 == 0 and j != 0:
                         t_precision = session.run(accuracy,
-                                                feed_dict={x: X_t_batch,
-                                                            y: Y_t_batch})
+                                                  feed_dict={x: X_t_batch,
+                                                             y: Y_t_batch})
                         t_cost = session.run(loss, feed_dict={x: X_valid,
-                                                            y: Y_valid})
+                                                              y: Y_valid})
 
                         print("\tStep {}:".format(j + 1))
                         print("\t\tCost: {}".format(t_cost))
