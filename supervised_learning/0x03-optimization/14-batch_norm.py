@@ -27,12 +27,15 @@ def create_batch_norm_layer(prev, n, activation):
     # kernel_initializer=het_et_al
     linear_model = tf.layers.Dense(name="layer",
                                    units=n,
-                                   activation=activation,
+                                   activation=None,
                                    kernel_initializer=het_et_al)
     layer = linear_model(prev)
 
-    beta = tf.Variable(initial_value=tf.constant(0.0, shape=[n], name='beta'))
-    gamma = tf.Variable(initial_value=tf.constant(1.0, shape=[n], name='gamma'))
+    beta = tf.Variable(initial_value=tf.constant(0.0, shape=[n]),
+                       name='beta')
+    gamma = tf.Variable(initial_value=tf.constant(1.0, shape=[n]),
+                        name='gamma')
+
     mean, std = tf.nn.moments(layer, axes=0, keep_dims=True)
     v1 = tf.nn.batch_normalization(layer, mean, std, offset=beta,
                                    scale=gamma, variance_epsilon=1e-8)
