@@ -30,13 +30,13 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             Zn = W @ X + b
         else:
             key = 'A{}'.format(i - 1)
-            D = np.random.rand(cache.get(key).shape)
+            X = cache.get(key)
+            D = np.random.rand(X.shape[0], X.shape[1])
             cache[key] *= D
             cache[key] /= keep_prob
-            cache['D{}'.format(i)]
+            cache['D{}'.format(i)] = D
         
             W = weights.get('W{}'.format(i))
-            X = cache.get(key)
             Zn = W @ X
             Zn += weights.get('b{}'.format(i))
         if L - 1 == i:
@@ -45,4 +45,4 @@ def dropout_forward_prop(X, weights, L, keep_prob):
                                                 keepdims=True)
         else:
             cache['A{}'.format(i)] = 1 / (1 + np.exp(-Zn))
-    return cache['A{}'.format(L)], cache
+    return cache
