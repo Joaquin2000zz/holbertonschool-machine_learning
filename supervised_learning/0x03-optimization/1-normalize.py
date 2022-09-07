@@ -19,3 +19,6 @@ def normalize(X, m, s):
     """
     Z = (X - m) / s
     return Z
+"""
+usar np.ex y una matriz identidad para crear una clase que dibuje el plano 3d de elevar e a dicha matriz
+"""
