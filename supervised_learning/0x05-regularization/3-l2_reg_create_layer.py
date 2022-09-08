@@ -18,7 +18,8 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     het_et_al = tf.keras.initializers.VarianceScaling(scale=2.0,
                                                       mode=("fan_avg"))
     L2 = tf.keras.regularizers.L2(lambtha)
-    layer = tf.layers.Dense(n, activation=activation,
-                                  kernel_initializer=het_et_al,
-                                  kernel_regularizer=L2)
+    layer = tf.layers.Dense(n,
+                            activation=activation,
+                            kernel_initializer=het_et_al,
+                            kernel_regularizer=L2)
     return layer(prev)
