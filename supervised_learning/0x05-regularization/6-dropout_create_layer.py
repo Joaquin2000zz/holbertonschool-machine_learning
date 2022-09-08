@@ -20,6 +20,5 @@ def dropout_create_layer(prev, n, activation, keep_prob):
     layer = tf.layers.Dense(n,
                             activation=activation,
                             kernel_initializer=het_et_al)
-    x = layer(prev)
 
-    return tf.layers.Dropout(rate=keep_prob)(x)
+    return tf.layers.Dropout(rate=keep_prob)(layer(prev))
