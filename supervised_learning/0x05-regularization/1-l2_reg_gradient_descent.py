@@ -27,7 +27,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """
 
     m = Y.shape[1]
-    for i in range(L - 1, 0, -1):
+    for i in range(L - 1, -1, -1):
         wn = 'W' + str(i + 1)
         bn = 'b' + str(i + 1)
         an = 'A' + str(i + 1)
