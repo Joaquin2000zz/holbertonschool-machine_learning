@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains l2_reg_create_layer function
+module which contains dropout_create_layer function
 """
 import tensorflow.compat.v1 as tf
 
