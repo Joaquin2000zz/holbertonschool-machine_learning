@@ -26,24 +26,23 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     * The weights and biases of the network should be updated in place
     """
 
-    for i in range(L, 0, -1):
-        if i == L:
-            m = Y.shape[1]
-            dZ = cache["A{}".format(L)] - Y
+    m = Y.shape[1]
+    for i in range(L - 1, 0, -1):
+        wn = 'W' + str(i + 1)
+        bn = 'b' + str(i + 1)
+        an = 'A' + str(i + 1)
+        xn = 'A' + str(i)
+        A = cache[an]
+        X = cache[xn]
+        if i == L - 1:
+            dz = A - Y
+            W = weights[wn]
         else:
-            dZ = (weights["W{}".format(dx)].T @ dZ) * (A * (1 - A))
-
-        Aprev = i - 1
-        A = cache["A{}".format(Aprev)]
-        dW = dZ @ A.T / m
-        db = np.sum(dZ, axis=1, keepdims=True) / m
-
-        # preparing dZ to the next iteration
-        dx = i
-        L2 = 1 - (alpha * lambtha) / m
-        # same formula but without simplify parameters
-        # Z = (dW + (lambtha / m * weights["W{}".format(dx)]))
-        # weights["W{}".format(dx)] -= alpha * Z
-        # used before (update using again, this is just to pass the checker)
-        weights["W{}".format(dx)] *= L2 - (dW * alpha)
-        weights["b{}".format(dx)] -= db * alpha
+            da = 1 - (A * A)
+            dz = np.matmul(W.T, dz)
+            dz = dz * da
+            W = weights[wn]
+        dw = np.matmul(X, dz.T) / m
+        db = np.sum(dz, axis=1, keepdims=True) / m
+        weights[wn] -= alpha * (dw.T + (lambtha / m * weights[wn]))
+        weights[bn] -= alpha * db
