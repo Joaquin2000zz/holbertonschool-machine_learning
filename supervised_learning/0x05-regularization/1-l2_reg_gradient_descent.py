@@ -32,11 +32,14 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         # this is because you need to use the dZ of the prev iteration
         db = np.sum(dZ, axis=1, keepdims=True) / m
 
-        A = cache["A{}".format(i - 1)]
+        Aprev = i - 1
+        A = cache["A{}".format(Aprev)]
         dW = dZ @ A.T / m
 
         # preparing dZ to the next iteration
-        dZ = (weights["W{}".format(i)].T @ dZ) * (A * (1 - A))
+        dx = i
+        dZ = (weights["W{}".format(dx)].T @ dZ) * (A * (1 - A))
 
-        weights["W{}".format(i)] *= (1 - (alpha * lambtha) / m) - (dW * alpha)
-        weights["b{}".format(i)] -= db * alpha
+        gradient = weights["W{}".format(dx)] * (1 - (alpha * lambtha) / m)
+        weights["W{}".format(dx)] = gradient - (dW * alpha)
+        weights["b{}".format(dx)] -= db * alpha
