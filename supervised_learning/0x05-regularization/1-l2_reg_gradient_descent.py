@@ -39,6 +39,6 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         # preparing dZ to the next iteration
         dx = i
         dZ = (weights["W{}".format(dx)].T @ dZ) * (A * (1 - A))
-        L2 = (1 - (alpha * lambtha) / m)
+        L2 = 1 - ((alpha * lambtha) / m)
         weights["W{}".format(dx)] *= L2 - (dW * alpha)
         weights["b{}".format(dx)] -= db * alpha
