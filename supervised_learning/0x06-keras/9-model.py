@@ -5,7 +5,7 @@ module which contains save_model and load_model function
 import tensorflow.keras as K
 
 
-def save_model(network, filename): 
+def save_model(network, filename):
     """
     saves an entire model:
 
@@ -17,6 +17,7 @@ def save_model(network, filename):
     filename += ".h3" if not ".h5" in filename else ''
 
     network.save(filename)
+
 
 def load_model(filename):
     """
