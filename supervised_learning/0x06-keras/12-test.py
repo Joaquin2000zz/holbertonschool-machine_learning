@@ -2,6 +2,7 @@
 """
 module which containts test_model function
 """
+import tensorflow.keras as K
 
 
 def test_model(network, data, labels, verbose=True):

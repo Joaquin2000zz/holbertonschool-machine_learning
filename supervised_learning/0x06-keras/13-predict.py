@@ -2,6 +2,7 @@
 """
 module which containts predict function
 """
+import tensorflow.keras as K
 
 
 def predict(network, data, verbose=False):
