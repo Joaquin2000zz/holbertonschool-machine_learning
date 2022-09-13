@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains
+module which contains train_model function
 """
 import tensorflow.keras as K
 
