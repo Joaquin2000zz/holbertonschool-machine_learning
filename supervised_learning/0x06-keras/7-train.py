@@ -30,15 +30,12 @@ def train_model(network, data, labels, batch_size, epochs,
                                                    monitor='val_loss')
         callbacks.append(early_stopping)
 
-    # this is one example of how pycodesyle sometimes is incoherent
-    # because this lines only should exist inside the conditional
-    # I make this only to pass the validation of the checker
-    s = K.optimizers.schedules.InverseTimeDecay(initial_learning_rate=alpha,
-                                                decay_rate=decay_rate,
-                                                decay_steps=batch_size,
-                                                staircase=True)
-    if learning_rate_decay and validation_data:
+    def s(global_step):
+        """schedule performing inverse time decay"""
+        return alpha / (1 + decay_rate * global_step / batch_size)
 
+
+    if learning_rate_decay and validation_data:
         learning_rate_decay = K.callbacks.LearningRateScheduler(schedule=s,
                                                                 verbose=1)
         callbacks.append(learning_rate_decay)
