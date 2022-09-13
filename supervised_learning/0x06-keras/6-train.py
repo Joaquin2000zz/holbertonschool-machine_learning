@@ -2,7 +2,6 @@
 """
 module which contains train_model
 """
-from gc import callbacks
 import tensorflow.keras as K
 
 
