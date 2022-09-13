@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-module which contains 
+module which contains
 """
-import tensorflow.keras as K   
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
