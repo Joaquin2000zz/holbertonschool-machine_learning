@@ -3,7 +3,6 @@
 module which contains build_model function
 """
 import tensorflow.keras as K
-import tensorflow as tf
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
@@ -22,14 +21,15 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     """
     x = K.layers.Input(shape=(nx, ))
     y = x
+    layer = None
     for n, activation in zip(layers, activations):
-        # creating layer
-        l = K.layers.Dense(n, activation=activation,
-                           activity_regularizer=K.regularizers.L2(lambtha))
-        y = l(y)
         # creating dropout to that layer 1 - p
-        if activation != 'softmax':
-            dropout = K.layers.Dropout(rate=1 - keep_prob, input_shape=(None, n))
+        if activation:
+            dropout = K.layers.Dropout(rate=1 - keep_prob)
             y = dropout(y)
+        # creating layer
+        layer = K.layers.Dense(n, activation=activation,
+                               kernel_regularizer=K.regularizers.L2(lambtha))
+        y = layer(y)
 
     return K.Model(x, y)
