@@ -3,7 +3,6 @@
 module which contains build_model function
 """
 import tensorflow.keras as K
-import tensorflow as tf
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
@@ -29,7 +28,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
         # creating layer
         l = K.layers.Dense(n, activation=activation,
-                           activity_regularizer=l2)
+                           activity_regularizer=l2, input_shape=(nx, ))
         L.append(l)
 
         # creating dropout to that layer 1 - p
@@ -41,8 +40,5 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
     # creating model with created layers in loop
     model = K.Sequential(L)
-
-    # initializes values
-    model(tf.ones((1, nx)))
 
     return model
