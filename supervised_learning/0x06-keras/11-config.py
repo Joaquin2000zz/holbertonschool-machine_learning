@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains save_config and load_model function
+module which contains save_config and load_config function
 """
 import tensorflow.keras as K
 
