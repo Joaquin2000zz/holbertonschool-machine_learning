@@ -28,12 +28,12 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
         # creating layer
         if flag:
-            l = K.layers.Dense(n, activation=activation,
-                               kernel_regularizer=l2, input_shape=(nx, ))
+            layer = K.layers.Dense(n, activation=activation,
+                                   kernel_regularizer=l2, input_shape=(nx, ))
         else:
-            l = K.layers.Dense(n, activation=activation,
-                               kernel_regularizer=l2)
-        L.append(l)
+            layer = K.layers.Dense(n, activation=activation,
+                                   kernel_regularizer=l2)
+        L.append(layer)
 
         # creating dropout to that layer 1 - p
         dropout = K.layers.Dropout(rate=1 - keep_prob)
