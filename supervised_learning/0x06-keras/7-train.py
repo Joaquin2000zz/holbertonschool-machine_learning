@@ -30,12 +30,11 @@ def train_model(network, data, labels, batch_size, epochs,
                                                    monitor='val_loss')
         callbacks.append(early_stopping)
 
-    def s(global_step):
-        """schedule performing inverse time decay"""
-        return alpha / (1 + decay_rate * global_step / batch_size)
-
-
     if learning_rate_decay and validation_data:
+        def s(global_step):
+            """schedule performing inverse time decay"""
+            return alpha / (1 + decay_rate * global_step)
+
         learning_rate_decay = K.callbacks.LearningRateScheduler(schedule=s,
                                                                 verbose=1)
         callbacks.append(learning_rate_decay)
