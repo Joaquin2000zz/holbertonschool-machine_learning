@@ -32,7 +32,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         L.append(l)
 
         # creating dropout to that layer 1 - p
-        dropout = K.layers.Dropout(rate=1 - keep_prob, input_shape=(None, n))
+        dropout = K.layers.Dropout(rate=1 - keep_prob)
         L.append(dropout)
 
     # removing dropout to the output layer
