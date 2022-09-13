@@ -22,14 +22,15 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     x = K.layers.Input(shape=(nx, ))
     y = x
     layer = None
+    l2 = K.regularizers.L2(lambtha)
     for n, activation in zip(layers, activations):
         # creating dropout to that layer 1 - p
-        if activation:
+        if layer:
             dropout = K.layers.Dropout(rate=1 - keep_prob)
             y = dropout(y)
         # creating layer
         layer = K.layers.Dense(n, activation=activation,
-                               kernel_regularizer=K.regularizers.L2(lambtha))
+                               kernel_regularizer=l2)
         y = layer(y)
 
     return K.Model(x, y)
