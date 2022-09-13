@@ -14,7 +14,7 @@ def save_model(network, filename):
     Returns: None
     """
 
-    filename += ".h3" if not ".h5" in filename else ''
+    filename += ".h3" if ".h5" not in filename else ''
 
     network.save(filename)
 
@@ -27,6 +27,6 @@ def load_model(filename):
     Returns: the loaded model
     """
 
-    filename += ".h3" if not ".h5" in filename else ''
+    filename += ".h3" if ".h5" not in filename else ''
 
     return K.models.load_model(filename)
