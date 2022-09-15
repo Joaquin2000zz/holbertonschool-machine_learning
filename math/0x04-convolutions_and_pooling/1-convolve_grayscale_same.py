@@ -37,6 +37,6 @@ def convolve_grayscale_same(images, kernel):
 
     for i in range(h):
         for j in range(w):
-            img_slice = padded_img[: , i: i + kh, j: j + kw]
-            conv[: , i, j] = np.tensordot(img_slice, kernel)
+            img_slice = padded_img[:, i: i + kh, j: j + kw]
+            conv[:, i, j] = np.tensordot(img_slice, kernel)
     return conv
