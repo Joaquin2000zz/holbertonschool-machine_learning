@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains convolve function
+module which contains pool function
 """
 import numpy as np
 
@@ -46,7 +46,7 @@ def pool(images, kernel_shape, stride, mode='max'):
 
             img_slice = images[:, x: x + kh, y: y + kw, :]
             if mode == 'max':
-                conv[:, i, j, :] = np.amax(img_slice, axis=0)
+                conv[:, i, j, :] = np.amax(img_slice, axis=(1, 2))
             else:
-                conv[:, i, j] = np.mean(img_slice, axis=0)
+                conv[:, i, j, :] = np.mean(img_slice, axis=(1, 2))
     return conv
