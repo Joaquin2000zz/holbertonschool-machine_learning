@@ -42,6 +42,6 @@ def convolve_grayscale_padding(images, kernel, padding):
 
     for i in range(oh):
         for j in range(ow):
-            img_slice = padded_img[: , i: i + kh, j: j + kw]
-            conv[: , i, j] = np.tensordot(img_slice, kernel)
+            img_slice = padded_img[:, i: i + kh, j: j + kw]
+            conv[:, i, j] = np.tensordot(img_slice, kernel)
     return conv

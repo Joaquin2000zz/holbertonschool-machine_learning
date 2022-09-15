@@ -29,12 +29,11 @@ def pool(images, kernel_shape, stride, mode='max'):
     Returns: a numpy.ndarray containing the pooled images
     """
 
-    m, h, w , c= images.shape
+    m, h, w, c = images.shape
     kh, kw = kernel_shape
     sh, sw = stride
 
-
-    oh = int((((h  - kh) / sh) + 1))
+    oh = int((((h - kh) / sh) + 1))
     ow = int((((w - kw) / sw) + 1))
 
     ret_dim = (m, oh, ow, c)
@@ -45,9 +44,9 @@ def pool(images, kernel_shape, stride, mode='max'):
         for j in range(ret_dim[2]):
             y = sw * j
 
-            img_slice = images[:, x: x + kh, y: y + kw, : ]
+            img_slice = images[:, x: x + kh, y: y + kw, :]
             if mode == 'max':
-                conv[:, i, j, : ] = np.amax(img_slice, axis=0)
+                conv[:, i, j, :] = np.amax(img_slice, axis=0)
             else:
                 conv[:, i, j] = np.mean(img_slice, axis=0)
     return conv
