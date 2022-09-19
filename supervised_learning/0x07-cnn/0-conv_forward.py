@@ -39,10 +39,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     if padding == "same":
         ph = int(np.ceil(((h - 1) * sh + kh - h) / 2))
         pw = int(np.ceil(((w - 1) * sw + kw - w) / 2))
-    elif padding == "valid":
-        ph = pw = 0
     else:
-        ph, pw = padding
+        ph = pw = 0
 
     oh = int((((h + 2 * ph - kh) / sh) + 1))
     ow = int((((w + 2 * pw - kw) / sw) + 1))
