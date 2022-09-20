@@ -70,6 +70,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
                     dA_prev[img, x: x + kh, y: y + kw, :] += dz * W[:, :, :, k]
 
-    dA_prev = dA_prev[: ,ph:-ph, pw:-pw, :] if padding == "same" else dA_prev
+    dA_prev = dA_prev[:, ph:-ph, pw:-pw, :] if padding == "same" else dA_prev
 
     return dA_prev, dW, db
