@@ -95,8 +95,7 @@ def lenet5(x, y):
     y_pred = tf.nn.softmax(logits)
 
     # Compute the cross-entropy loss
-    soft = tf.nn.softmax_cross_entropy_with_logits_v2(logits=logits,
-                                                      labels=y)
+    soft = tf.nn.softmax_cross_entropy(logits=logits, labels=y)
     loss = tf.reduce_mean(soft)
 
     # Use adam optimizer to reduce cost
@@ -116,5 +115,14 @@ def lenet5(x, y):
     # has DataType bool not in list of allowed values**
     cast = tf.cast(equal, dtype=tf.float32)
     accuracy = tf.reduce_mean(cast)
+
+    estimator = tf.estimator.Estimator(y_pred)
+
+    early_stopping = tf.contrib.estimator.stop_if_no_decrease_hook(
+    estimator,
+    metric_name = 'loss',
+    max_steps_without_decrease = 1000,
+    min_steps = 100)
+
 
     return y_pred, train_op, loss, accuracy
