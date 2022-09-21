@@ -40,14 +40,11 @@ def lenet5(x, y):
     # kernel_initializer=variance
     variance = tf.keras.initializers.VarianceScaling(scale=2.0)
 
-    # Padding the input to make it 32x32. Specification of LeNET
-    padded_input = tf.pad(x, [[0, 0], [2, 2], [2, 2], [0, 0]], "CONSTANT")
-
     # Convolutional Layer #1
     # Has a default stride of 1
     # Output: 28 * 28 * 6
     conv1 = tf.layers.conv2d(
-        inputs=padded_input,
+        inputs=x,
         filters=6,  # Number of filters.
         kernel_size=5,  # Size of each filter is 5x5.
         padding="same",  # Same padding applied to the input.
