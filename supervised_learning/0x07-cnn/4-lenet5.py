@@ -116,13 +116,4 @@ def lenet5(x, y):
     cast = tf.cast(equal, dtype=tf.float32)
     accuracy = tf.reduce_mean(cast)
 
-    estimator = tf.estimator.Estimator(y_pred)
-
-    early_stopping = tf.contrib.estimator.stop_if_no_decrease_hook(
-    estimator,
-    metric_name = 'loss',
-    max_steps_without_decrease = 1000,
-    min_steps = 100)
-
-
     return y_pred, train_op, loss, accuracy
