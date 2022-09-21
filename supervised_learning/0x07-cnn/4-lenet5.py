@@ -87,13 +87,13 @@ def lenet5(x, y):
         kernel_initializer=variance)
 
     # Output layer, 10 neurons for each digit
-    logits = tf.layers.dense(inputs=dense2, units=10)
+    logits = tf.layers.dense(inputs=dense2, units=10,
+                             kernel_initializer=variance)
 
     y_pred = tf.nn.softmax(logits)
 
     # Compute the cross-entropy loss
-    soft = tf.nn.softmax_cross_entropy(logits=logits, labels=y)
-    loss = tf.reduce_mean(soft)
+    loss = tf.losses.softmax_cross_entropy(y, logits)
 
     # Use adam optimizer to reduce cost
     optimizer = tf.train.AdamOptimizer()
