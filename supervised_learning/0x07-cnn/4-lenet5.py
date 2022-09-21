@@ -25,7 +25,7 @@ def lenet5(x, y):
         - Fully connected softmax output layer with 10 nodes
     * All layers requiring initialization should initialize their kernels
       with the he_normal initialization method:
-        tf.keras.initializers.VarianceScaling(scale=2.0)
+        - tf.keras.initializers.VarianceScaling(scale=2.0)
     * All hidden layers requiring activation should use
       the relu activation function
     Returns:
@@ -104,7 +104,17 @@ def lenet5(x, y):
     train_op = optimizer.minimize(loss)
 
     # For testing and prediction
-    correct_pred = tf.equal(tf.cast(y_pred, "float"), tf.cast(y, "float"))
-    accuracy = tf.reduce_mean(tf.cast(correct_pred, "float"))
+    # returns the index with the largest value across axes of a tensor
+    Y_pred = tf.argmax(input=y_pred, axis=1)
+    y = tf.argmax(input=y, axis=1)
+
+    # returns the truth value of (y_pred == y) element-wise.
+    equal = tf.equal(y, Y_pred)
+
+    # casting to avoid this error
+    # **TypeError: Value passed to parameter 'input'
+    # has DataType bool not in list of allowed values**
+    cast = tf.cast(equal, dtype=tf.float32)
+    accuracy = tf.reduce_mean(cast)
 
     return y_pred, train_op, loss, accuracy
