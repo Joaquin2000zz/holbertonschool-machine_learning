@@ -83,6 +83,7 @@ def lenet5(X):
     # Use adam optimizer to reduce cost
     optimizer = K.optimizers.Adam()
     network.compile(optimizer=optimizer,
-                    loss='categorical_crossentropy')
+                    loss='categorical_crossentropy',
+                    metrics=["accuracy"])
 
     return network
