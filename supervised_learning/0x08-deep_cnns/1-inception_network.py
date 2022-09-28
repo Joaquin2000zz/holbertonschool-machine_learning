@@ -16,15 +16,17 @@ def inception_network():
       should use a rectified linear activation (ReLU)
     Returns: the keras model
     """
+    het_et_al = K.initializers.HeNormal()
+
     X = K.Input(shape=(224, 224, 3))
 
     x = K.layers.Conv2D(64, kernel_size=(7, 7), padding='same',
-                        strides=(2, 2), activation='relu')(X)
+                        strides=(2, 2), kernel_initializer=het_et_al, activation='relu')(X)
     x = K.layers.MaxPool2D((3, 3), padding='same', strides=(2, 2))(x)
     x = K.layers.Conv2D(64, kernel_size=(1, 1), padding='same',
-                        strides=(1, 1), activation='relu')(x)
+                        strides=(1, 1), kernel_initializer=het_et_al, activation='relu')(x)
     x = K.layers.Conv2D(192, kernel_size=(3, 3), padding='same',
-                        strides=(1, 1), activation='relu')(x)
+                        strides=(1, 1), kernel_initializer=het_et_al, activation='relu')(x)
     x = K.layers.MaxPool2D((3, 3), padding='same', strides=(2, 2))(x)
 
     x = inception_block(x, [64, 96, 128, 16, 32, 32])
@@ -45,5 +47,5 @@ def inception_network():
 
     x = K.layers.AveragePooling2D((7, 7), (1, 1))(x)
     x = K.layers.Dropout(rate=0.4)(x)
-    x = K.layers.Dense(1000, activation='softmax')(x)
+    x = K.layers.Dense(1000, kernel_initializer=het_et_al, activation='softmax')(x)
     return K.Model(X, x)
