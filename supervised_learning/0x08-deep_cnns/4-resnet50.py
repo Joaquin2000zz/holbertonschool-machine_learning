@@ -26,7 +26,7 @@ def resnet50():
 
     x = K.layers.Conv2D(filters=64, kernel_size=(7, 7),
                         strides=(2, 2), kernel_initializer=het_et_al,
-                        padding='valid')(X)
+                        padding='same')(X)
     x = K.layers.BatchNormalization(axis=3)(x)
 
     x = projection_block(x, [64, 64, 256], s=1)
