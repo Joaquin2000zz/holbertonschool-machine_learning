@@ -51,6 +51,6 @@ def projection_block(A_prev, filters, s=2):
     # Final step:
     # Add shortcut value to main path, and pass it through a RELU activation
     X = K.layers.Add()([X, identity])
-    #X = K.layers.Activation('relu')(X)
+    X = K.layers.Activation('relu')(X)
 
     return X
