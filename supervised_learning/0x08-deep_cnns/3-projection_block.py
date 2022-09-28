@@ -27,7 +27,7 @@ def projection_block(A_prev, filters, s=2):
     F11, F3, F12 = filters
     identity = X = A_prev
     het_et_al = K.initializers.HeNormal()
-    ##### MAIN PATH #####
+    # MAIN PATH
     # First component of main path
     X = K.layers.Conv2D(F11, (1, 1), strides=(s, s),
                         kernel_initializer=het_et_al)(X)
@@ -45,7 +45,7 @@ def projection_block(A_prev, filters, s=2):
                         kernel_initializer=het_et_al)(X)
     X = K.layers.BatchNormalization(axis=3)(X)
 
-    ##### SHORTCUT PATH ####
+    # SHORTCUT PATH
     identity = K.layers.Conv2D(F12, (1, 1), strides=(s, s), padding='valid',
                                kernel_initializer=het_et_al)(identity)
     identity = K.layers.BatchNormalization(axis=3)(identity)
