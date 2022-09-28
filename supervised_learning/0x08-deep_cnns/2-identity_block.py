@@ -21,6 +21,7 @@ def identity_block(A_prev, filters):
     * All weights should use he normal initialization
     Returns: the activated output of the identity block
     """
+    het_et_al = K.initializers.HeNormal()
     # Retrieve Filters
     F11, F3, F12 = filters
     
@@ -30,20 +31,23 @@ def identity_block(A_prev, filters):
     
     # First component of main path
     X = K.layers.Conv2D(filters=F11, kernel_size=(1, 1),
-                        strides=(1, 1), padding='valid')(X)
+                        strides=(1, 1), kernel_initializer=het_et_al,
+                        padding='valid')(X)
     X = K.layers.BatchNormalization(axis=3)(X)
     X = K.layers.Activation('relu')(X)
     
     
     # Second component of main path
     X = K.layers.Conv2D(filters=F3, kernel_size=(3, 3),
-                        strides=(1, 1), padding='same')(X)
+                        strides=(1, 1), kernel_initializer=het_et_al,
+                        padding='same')(X)
     X = K.layers.BatchNormalization(axis=3)(X)
     X = K.layers.Activation('relu')(X)
 
     # Third component of main path 
     X = K.layers.Conv2D(filters=F12, kernel_size=(1, 1),
-                        strides=(1, 1), padding='valid')(X)
+                        strides=(1, 1), kernel_initializer=het_et_al,
+                        padding='valid')(X)
     X = K.layers.BatchNormalization(axis=3)(X)
 
     # Final step: Add shortcut value to main path,
