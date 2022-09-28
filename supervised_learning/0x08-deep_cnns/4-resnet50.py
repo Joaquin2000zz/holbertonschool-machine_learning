@@ -33,19 +33,19 @@ def resnet50():
     x = identity_block(x, [64, 64, 256])
     x = identity_block(x, [64, 64, 256])
 
-    x = projection_block(x, [128, 128, 512], s=1)
+    x = projection_block(x, [128, 128, 512], s=2)
     x = identity_block(x, [128, 128, 512])
     x = identity_block(x, [128, 128, 512])
     x = identity_block(x, [128, 128, 512])
 
-    x = projection_block(x, [256, 256, 1024], s=1)
+    x = projection_block(x, [256, 256, 1024], s=2)
     x = identity_block(x, [256, 256, 1024])
     x = identity_block(x, [256, 256, 1024])
     x = identity_block(x, [256, 256, 1024])
     x = identity_block(x, [256, 256, 1024])
     x = identity_block(x, [256, 256, 1024])
 
-    x = projection_block(x, [512, 512, 2048], s=1)
+    x = projection_block(x, [512, 512, 2048], s=2)
     x = identity_block(x, [512, 512, 2048])
     x = identity_block(x, [512, 512, 2048])
 
