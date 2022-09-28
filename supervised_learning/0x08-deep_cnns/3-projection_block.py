@@ -30,22 +30,24 @@ def projection_block(A_prev, filters, s=2):
     ##### MAIN PATH #####
     # First component of main path
     X = K.layers.Conv2D(F11, (1, 1), strides=(s, s),
-                        kernel_initializer=het_et_al, activation='relu')(X)
+                        kernel_initializer=het_et_al)(X)
     X = K.layers.BatchNormalization(axis=3)(X)
+    X = K.layers.Activation('relu')(X)
 
     # Second component of main path
     X = K.layers.Conv2D(F3, (3, 3), strides=(1, 1), padding='same',
-                        kernel_initializer=het_et_al, activation='relu')(X)
+                        kernel_initializer=het_et_al)(X)
     X = K.layers.BatchNormalization(axis=3)(X)
+    X = K.layers.Activation('relu')(X)
 
     # Third component of main path
     X = K.layers.Conv2D(F12, (1, 1), strides=(1, 1), padding='valid',
-                        kernel_initializer=het_et_al, activation='relu')(X)
+                        kernel_initializer=het_et_al)(X)
     X = K.layers.BatchNormalization(axis=3)(X)
 
     ##### SHORTCUT PATH ####
     identity = K.layers.Conv2D(F12, (1, 1), strides=(s, s), padding='valid',
-                               kernel_initializer=het_et_al, activation='relu')(identity)
+                               kernel_initializer=het_et_al)(identity)
     identity = K.layers.BatchNormalization(axis=3)(identity)
 
     # Final step:
