@@ -28,7 +28,7 @@ def inception_block(A_prev, filters):
     Returns: the concatenated output of the inception block
     """
     het_et_al = K.initializers.HeNormal()
-  
+
     layer_0 = K.layers.Conv2D(
         filters[0], (1, 1), padding='same', activation='relu',
         kernel_initializer=het_et_al)(A_prev)
