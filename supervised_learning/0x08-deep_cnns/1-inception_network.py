@@ -24,9 +24,6 @@ def inception_network():
                         strides=(2, 2), kernel_initializer=het_et_al,
                         activation='relu')(X)
     x = K.layers.MaxPool2D((3, 3), padding='same', strides=(2, 2))(x)
-    x = K.layers.Conv2D(64, kernel_size=(1, 1), padding='same',
-                        strides=(1, 1), kernel_initializer=het_et_al,
-                        activation='relu')(x)
     x = K.layers.Conv2D(192, kernel_size=(3, 3), padding='same',
                         strides=(1, 1), kernel_initializer=het_et_al,
                         activation='relu')(x)
