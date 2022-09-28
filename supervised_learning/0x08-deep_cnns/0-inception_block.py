@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which containts inception_block function
+module which contains inception_block function
 """
 import tensorflow.keras as K
 
