@@ -27,24 +27,31 @@ def inception_block(A_prev, filters):
       a rectified linear activation (ReLU)
     Returns: the concatenated output of the inception block
     """
-
+    het_et_al = K.initializers.HeNormal()
+  
     layer_0 = K.layers.Conv2D(
-        filters[0], (1, 1), padding='same', activation='relu')(A_prev)
+        filters[0], (1, 1), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(A_prev)
 
     layer_1 = K.layers.Conv2D(
-        filters[1], (1, 1), padding='same', activation='relu')(A_prev)
+        filters[1], (1, 1), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(A_prev)
     layer_1 = K.layers.Conv2D(
-        filters[2], (3, 3), padding='same', activation='relu')(layer_1)
+        filters[2], (3, 3), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(layer_1)
 
     layer_2 = K.layers.Conv2D(
-        filters[3], (1, 1), padding='same', activation='relu')(A_prev)
+        filters[3], (1, 1), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(A_prev)
     layer_2 = K.layers.Conv2D(
-        filters[4], (5, 5), padding='same', activation='relu')(layer_2)
+        filters[4], (5, 5), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(layer_2)
 
     layer_3 = K.layers.MaxPooling2D(
         (3, 3), strides=(1, 1), padding='same')(A_prev)
     layer_3 = K.layers.Conv2D(
-        filters[5], (1, 1), padding='same', activation='relu')(layer_3)
+        filters[5], (1, 1), padding='same', activation='relu',
+        kernel_initializer=het_et_al)(layer_3)
 
     block = K.layers.concatenate([layer_0, layer_1, layer_2, layer_3], axis=3)
 
