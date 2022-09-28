@@ -28,31 +28,31 @@ def projection_block(A_prev, filters, s=2):
     identity = X = A_prev
     het_et_al = K.initializers.HeNormal()
     ##### MAIN PATH #####
-    # First component of main path 
-    X = K.layers.Conv2D(F11, (1, 1), strides=(s, s), kernel_initializer=het_et_al)(X)
-    X = K.layers.BatchNormalization(axis = 3)(X)
+    # First component of main path
+    X = K.layers.Conv2D(F11, (1, 1), strides=(
+        s, s), kernel_initializer=het_et_al)(X)
+    X = K.layers.BatchNormalization(axis=3)(X)
     X = K.layers.Activation('relu')(X)
-    
 
-    # Second component of main path 
+    # Second component of main path
     X = K.layers.Conv2D(F3, (3, 3), strides=(1, 1), padding='same',
                         kernel_initializer=het_et_al)(X)
-    X = K.layers.BatchNormalization(axis = 3)(X)
-    X = K.layers.Activation('relu') (X)
+    X = K.layers.BatchNormalization(axis=3)(X)
+    X = K.layers.Activation('relu')(X)
 
-    # Third component of main path 
-    X = K.layers.Conv2D(F12, (1, 1), strides=(1,1), padding='valid',
+    # Third component of main path
+    X = K.layers.Conv2D(F12, (1, 1), strides=(1, 1), padding='valid',
                         kernel_initializer=het_et_al)(X)
-    X = K.layers.BatchNormalization(axis = 3)(X)
+    X = K.layers.BatchNormalization(axis=3)(X)
 
-    ##### SHORTCUT PATH #### 
-    identity = K.layers.Conv2D(F12, (1, 1), strides=(s,s), padding='valid',
+    ##### SHORTCUT PATH ####
+    identity = K.layers.Conv2D(F12, (1, 1), strides=(s, s), padding='valid',
                                kernel_initializer=het_et_al)(identity)
-    identity = K.layers.BatchNormalization(axis = 3)(identity)
+    identity = K.layers.BatchNormalization(axis=3)(identity)
 
     # Final step: Add shortcut value to main path,
-    #             and pass it through a RELU activation 
+    #             and pass it through a RELU activation
     X = K.layers.Add()([X, identity])
     X = K.layers.Activation('relu')(X)
-    
+
     return X
