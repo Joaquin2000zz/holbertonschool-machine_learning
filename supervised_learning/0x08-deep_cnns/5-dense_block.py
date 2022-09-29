@@ -32,7 +32,7 @@ def dense_block(X, nb_filters, growth_rate, layers):
                             strides=strides, padding='same')(x)
         return x
 
-    for i in range(layers):
+    for _ in range(layers):
         y = composite_function(X, growth_rate * 4)
         y = composite_function(y, growth_rate, kernel_size=(1, 1))
         X = K.layers.concatenate([y, X], axis=-1)
