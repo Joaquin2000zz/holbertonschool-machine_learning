@@ -23,7 +23,7 @@ def transition_layer(X, nb_filters, compression):
     het_et_al = K.initializers.HeNormal()
 
     X = K.layers.BatchNormalization()(X)
-    X = K.layers.ReLU()(X)
+    X = K.layers.Activation('relu')(X)
     X = K.layers.Conv2D(nb_filters * compression, kernel_size=(1, 1),
                         kernel_initializer=het_et_al,
                         strides=(1, 1), padding='same')(X)
