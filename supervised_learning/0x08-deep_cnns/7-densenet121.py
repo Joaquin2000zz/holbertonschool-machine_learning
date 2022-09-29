@@ -29,7 +29,8 @@ def densenet121(growth_rate=32, compression=1.0):
     x = K.layers.Conv2D(nb_filters, kernel_size=(7, 7),
                         kernel_initializer=het_et_al,
                         strides=(2, 2), padding='same')(x)
-    x = K.layers.MaxPool2D(pool_size=(3, 3), padding='same', strides=(2, 2))(x)
+    x = K.layers.MaxPool2D(pool_size=(3, 3), padding='same',
+                           strides=(2, 2))(x)
 
     for i, layers in enumerate([6, 12, 24, 16]):
         x, nb_filters = dense_block(x, nb_filters, growth_rate, layers)
@@ -37,5 +38,6 @@ def densenet121(growth_rate=32, compression=1.0):
             x, nb_filters = transition_layer(x, nb_filters, compression)
 
     x = K.layers.AveragePooling2D(pool_size=(7, 7), padding='same')(x)
-    x = K.layers.Dense(1000, activation='softmax', kernel_initializer=het_et_al)(x)
+    x = K.layers.Dense(1000, activation='softmax',
+                       kernel_initializer=het_et_al)(x)
     return K.Model(X, x)
