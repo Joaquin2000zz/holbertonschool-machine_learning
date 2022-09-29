@@ -21,13 +21,13 @@ def transition_layer(X, nb_filters, compression):
              the number of filters within the output, respectively
     """
     het_et_al = K.initializers.HeNormal()
-
+    nb_filters = round(nb_filters * compression)
     X = K.layers.BatchNormalization()(X)
     X = K.layers.Activation('relu')(X)
-    X = K.layers.Conv2D(nb_filters * compression, kernel_size=(1, 1),
+    X = K.layers.Conv2D(nb_filters, kernel_size=(1, 1),
                         kernel_initializer=het_et_al,
                         strides=(1, 1), padding='same')(X)
     X = K.layers.AvgPool2D(pool_size=(2, 2), strides=(2, 2),
                            padding="valid")(X)
 
-    return X, nb_filters * compression
+    return X, nb_filters
