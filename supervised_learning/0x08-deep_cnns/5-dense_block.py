@@ -24,17 +24,23 @@ def dense_block(X, nb_filters, growth_rate, layers):
     """
     het_et_al = K.initializers.HeNormal()
 
-    def composite_function(x, filters, kernel_size=(1, 1), strides=(1, 1)):
-        x = K.layers.BatchNormalization()(x)
-        x = K.layers.Activation('relu')(x)
-        x = K.layers.Conv2D(filters, kernel_size=kernel_size,
-                            kernel_initializer=het_et_al,
-                            strides=strides, padding='same')(x)
-        return x
-
     for _ in range(layers):
-        y = composite_function(X, growth_rate * 4)
-        y = composite_function(y, growth_rate, kernel_size=(3, 3))
-        X = K.layers.concatenate([y, X], axis=-1)
+        y = K.layers.BatchNormalization(axis=3)(X)
+        y = K.layers.Activation('relu')(y)
+        y = K.layers.Conv2D(growth_rate * 4,
+                            kernel_size=(1, 1),
+                            strides=(1, 1),
+                            padding='same',
+                            kernel_initializer=het_et_al)(y)
+
+        y = K.layers.BatchNormalization(axis=3)(y)
+        y = K.layers.Activation('relu')(y)
+        y = K.layers.Conv2D(growth_rate,
+                            kernel_size=(3, 3),
+                            strides=(1, 1),
+                            padding='same',
+                            kernel_initializer=het_et_al)(y)
+
+        X = K.layers.concatenate([X, y], axis=3)
         nb_filters += growth_rate
     return X, nb_filters
