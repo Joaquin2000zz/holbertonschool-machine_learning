@@ -121,10 +121,10 @@ class Yolo:
             # for more information https://www.youtube.com/watch?v=vRqSO6RsptU
 
             # bounding boxes
-            b_x = self.__sigmoid(t_x) + c_x / input_width
-            b_y = self.__sigmoid(t_y) + c_y / input_height
-            b_w = p_w * np.exp(t_w) / input_width
-            b_h = p_h * np.exp(t_h) / input_height
+            b_x = (self.__sigmoid(t_x) + c_x) / input_width
+            b_y = (self.__sigmoid(t_y) + c_y) / input_height
+            b_w = (p_w * np.exp(t_w)) / input_width
+            b_h = (p_h * np.exp(t_h)) / input_height
 
             # adjunsting for CV2 (top left and bottom right point of image)
             x_1 = (b_x - (b_w / 2)) * image_size[1]
