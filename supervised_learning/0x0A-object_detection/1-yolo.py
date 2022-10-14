@@ -82,7 +82,7 @@ class Yolo:
         """
         boxes = []
         box_confidences = []
-        boc_class_probs = []
+        box_class_probs = []
 
         # obtaining input shape to make the calculation needed to the boxes
         # for more detail https://www.youtube.com/watch?v=vRqSO6RsptU
@@ -92,7 +92,7 @@ class Yolo:
 
             # normalizing values between 0 and 1 as the sigmoid function does
             box_confidences.append(self.__sigmoid(output[..., 4]))
-            boc_class_probs.append(self.__sigmoid(output[..., 5:]))
+            box_class_probs.append(self.__sigmoid(output[..., 5:]))
 
             # isolating t_x t_y t_w t_h from last dimention of the output
             box = output[..., :4]
@@ -140,4 +140,4 @@ class Yolo:
 
             boxes.append(box)
 
-        return boxes, box_confidences, boc_class_probs
+        return boxes, box_confidences, box_class_probs
