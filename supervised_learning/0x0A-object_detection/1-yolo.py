@@ -84,7 +84,7 @@ class Yolo:
         box_confidences = []
         boc_class_probs = []
 
-        # obtaining input shape to then make the calculation needed to the boxes
+        # obtaining input shape to make the calculation needed to the boxes
         # for more detail https://www.youtube.com/watch?v=vRqSO6RsptU
         _, input_width, input_height, _ = self.model.input.shape
 
