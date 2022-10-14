@@ -112,7 +112,7 @@ class Yolo:
             b_xy = self.__sigmoid(t_xy) + grid
 
             # computing width and height of each bounding box
-            b_wh = t_wh * np.exp(t_wh)
+            b_wh = anchors * np.exp(t_wh)
 
             # normalizing b_xy and b_wh
             # b_xy: divided by grid's size
