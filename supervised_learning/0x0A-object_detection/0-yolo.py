@@ -30,8 +30,6 @@ class Yolo:
             - nms_t: the IOU threshold for non-max suppression
             - anchors: the anchor boxes
         """
-        # using conventional if to pass pycodestyle not exceed 80 characters
-        # (ridiculous)
         if '.h5' != model_path[-3:]:
             model_path + '.h5'
         if '.txt' != classes_path[-4:]:
