@@ -2,8 +2,8 @@
 """
 module which contains you only look once algorithm
 """
-import tensorflow.keras as K
 import numpy as np
+import tensorflow.keras as K
 
 
 class Yolo:
