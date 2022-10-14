@@ -91,7 +91,8 @@ class Yolo:
         for i, output in enumerate(outputs):
 
             # normalizing values between 0 and 1 as the sigmoid function does
-            box_confidences.append(self.__sigmoid(output[..., 4]))
+            confidence = self.__sigmoid(output[..., 4])
+            box_confidences.append(np.expand_dims(confidence), axis=-1)
             box_class_probs.append(self.__sigmoid(output[..., 5:]))
 
             # isolating t_x t_y t_w t_h from last dimention of the output
