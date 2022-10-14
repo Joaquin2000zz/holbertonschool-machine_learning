@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+module which contains you only look once algorithm
+"""
 import tensorflow.keras as K
 
 
@@ -34,6 +37,7 @@ class Yolo:
             model_path + '.h5'
         if '.txt' != classes_path[-4:]:
             classes_path += '.txt'
+
         self.model = K.models.load_model(model_path)
         with open(file=classes_path, mode='r', encoding='utf-8') as f:
             self.class_names = f.read().split('\n')
