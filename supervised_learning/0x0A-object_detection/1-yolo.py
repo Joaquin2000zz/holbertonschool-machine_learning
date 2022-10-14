@@ -92,7 +92,7 @@ class Yolo:
 
             # normalizing values between 0 and 1 as the sigmoid function does
             box_confidences.append(self.__sigmoid(output[..., 4]))
-            boc_class_probs.append(self.__sigmoid(output[..., :5]))
+            boc_class_probs.append(self.__sigmoid(output[..., 5:]))
 
             # isolating t_x t_y t_w t_h from last dimention of the output
             box = output[..., :4]
