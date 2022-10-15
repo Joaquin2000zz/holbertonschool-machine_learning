@@ -106,7 +106,7 @@ class Yolo:
             grid = grid.reshape((g_w, g_h) + anchors.shape)
 
             # given the extracted values, let's start with the calculations
-            # for more information https://www.youtube.com/watch?v=vRqSO6RsptU
+            # more information https://www.youtube.com/watch?v=vRqSO6RsptU
 
             # computing center of each bounding box
             b_xy = self.__sigmoid(t_xy) + grid
