@@ -141,5 +141,54 @@ class Yolo:
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """
-        
+        * boxes: a list of numpy.ndarrays of shape 
+          (grid_height, grid_width, anchor_boxes, 4)
+          containing the processed boundary boxes for each output
+        * box_confidences: a list of numpy.ndarrays of shape
+          (grid_height, grid_width, anchor_boxes, 1)
+          containing the processed box confidences for each output
+        * box_class_probs: a list of numpy.ndarrays of shape
+          (grid_height, grid_width, anchor_boxes, classes)
+          containing the processed box class probabilities for each output
+        Returns a tuple of (filtered_boxes, box_classes, box_scores):
+          - filtered_boxes: a numpy.ndarray of shape (?, 4) containing
+                            all of the filtered bounding boxes
+          - box_classes: a numpy.ndarray of shape (?,) containing
+                         the class number that each box in
+                         filtered_boxes predicts
+          - box_scores: a numpy.ndarray of shape (?) containing
+                        the box scores for each box in
+                        filtered_boxes, respectively
         """
+
+        box_scores = []
+        # The paper of YOLO https://arxiv.org/pdf/1506.02640v5.pdf says:
+        # At test time we multiply the conditional class probabilities
+        # and the individual box confidence predictions,
+        # Pr(Classi|Object) ∗ Pr(Object)
+        for classi, confidence in zip(box_class_probs, box_confidences):
+            box_scores.append(classi[..., 0] * confidence)
+
+        # obtaining max value and their corresponding idx as the exercise requieres
+        max_scores = []
+        idx_scores = []
+        for score in box_scores:
+            # takes max values of last dimentions and reduce it to 1 dimention
+            max_scores.append(np.amax(score, -1).reshape(-1))
+            idx_scores.append(np.argmax(score, -1).reshape(-1))
+
+        max_scores = np.concatenate(max_scores)
+        idx_scores = np.concatenate(idx_scores)
+
+        conditional_idx = np.where(max_scores >= self.class_t)
+
+        # preparing boundig boxes according with the required shape
+        # (?, 4)
+        boxes = np.concatenate([box.reshape(-1, 4) for box in boxes])
+
+        # making each box of shape
+        filtered_boxes = boxes[conditional_idx]
+        box_classes = idx_scores[conditional_idx]
+        box_scores = max_scores[conditional_idx]
+
+        return filtered_boxes, box_classes, box_scores
