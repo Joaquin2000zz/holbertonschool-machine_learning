@@ -163,7 +163,8 @@ class Yolo:
         for classi, confidence in zip(box_class_probs, box_confidences):
             box_scores.append(classi * confidence)
 
-        # obtaining max value and their corresponding idx as the exercise requieres
+        # obtaining max value and their corresponding idx
+        # as the exercise requieres
         max_scores = []
         idx_scores = []
         for score in box_scores:
