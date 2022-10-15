@@ -34,14 +34,14 @@ class Yolo:
             - nms_t: the IOU threshold for non-max suppression
             - anchors: the anchor boxes
         """
-        model_path = model_path if '.h5' == model_path[-3:] else model_path + '.h5'
-        # using conventional if to pass pycodestyle because exceeds 80 characters
-        # (ridiculous)
+        if '.h5' != model_path[-3:]:
+            model_path + '.h5'
         if '.txt' != classes_path[-4:]:
             classes_path += '.txt'
+
         self.model = K.models.load_model(model_path)
         with open(file=classes_path, mode='r', encoding='utf-8') as f:
-            self.class_names = f.read().split('\n')
+            self.class_names = list(filter(None, f.read().split('\n')))
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
