@@ -161,7 +161,7 @@ class Yolo:
         # and the individual box confidence predictions,
         # Pr(Classi|Object) ∗ Pr(Object)
         for classi, confidence in zip(box_class_probs, box_confidences):
-            box_scores.append(classi[..., 0] * confidence)
+            box_scores.append(classi * confidence)
 
         # obtaining max value and their corresponding idx as the exercise requieres
         max_scores = []
