@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+module which contains you only look once algorithm
+"""
 import tensorflow.keras as K
 import numpy as np
 
