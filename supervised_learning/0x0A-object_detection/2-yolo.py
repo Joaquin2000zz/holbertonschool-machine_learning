@@ -138,7 +138,7 @@ class Yolo:
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """
-        * boxes: a list of numpy.ndarrays of shape 
+        * boxes: a list of numpy.ndarrays of shape
           (grid_height, grid_width, anchor_boxes, 4)
           containing the processed boundary boxes for each output
         * box_confidences: a list of numpy.ndarrays of shape
