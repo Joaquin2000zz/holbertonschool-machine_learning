@@ -168,7 +168,7 @@ class Yolo:
         max_scores = []
         idx_scores = []
         for score in box_scores:
-            # takes max values of last dimentions and reduce it to 1 dimention
+            # takes max values of last dimentions be reduced to 1 dimention
             max_scores.append(np.amax(score, -1).reshape(-1))
             idx_scores.append(np.argmax(score, -1).reshape(-1))
 
