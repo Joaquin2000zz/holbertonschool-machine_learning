@@ -318,18 +318,23 @@ class Yolo:
                         the original height and width of the images
             + 2 => (image_height, image_width)
         """
+        # extracting n images and input shape
+        print(self.model.input.shape)
+        n = len(images)
+        _, h, w, c = self.model.input.shape
 
-
-        pimages = []
-        image_shapes = []
-        for image in images:
+        # np.zeros to call np just once
+        pimages = np.zeros(shape=(n, h, w, c))
+        image_shapes = np.zeros(shape=(n, 2), dtype=int)
+        
+        for i, image in enumerate(images):
             # using inter cubic because of their advantages
             # https://chadrick-kwag.net/cv2-resize-interpolation-methods/
             resized = cv2.resize(image, self.model.input.shape[1:-1],
                                  interpolation=cv2.INTER_CUBIC)
             resized = resized / 255
-            pimages.append(resized)
+            pimages[i] = resized
             # ignoring number of channels
-            image_shapes.append(image.shape[:-1])
+            image_shapes[i] = [image.shape[0], image.shape[1]]
 
-        return np.array(pimages), np.array(image_shapes)
+        return pimages, image_shapes
