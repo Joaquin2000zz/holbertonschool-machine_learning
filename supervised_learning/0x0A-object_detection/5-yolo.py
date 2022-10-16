@@ -314,7 +314,7 @@ class Yolo:
                 + input_w: the input width for the Darknet model Note:
                            this can vary by model
                 + 3: number of color channels
-        - image_shapes: a numpy.ndarray of shape (ni, 2) containing 
+        - image_shapes: a numpy.ndarray of shape (ni, 2) containing
                         the original height and width of the images
             + 2 => (image_height, image_width)
         """
