@@ -330,7 +330,7 @@ class Yolo:
         for i, image in enumerate(images):
             # using inter cubic because of their advantages
             # https://chadrick-kwag.net/cv2-resize-interpolation-methods/
-            resized = cv2.resize(image, h, w, interpolation=cv2.INTER_CUBIC)
+            resized = cv2.resize(image, (h, w), interpolation=cv2.INTER_CUBIC)
             resized = resized / 255
 
             pimages[i] = resized
