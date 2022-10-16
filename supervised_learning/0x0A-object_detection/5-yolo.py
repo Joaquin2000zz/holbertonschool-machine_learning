@@ -325,5 +325,6 @@ class Yolo:
                                  interpolation=cv2.INTER_LINEAR)
             resized = np.array(resized) / 255
             pimages.append(resized)
-            image_shapes.append(resized.shape[:-1])
+            image_shapes.append(image.shape[:-1])
+
         return np.array(pimages), np.array(image_shapes)
