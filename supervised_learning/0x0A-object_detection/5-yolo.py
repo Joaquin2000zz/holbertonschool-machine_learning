@@ -326,15 +326,14 @@ class Yolo:
         # np.zeros to call np just once
         pimages = np.zeros(shape=(n, h, w, c))
         image_shapes = np.zeros(shape=(n, 2), dtype=int)
-        
+
         for i, image in enumerate(images):
             # using inter cubic because of their advantages
             # https://chadrick-kwag.net/cv2-resize-interpolation-methods/
-            resized = cv2.resize(image, self.model.input.shape[1:-1],
-                                 interpolation=cv2.INTER_CUBIC)
+            resized = cv2.resize(image, h, w, interpolation=cv2.INTER_CUBIC)
             resized = resized / 255
+
             pimages[i] = resized
-            # ignoring number of channels
             image_shapes[i] = [image.shape[0], image.shape[1]]
 
         return pimages, image_shapes
