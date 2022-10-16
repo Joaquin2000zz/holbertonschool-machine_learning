@@ -120,7 +120,7 @@ class Yolo:
             # b_xy: divided by grid's size
             # b_wh: divided by model's input shape
             b_xy /= [g_h, g_w]
-            b_wh /= self.model.inputs[0].shape.as_list()[1:3]
+            b_wh /= self.model.inputs[0].shape.as_list()[1:-1]
 
             # convert box center and weight in top left
             # and bottom right corners

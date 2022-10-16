@@ -6,6 +6,7 @@ import cv2
 from glob import glob
 import numpy as np
 import tensorflow.keras as K
+import os
 
 
 class Yolo:
@@ -299,3 +300,180 @@ class Yolo:
         """
         images_paths = glob(folder_path + '/*.jpg')
         return [cv2.imread(file) for file in images_paths], images_paths
+
+    def preprocess_images(self, images):
+        """
+        - images: a list of images as numpy.ndarrays
+        - Resize the images with inter-cubic interpolation
+        - Rescale all images to have pixel values in the range [0, 1]
+        Returns a tuple of (pimages, image_shapes):
+            - pimages: a numpy.ndarray of shape (ni, input_h, input_w, 3)
+              containing all of the preprocessed images
+                + ni: the number of images that were preprocessed
+                + input_h: the input height for the Darknet model Note:
+                           this can vary by model
+                + input_w: the input width for the Darknet model Note:
+                           this can vary by model
+                + 3: number of color channels
+        - image_shapes: a numpy.ndarray of shape (ni, 2) containing
+                        the original height and width of the images
+            + 2 => (image_height, image_width)
+        """
+        # extracting n images and input shape
+        n = len(images)
+        _, h, w, c = self.model.input.shape
+
+        # np.zeros to call np just once
+        pimages = np.zeros(shape=(n, h, w, c))
+        image_shapes = np.zeros(shape=(n, 2), dtype=int)
+
+        for i, image in enumerate(images):
+            # using inter cubic because of their advantages
+            # https://chadrick-kwag.net/cv2-resize-interpolation-methods/
+            resized = cv2.resize(image, (h, w), interpolation=cv2.INTER_CUBIC)
+            resized = resized / 255
+
+            pimages[i] = resized#np.expand_dims(resized, axis=-1)
+            image_shapes[i] = [image.shape[0], image.shape[1]]
+
+        return pimages, image_shapes
+
+    def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
+        """
+        - image: a numpy.ndarray containing an unprocessed image
+        - boxes: a numpy.ndarray containing the boundary boxes for the image
+        - box_classes: a numpy.ndarray containing the class indices
+          for each box
+        - box_scores: a numpy.ndarray containing the box scores for each box
+        - file_name: the file path where the original image is stored
+        - Displays the image with all boundary boxes, class names,
+          and box scores
+        - Boxes should be drawn as with a blue line of thickness 2
+        - Class names and box scores should be drawn above each box in red
+            + Box scores should be rounded to 2 decimal places
+            + Text should be written 5 pixels above the top left
+              corner of the box
+            + Text should be written in FONT_HERSHEY_SIMPLEX
+            + Font scale should be 0.5
+            + Line thickness should be 1
+            + You should use LINE_AA as the line type
+        - The window name should be the same as file_name
+        - If the s key is pressed:
+            + The image should be saved in the directory detections,
+              located in the current directory
+            + If detections does not exist, create it
+            + The saved image should have the file name file_name
+            + The image window should be closed
+        - If any key besides s is pressed, the image window should
+          be closed without saving
+        """
+        for box, cls, score in zip(boxes, box_classes, box_scores):
+            # each box contains x1, x2, y1, y2
+            x1, x2 = [int(x) for x in box[:2]]
+            y1, y2 = [int(y) for y in box[2:]]
+            text = "{} {:0.2f}".format(self.class_names[cls], score)
+            image = cv2.rectangle(img=image, pt1=(x1, x2), pt2=(y1, y2),
+                                  color=(255, 0, 0), thickness=1)
+            image = cv2.putText(image, text, (x1, x2 -5),
+                                cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5,
+                                color=(0, 0, 255), thickness=1,
+                                lineType=cv2.LINE_AA)
+        
+        cv2.imshow(file_name, image)
+        scape = cv2.waitKey(0)
+
+        if scape == ord('s'):
+            if not os.path.exists('detections'):
+                os.mkdir('detections')
+
+            cv2.imwrite(os.path.join('./detections', file_name), image)
+            cv2.destroyAllWindows()
+        else:
+            cv2.destroyAllWindows()
+
+    def predict(self, folder_path):
+        """
+        - folder_path: a string representing the path to the folder
+                     holding all the images to predict
+        - All image windows should be named after the corresponding
+          image filename without its full path
+        - Displays all images using the show_boxes method
+        - Returns: a tuple of (predictions, image_paths):
+        predictions: a list of tuples for each image of
+                     (boxes, box_classes, box_scores)
+        - image_paths: a list of image paths corresponding to each
+                       prediction in predictions
+        """
+        
+        images, images_path = self.load_images(folder_path=folder_path)
+
+        pimages, image_shapes = self.preprocess_images(images=images)
+
+        results = self.model.predict(pimages)
+
+        file_names = []
+        predictions = []
+        for i, image in enumerate(images):
+            outi = [result[i] for result in results]
+            print(image_shapes)
+            boxes, box_confidences, box_class_probs = self.process_outputs(outi, image_shapes[i])
+
+            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
+
+            box_p, p_box_classes, p_box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)
+
+            file_name = images_path[i].split('\\')[-1]
+            file_names.append(file_names)
+            predictions.append((boxes, box_classes, box_scores))
+
+            self.show_boxes(image, box_p, p_box_classes, p_box_scores,
+                            file_name)
+
+        return predictions, glob(folder_path + '/*.jpg')
+
+    def predict_webcam(self):
+        """
+        predicts in real time
+        """
+        cap = cv2.VideoCapture(0)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 450)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 550)
+        if not cap.isOpened():
+            print("Cannot open camera")
+            exit()
+        while cap.isOpened():
+            # Capture frame-by-frame
+            ret, frame = cap.read()
+            # if frame is read correctly ret is True
+            if not ret:
+                print("Can't receive frame (stream end?). Exiting ...")
+                break
+            # Our operations on the frame come here
+            flag = True
+            pimages, image_shapes = self.preprocess_images(images=[frame])
+            results = self.model.predict(pimages)
+
+            boxes, box_confidences, box_class_probs = self.process_outputs(results, image_shapes)
+
+            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
+
+            box_p, p_box_classes, p_box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)
+            for box, cls, score in zip(box_p, p_box_classes, p_box_scores):
+                # each box contains x1, x2, y1, y2
+                x1, x2 = [int(x) for x in box[:2]]
+                y1, y2 = [int(y) for y in box[2:]]
+                text = "{} {:0.2f}".format(self.class_names[cls], score)
+                frame = cv2.rectangle(img=frame, pt1=(x1, x2), pt2=(y1, y2),
+                                      color=(255, 0, 0), thickness=1)
+                frame = cv2.putText(frame, text, (x1, x2 -5),
+                                    cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5,
+                                    color=(0, 0, 255), thickness=1,
+                                    lineType=cv2.LINE_AA)
+
+            # Display the resulting frame
+            cv2.imshow('You Only Look Once aka YOLO', frame)
+            if cv2.waitKey(1) == ord('q'):
+                break
+        # When everything done, release the capture
+        cap.release()
+        cv2.destroyAllWindows()
