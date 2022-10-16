@@ -319,6 +319,7 @@ class Yolo:
             + 2 => (image_height, image_width)
         """
 
+
         pimages = []
         image_shapes = []
         for image in images:
@@ -326,9 +327,9 @@ class Yolo:
             # https://chadrick-kwag.net/cv2-resize-interpolation-methods/
             resized = cv2.resize(image, self.model.input.shape[1:-1],
                                  interpolation=cv2.INTER_CUBIC)
-            resized = np.array(resized) / 255
+            resized = resized / 255
             pimages.append(resized)
             # ignoring number of channels
-            image_shapes.append(resized.shape[:-1])
+            image_shapes.append(image.shape[:-1])
 
         return np.array(pimages), np.array(image_shapes)
