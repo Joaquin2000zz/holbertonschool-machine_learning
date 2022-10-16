@@ -319,7 +319,6 @@ class Yolo:
             + 2 => (image_height, image_width)
         """
         # extracting n images and input shape
-        print(self.model.input.shape)
         n = len(images)
         _, h, w, c = self.model.input.shape
 
