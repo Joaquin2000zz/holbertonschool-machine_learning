@@ -34,12 +34,12 @@ class NST:
         error = 'must be a numpy.ndarray with shape (h, w, 3)'
 
         ndim = style_image.ndim
-        shape = style_image.shape[-1]
+        shape = style_image.shape[2]
         if type(style_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('style_image {}'.format(error))
 
         ndim = content_image.ndim
-        shape = content_image.shape[-1]
+        shape = content_image.shape[2]
         if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('content_image {}'.format(error))
 
@@ -71,9 +71,9 @@ class NST:
         """
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
         ndim = image.ndim
-        shape = image.shape[-1]
+        shape = image.shape[2]
         if type(image) != np.ndarray or ndim != 3 or shape != 3:
-            raise TypeError(error)
+            raise TypeError("{}".format(error))
 
         # calculating rescaling
         h, w, _ = image.shape
