@@ -34,26 +34,26 @@ class NST:
         error = 'must be a numpy.ndarray with shape (h, w, 3)'
 
         ndim = style_image.ndim
-        shape = style_image.shape[-1]
+        shape = style_image.shape[2]
         if type(style_image) != np.ndarray or ndim != 3 or shape != 3:
-            raise TypeError('style_image ', error)
+            raise TypeError('style_image {}'.format(error))
 
         ndim = content_image.ndim
-        shape = content_image.shape[-1]
+        shape = content_image.shape[2]
         if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
-            raise TypeError('content_image ', error)
+            raise TypeError('content_image {}'.format(error))
 
-        if type(alpha) != int or type(alpha) != float or alpha < 0:
+        if (type(alpha) != int and type(alpha) != float) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
 
-        if type(beta) != int or type(beta) != float or beta < 0:
+        if (type(beta) != int and type(beta) != float) or beta < 0:
             raise TypeError('beta must be a non-negative number')
 
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        self.model = self.load_model()
+        tf.enable_eager_execution()
 
     @staticmethod
     def scale_image(image):
@@ -72,9 +72,9 @@ class NST:
         """
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
         ndim = image.ndim
-        shape = image.shape[-1]
-        if not isinstance(image, np.ndarray) or ndim != 3 or shape != 3:
-            raise TypeError(error)
+        shape = image.shape[2]
+        if type(image) != np.ndarray or ndim != 3 or shape != 3:
+            raise TypeError("{}".format(error))
 
         # calculating rescaling
         h, w, _ = image.shape
@@ -83,7 +83,7 @@ class NST:
         scale = max_dim / maximum
         new_shape = (int(h * scale), int(w * scale))
         image = np.expand_dims(image, axis=0)
-        scaled_image = tf.image.resize(image, new_shape)
+        scaled_image = tf.image.resize_bicubic(image, new_shape)
         scaled_image = tf.clip_by_value(scaled_image / 255, 0, 1)
 
         return scaled_image
