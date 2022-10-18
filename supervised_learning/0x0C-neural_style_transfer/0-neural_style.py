@@ -18,8 +18,10 @@ class NST:
     def __init__(self, style_image, content_image, alpha=1e4, beta=1):
         """
         Class constructor:
-        * style_image - the image used as a style reference, stored as a numpy.ndarray
-        * content_image - the image used as a content reference, stored as a numpy.ndarray
+        * style_image - the image used as a style reference,
+          stored as a numpy.ndarray
+        * content_image - the image used as a content reference,
+          stored as a numpy.ndarray
         * alpha - the weight for content cost
         * beta - the weight for style cost
         * Sets Tensorflow to execute eagerly
