@@ -43,10 +43,10 @@ class NST:
         if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('content_image ', error)
 
-        if type(alpha) != int or type(alpha) != float or alpha < 0:
+        if (type(alpha) != int and type(alpha) != float) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
 
-        if type(beta) != int or type(beta) != float or beta < 0:
+        if (type(beta) != int and type(beta) != float) or beta < 0:
             raise TypeError('beta must be a non-negative number')
 
         self.style_image = self.scale_image(style_image)
