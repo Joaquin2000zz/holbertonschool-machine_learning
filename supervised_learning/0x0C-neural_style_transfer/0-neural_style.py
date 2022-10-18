@@ -3,7 +3,7 @@
 module which contains the class NST
 """
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 class NST:
@@ -53,6 +53,7 @@ class NST:
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
+        tf.enable_eager_execution()
 
     @staticmethod
     def scale_image(image):
@@ -82,7 +83,7 @@ class NST:
         scale = max_dim / maximum
         new_shape = (int(h * scale), int(w * scale))
         image = np.expand_dims(image, axis=0)
-        scaled_image = tf.image.resize(image, new_shape)
+        scaled_image = tf.image.resize_bicubic(image, new_shape)
         scaled_image = tf.clip_by_value(scaled_image / 255, 0, 1)
 
         return scaled_image
