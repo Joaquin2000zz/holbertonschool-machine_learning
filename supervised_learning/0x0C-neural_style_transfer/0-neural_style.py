@@ -32,25 +32,21 @@ class NST:
             - beta: the weight for style cost
         """
         error = 'must be a numpy.ndarray with shape (h, w, 3)'
-        
-        ndim =  style_image.ndim
+
+        ndim = style_image.ndim
         shape = style_image.shape[-1]
-        cond = not isinstance(style_image, np.ndarray)
-        if cond or ndim != 3 or shape != 3:
+        if type(style_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('style_image ', error)
 
-        ndim =  content_image.ndim
+        ndim = content_image.ndim
         shape = content_image.shape[-1]
-        cond = not isinstance(content_image, np.ndarray)
-        if cond or ndim != 3 or shape != 3:
+        if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('content_image ', error)
 
-        cond = (not isinstance(alpha, int) and not isinstance(alpha, float))
-        if cond or alpha < 0:
+        if type(alpha) != int or type(alpha) != float or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
 
-        cond = (not isinstance(beta, int) and not isinstance(beta, float))
-        if cond or beta < 0:
+        if type(beta) != int or type(beta) != float or beta < 0:
             raise TypeError('beta must be a non-negative number')
 
         self.style_image = self.scale_image(style_image)
