@@ -9,7 +9,6 @@ def minimize_matrix(matrix, n):
     minimize matrix
     return a list of minimized matrices and other with k values
     """
-    det = 0
     minimized = []
     for i in range(0, n):
         new = []
