@@ -57,4 +57,4 @@ def determinant(matrix):
             new.append(nested)
         det += k * det_2(new) * sign
         sign *= -1
-    return det    
+    return det
