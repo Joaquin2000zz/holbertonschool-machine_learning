@@ -76,7 +76,6 @@ def determinant(matrix):
         return det_2(matrix)
 
     minimized, kvector = minimize_matrix(matrix, n)
-    print(f'antes del for minimized1, kvector 1 {minimized} {kvector}')
     if len(minimized[0]) == 2:
         return det_3(minimized, kvector)
 
