@@ -9,7 +9,6 @@ def minimize_matrix(matrix, n):
     minimize matrix
     return a list of minimized matrices and other with k values
     """
-    det = 0
     minimized = []
     for i in range(0, n):
         new = []
@@ -77,6 +76,7 @@ def determinant(matrix):
         return det_2(matrix)
 
     minimized, kvector = minimize_matrix(matrix, n)
+    print(f'antes del for minimized1, kvector 1 {minimized} {kvector}')
     if len(minimized[0]) == 2:
         return det_3(minimized, kvector)
 
