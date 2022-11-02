@@ -86,4 +86,5 @@ def determinant(matrix):
     for min, k in zip(minimized, kvector):
         a, b = minimize_matrix(min, len(min))
         det += sign * k * det_3(a, b)
+        sign *= -1
     return det
