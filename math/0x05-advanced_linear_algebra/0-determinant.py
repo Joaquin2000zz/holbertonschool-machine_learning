@@ -56,7 +56,7 @@ def determinant(matrix):
     """
     if not matrix or not isinstance(matrix, list):
         raise TypeError('matrix must be a list of lists')
-    if all([not isinstance(i, list) for i in matrix]):
+    if not all([isinstance(i, list) for i in matrix]):
         raise TypeError('matrix must be a list of lists')
 
     n = len(matrix)
