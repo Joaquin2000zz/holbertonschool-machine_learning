@@ -4,6 +4,15 @@ module which contains determinant function
 """
 
 
+def det_2(matrix):
+    """
+    finds the determinant of a 2x2 matrix
+    """
+    ad = matrix[0][0] * matrix[1][1]
+    bc = matrix[0][1] * matrix[1][0]
+    return ad - bc
+
+
 def determinant(matrix):
     """
     given a matrix, calculates its determinant
@@ -31,14 +40,21 @@ def determinant(matrix):
         raise ValueError('message matrix must be a square matrix')
 
     if n == 2:
-        ad = matrix[0][0] * matrix[1][1]
-        bc = matrix[0][1] * matrix[1][0]
-        return ad - bc
+        return det_2(matrix)
 
-    a, b, c = matrix[0][0], matrix[0][1], matrix[0][2]
-
-    ei, fh = matrix[1][1] * matrix[2][2], matrix[1][2] * matrix[2][1]
-    di, fg = matrix[1][0] * matrix[2][2], matrix[1][2] * matrix[2][0]
-    dh, eg = matrix[1][0] * matrix[2][1], matrix[1][1] * matrix[2][0]
-
-    return a * (ei - fh) - b * (di - fg) + c * (dh - eg)
+    det = 0
+    sign = 1
+    for i in range(0, n):
+        k = matrix[0][i]
+        new = []
+        for j in range(1, n):
+            nested = []
+            for z in range(0, n):
+                if z == i:
+                    continue
+                else:
+                    nested.append(matrix[j][z])
+            new.append(nested)
+        det += k * det_2(new) * sign
+        sign *= -1
+    return det    
