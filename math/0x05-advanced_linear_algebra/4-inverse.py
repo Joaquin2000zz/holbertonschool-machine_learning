@@ -38,5 +38,5 @@ def inverse(matrix):
 
     for i in range(n):
         for j in range(n):
-            adjugate[i][j] = 1 / determinant * adjugate[i][j]
+            adjugate[i][j] = adjugate[i][j] / determinant
     return adjugate
