@@ -7,14 +7,16 @@ if __name__ == '__main__':
     mat1 = [[5]]
     mat2 = [[1, 2], [3, 4]]
     mat3 = [[1, 1], [1, 1]]
-    mat4 = [[5, 7, 9], [3, 1, 8], [6, 2, 4]]
-    mat5 = []
+    mata = [[5, 7, 9], [3, 1, 8], [6, 2, 4]]
+    mat4 = [[5, 7, 9, 1, 4], [3, 1, 8, 2, 4], [6, 2, 4, 3, 4], [1, 2, 3, 4, 4], [3, 1, 3, 5, 6]]
+    mat5 = [[], (), {}]
     mat6 = [[1, 2, 3], [4, 5, 6]]
 
     print(determinant(mat0))
     print(determinant(mat1))
     print(determinant(mat2))
     print(determinant(mat3))
+    print(determinant(mata))
     print(determinant(mat4))
     try:
         determinant(mat5)
