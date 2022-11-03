@@ -12,21 +12,17 @@ def inverse(matrix):
     - matrix is a list of lists whose inverse should be calculated
     Returns: the inverse of matrix, or None if matrix is singular
     """
-    if type(matrix) is not list:
+    n = len(matrix) if matrix else None
+    if type(matrix) is not list or n == 0:
         raise TypeError('matrix must be a list of lists')
 
     if all([type(i) is list for i in matrix]) is False:
         raise TypeError('matrix must be a list of lists')
 
-    n = len(matrix)
-
-    if n == 0:
-        raise TypeError('matrix must be a list of lists')
-
     if (matrix[0] and n != len(matrix[0])) or matrix == [[]]:
         raise ValueError('matrix must be a non-empty square matrix')
 
-    if all(n == len(row) for row in matrix) is False:
+    if all(n == len(colum) for colum in matrix) is False:
         raise ValueError('matrix must be a non-empty square matrix')
 
     determinant = compute_determinant(matrix)
@@ -38,5 +34,5 @@ def inverse(matrix):
 
     for i in range(n):
         for j in range(n):
-            adjugate[i][j] = adjugate[i][j] / determinant
+            adjugate[i][j] /= determinant
     return adjugate
