@@ -39,5 +39,4 @@ def cofactor(matrix):
         for j in range(n):
             minor[i][j] = minor[i][j] * sign
             sign *= -1
-        sign *= -1
     return minor
