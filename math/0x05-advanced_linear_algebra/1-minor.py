@@ -15,21 +15,18 @@ def minor(matrix):
     if type(matrix) is not list:
         raise TypeError('matrix must be a list of lists')
 
-    if not all([type(i) is list for i in matrix]):
+    if all([type(i) is list for i in matrix]) is False:
         raise TypeError('matrix must be a list of lists')
 
     n = len(matrix)
 
     if n == 0:
+        raise TypeError('matrix must be a list of lists')
+
+    if (matrix[0] and n not in [len(i) for i in matrix]) or matrix == [[]]:
         raise ValueError('matrix must be a non-empty square matrix')
 
-    if matrix[0] and n not in [len(i) for i in matrix]:
-        raise ValueError('matrix must be a non-empty square matrix')
-
-    if matrix == [[]]:
-        raise ValueError('matrix must be a non-empty square matrix')
-
-    if n == 1:
+    if n == len(matrix[0]) == 1:
         return [[1]]
 
     minors = []
