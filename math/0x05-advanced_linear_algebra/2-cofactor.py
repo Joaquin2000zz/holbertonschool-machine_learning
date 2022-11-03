@@ -32,11 +32,10 @@ def cofactor(matrix):
         return [[1]]
 
     minor = compute_minor(matrix)
-
-    sign = 1
-
+    ci = cj = 1
     for i in range(n):
+        ci = 1 if i % 2 == 0 else -1
         for j in range(n):
-            minor[i][j] = minor[i][j] * sign
-            sign *= -1
+            cj = 1 if j % 2 == 0 else -1
+            minor[i][j] = minor[i][j] * ci * cj
     return minor
