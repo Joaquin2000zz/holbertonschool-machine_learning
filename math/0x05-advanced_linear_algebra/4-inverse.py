@@ -29,9 +29,6 @@ def inverse(matrix):
     if all(n == len(row) for row in matrix) is False:
         raise ValueError('matrix must be a non-empty square matrix')
 
-    if n == len(matrix[0]) == 1:
-        return [[1]]
-    
     determinant = compute_determinant(matrix)
 
     if determinant == 0:
