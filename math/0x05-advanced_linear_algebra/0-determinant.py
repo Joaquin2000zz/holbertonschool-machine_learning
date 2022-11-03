@@ -37,24 +37,24 @@ def determinant(matrix):
     - The list [[]] represents a 0x0 matrix
     Returns: its matrix's determinant
     """
-    if not matrix or not isinstance(matrix, list):
+    if type(matrix) is not list or len(matrix) == 0:
         raise TypeError('matrix must be a list of lists')
-    if not all([isinstance(i, list) for i in matrix]):
+    if all([type(i) is list for i in matrix]) is False:
         raise TypeError('matrix must be a list of lists')
+
+    if matrix[0] and len(matrix) != len(matrix[0]):
+        raise ValueError('matrix must be a square matrix')
+
+    if matrix == [[]]:
+        return 1
+
+    if len(matrix) == 1:
+        return matrix[0][0]
+
+    if all(len(matrix) == len(col) for col in matrix) is False:
+        raise ValueError('matrix must be a square matrix')
 
     n = len(matrix)
-
-    if n == 1:
-        if not matrix[0]:
-            return 1
-        else:
-            if len(matrix[0]) != 1:
-                raise ValueError('message matrix must be a square matrix')
-            return matrix[0][0]
-
-    m = [len(i) for i in matrix]
-    if n not in m:
-        raise ValueError('message matrix must be a square matrix')
 
     if n == 2:
         return det_2(matrix)
