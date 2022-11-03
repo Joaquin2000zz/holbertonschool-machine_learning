@@ -4,24 +4,21 @@ module which contains determinant function
 """
 
 
-def minimize_matrix(matrix, n):
+def minimize_matrix(matrix, ignore, n):
     """
     minimize matrix
-    return a list of minimized matrices and other with k values
+    return a minimized matrixin given axis
     """
-    minimized = []
-    for i in range(0, n):
-        new = []
-        for j in range(1, n):
-            nested = []
-            for z in range(0, n):
-                if z == i:
-                    continue
-                else:
-                    nested.append(matrix[j][z])
-            new.append(nested)
-        minimized.append(new)
-    return minimized, matrix[0]
+    new = []
+    for j in range(1, n):
+        nested = []
+        for z in range(0, n):
+            if z == ignore:
+                continue
+            else:
+                nested.append(matrix[j][z])
+        new.append(nested)
+    return new
 
 
 def det_2(matrix):
@@ -31,19 +28,6 @@ def det_2(matrix):
     ad = matrix[0][0] * matrix[1][1]
     bc = matrix[0][1] * matrix[1][0]
     return ad - bc
-
-
-def det_3(minimized, kvector):
-    """
-    finds the determinant of a minimized 3x3 matrix
-    """
-    sign = 1
-    det = 0
-
-    for min, k in zip(minimized, kvector):
-        det += k * det_2(min) * sign
-        sign *= -1
-    return det
 
 
 def determinant(matrix):
@@ -75,15 +59,10 @@ def determinant(matrix):
     if n == 2:
         return det_2(matrix)
 
-    minimized, kvector = minimize_matrix(matrix, n)
-    if len(minimized[0]) == 2:
-        return det_3(minimized, kvector)
-
     det = 0
     sign = 1
 
-    for min, k in zip(minimized, kvector):
-        a, b = minimize_matrix(min, len(min))
-        det += sign * k * det_3(a, b)
+    for m, k, i in zip(matrix, matrix[0], range(n)):
+        det += sign * k * determinant(minimize_matrix(matrix, ignore=i, n=n))
         sign *= -1
     return det
