@@ -11,29 +11,26 @@ def cofactor(matrix):
     Returns: the cofactor matrix of matrix
     """
 
-    if type(matrix) is not list:
+    if type(matrix) is not list or len(matrix) == 0:
         raise TypeError('matrix must be a list of lists')
 
     if all([type(i) is list for i in matrix]) is False:
         raise TypeError('matrix must be a list of lists')
 
-    n = len(matrix)
-
-    if n == 0:
-        raise TypeError('matrix must be a list of lists')
-
-    if (matrix[0] and n != len(matrix[0])) or matrix == [[]]:
+    if (matrix[0] and len(matrix) != len(matrix[0])) or matrix == [[]]:
         raise ValueError('matrix must be a non-empty square matrix')
 
-    if all(n == len(row) for row in matrix) is False:
+    if all(len(matrix) == len(colum) for colum in matrix) is False:
         raise ValueError('matrix must be a non-empty square matrix')
 
-    if n == len(matrix[0]) == 1:
+    if len(matrix) == len(matrix[0]) == 1:
         return [[1]]
 
     minor = compute_minor(matrix)
 
     sign = 1
+
+    n = len(matrix)
 
     for i in range(n):
         for j in range(n):
