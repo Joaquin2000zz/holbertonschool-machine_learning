@@ -23,7 +23,10 @@ def minor(matrix):
     if n == 0:
         raise TypeError('matrix must be a list of lists')
 
-    if (matrix[0] and n not in [len(i) for i in matrix]) or matrix == [[]]:
+    if (matrix[0] and n != len(matrix[0])) or matrix == [[]]:
+        raise ValueError('matrix must be a non-empty square matrix')
+
+    if all(len(matrix) == len(row) for row in matrix) is False:
         raise ValueError('matrix must be a non-empty square matrix')
 
     if n == len(matrix[0]) == 1:
