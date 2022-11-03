@@ -4,6 +4,7 @@ module which contains cofactor fuction
 """
 compute_minor = __import__('1-minor').minor
 
+
 def cofactor(matrix):
     """
     given a matrix, computes its minor
@@ -29,7 +30,7 @@ def cofactor(matrix):
 
     if n == len(matrix[0]) == 1:
         return [[1]]
-    
+
     minor = compute_minor(matrix)
 
     sign = 1
