@@ -55,7 +55,7 @@ def minor(matrix):
     m = [len(i) for i in matrix]
     if n not in m:
         raise ValueError('matrix must be a non-empty square matrix')
-    
+
     minors = []
 
     if n == 2:
