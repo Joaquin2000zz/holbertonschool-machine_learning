@@ -54,7 +54,7 @@ def determinant(matrix):
     if matrix == [[]]:
         return 1
 
-    if len(matrix) == 1:
+    if n == 1:
         return matrix[0][0]
 
     if all(len(matrix) == len(col) for col in matrix) is False:
