@@ -38,23 +38,26 @@ def minor(matrix):
     - matrix is a list of lists whose minor matrix should be calculated
     Returns: the minor matrix of matrix
     """
-    if not matrix or not isinstance(matrix, list):
+
+    if type(matrix) is not list:
         raise TypeError('matrix must be a list of lists')
-    if not all([isinstance(i, list) for i in matrix]):
+
+    if not all([type(i) is list for i in matrix]):
         raise TypeError('matrix must be a list of lists')
 
     n = len(matrix)
 
-    if n == 1:
-        if not matrix[0]:
-            raise ValueError('matrix must be a non-empty square matrix')
-        else:
-            if len(matrix[0]) != 1:
-                raise ValueError('matrix must be a non-empty square matrix')
-            return [[1]]
-    m = [len(i) for i in matrix]
-    if n not in m:
+    if n == 0:
         raise ValueError('matrix must be a non-empty square matrix')
+
+    if matrix[0] and n not in [len(i) for i in matrix]:
+        raise ValueError('matrix must be a non-empty square matrix')
+
+    if matrix == [[]]:
+        raise ValueError('matrix must be a non-empty square matrix')
+
+    if n == 1:
+        return [[1]]
 
     minors = []
 
