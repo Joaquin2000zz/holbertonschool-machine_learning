@@ -36,7 +36,7 @@ def minor(matrix):
 
     for x in range(n):
         min = []
-        for y in range (n):
+        for y in range(n):
             det = []
             for i in range(n):
                 nested = []
