@@ -2,34 +2,7 @@
 """
 module which contains minor function
 """
-
-
-def minimize_matrix(matrix, ignorej, ignorez, n):
-    """
-    minimize matrix
-    return a minimized matrixin given axis
-    """
-    new = []
-    for j in range(n):
-        if j == ignorej:
-            continue
-        nested = []
-        for z in range(0, n):
-            if z == ignorez:
-                continue
-            else:
-                nested.append(matrix[j][z])
-        new.append(nested)
-    return new
-
-
-def det_2(matrix):
-    """
-    finds the determinant of a 2x2 matrix
-    """
-    ad = matrix[0][0] * matrix[1][1]
-    bc = matrix[0][1] * matrix[1][0]
-    return ad - bc
+determinant = __import__('0-determinant').determinant
 
 
 def minor(matrix):
@@ -61,22 +34,19 @@ def minor(matrix):
 
     minors = []
 
-    if n == 2:
-        for i in range(n):
-            j = 0
-            new = []
-            new.append(minimize_matrix(matrix, i, j, n)[0][0])
-            for j in range(1, n):
-                new.append(minimize_matrix(matrix, i, j, n)[0][0])
-            minors.append(new)
-
-        return minors
-
-    for i in range(n):
-        new = []
-        for j in range(n):
-            new.append(det_2(minimize_matrix(matrix, ignorej=i,
-                             ignorez=j, n=n)))
-        minors.append(new)
-
+    for x in range(n):
+        min = []
+        for y in range (n):
+            det = []
+            for i in range(n):
+                nested = []
+                if i == x:
+                    continue
+                for j in range(n):
+                    if j == y:
+                        continue
+                    nested.append(matrix[i][j])
+                det.append(nested)
+            min.append(determinant(det))
+        minors.append(min)
     return minors
