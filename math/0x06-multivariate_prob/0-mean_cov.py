@@ -27,4 +27,4 @@ def mean_cov(X):
 
     Xμ = X - μ
 
-    return μ, np.matmul(Xμ.T, Xμ) / n
+    return μ, Xμ.T @ Xμ / n - 1
