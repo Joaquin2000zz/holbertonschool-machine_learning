@@ -23,8 +23,8 @@ def mean_cov(X):
     if n < 2:
         raise ValueError('X must contain multiple data points')
 
-    mu = np.mean(X, axis=0, keepdims=True)
+    μ = np.mean(X, axis=0, keepdims=True)
 
-    Xmu = X - mu
+    Xμ = X - μ
 
-    return mu, Xmu.T @ Xmu / n - 1
+    return μ, (Xμ.T @ Xμ) / (n - 1)
