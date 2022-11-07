@@ -12,8 +12,10 @@ def correlation(C):
       * d is the number of dimensions
     Returns a numpy.ndarray of shape (d, d) containing the correlation matrix
     """
-    if not isinstance(C, np.ndarray) or len(C.shape) != 2:
+    if not isinstance(C, np.ndarray):
         raise TypeError('C must be a numpy.ndarray')
+    if len(C.shape) != 2:
+        raise ValueError('C must be a 2D square matrix')
     w, h = C.shape
     if w != h:
         raise ValueError('C must be a 2D square matrix')
