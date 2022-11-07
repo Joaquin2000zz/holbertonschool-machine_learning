@@ -18,7 +18,7 @@ def mean_cov(X):
         containing the covariance matrix of the data set
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        raise TypeError('message X must be a 2D numpy.ndarray')
+        raise TypeError('X must be a 2D numpy.ndarray')
     n, _ = X.shape
     if n < 2:
         raise ValueError('X must contain multiple data points')
