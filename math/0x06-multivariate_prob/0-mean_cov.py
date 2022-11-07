@@ -19,20 +19,12 @@ def mean_cov(X):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         raise TypeError('message X must be a 2D numpy.ndarray')
-    n, d = X.shape
+    n, _ = X.shape
     if n < 2:
         raise ValueError('X must contain multiple data points')
 
     μ = np.mean(X, axis=0, keepdims=True)
-    XT = X.T
 
-    cov = np.zeros(shape=(d, d))
-    for i in range(d):
-        for j in range(d):
-            if j > i:
-                break
-            # in i == j it's making the variance
-            cov[i][j] = cov[j][i] = np.mean(
-                XT[i] * XT[j]) - (μ[0, i] * μ[0, j])
+    Xμ = X - μ
 
-    return μ, cov
+    return μ, (Xμ.T @ Xμ) / n
