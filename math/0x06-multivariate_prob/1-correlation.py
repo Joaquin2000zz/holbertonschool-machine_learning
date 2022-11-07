@@ -20,9 +20,9 @@ def correlation(C):
     c = w
     var = np.diag(C)
     corr = np.zeros(shape=(c, c))
-    for i in range(c):
-        for j in range(c):
-            if j > i:
+    for x in range(c):
+        for y in range(c):
+            if y > x:
                 break
-            corr[i][j] = corr[j][i] = C[i][j] / np.sqrt(var[i] * var[j])
+            corr[x][y] = corr[y][x] = C[x][y] / np.sqrt(var[x] * var[y])
     return corr
