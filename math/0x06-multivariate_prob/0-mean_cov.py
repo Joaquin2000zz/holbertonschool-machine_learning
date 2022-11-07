@@ -17,14 +17,14 @@ def mean_cov(X):
       - cov is a numpy.ndarray of shape (d, d)
         containing the covariance matrix of the data set
     """
-    if type(X) is not np.ndarray or len(X.shape) != 2:
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         raise TypeError('X must be a 2D numpy.ndarray')
     n, _ = X.shape
     if n < 2:
         raise ValueError('X must contain multiple data points')
 
-    μ = np.mean(X, axis=0, keepdims=True)
+    mu = np.mean(X, axis=0, keepdims=True)
 
-    Xμ = X - μ
+    Xmu = X - mu
 
-    return μ, Xμ.T @ Xμ / n - 1
+    return mu, Xmu.T @ Xmu / n - 1
