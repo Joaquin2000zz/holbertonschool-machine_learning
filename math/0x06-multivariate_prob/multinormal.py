@@ -46,7 +46,7 @@ class MultiNormal:
         if len(x.shape) != 2:
             raise ValueError(error)
         d, h = x.shape
-        if d != self.mean.shape[0] and h != 1:
+        if d != self.mean.shape[0] or h != 1:
             raise ValueError(error)
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
