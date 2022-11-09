@@ -17,7 +17,8 @@ def pca(X, ndim):
              var fraction of X‘s original variance
     - W is a numpy.ndarray of shape (d, nd) where nd is
       the new dimensionality of the transformed X
-    ### this is an unoptimized implementation using the eigen vectors of the covariance matrix ###
+    ### this is an unoptimized implementation using the
+        eigen vectors of the covariance matrix ###
     # mean centering the data
     Xµ = X - np.mean(X, axis=0)
 
