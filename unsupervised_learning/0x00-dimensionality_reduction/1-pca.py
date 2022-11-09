@@ -46,6 +46,6 @@ def pca(X, ndim):
 
     U, sigma, V = np.linalg.svd(Xμ)
 
-    # this can be also maded with U[..., :ndim] @ np.diag(S[..., :ndim])
+    # this can be also maded with U[..., :ndim] @ np.diag(sigma[..., :ndim])
     # but the checker doesn't like it xd
     return Xμ @ V[:ndim].T
