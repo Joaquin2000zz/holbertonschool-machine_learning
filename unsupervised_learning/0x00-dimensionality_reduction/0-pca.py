@@ -31,4 +31,3 @@ def pca(X, var=0.95):
     # taking just the significant values above the threshold
     idx = np.amin(np.where(sigma >= var))
     return V.T[..., :idx + 1]
-  
