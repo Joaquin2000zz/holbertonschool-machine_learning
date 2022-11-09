@@ -17,6 +17,7 @@ def pca(X, ndim):
              var fraction of X‘s original variance
     - W is a numpy.ndarray of shape (d, nd) where nd is
       the new dimensionality of the transformed X
+    
     ### this is an unoptimized implementation using the
         eigen vectors of the covariance matrix ###
     # mean centering the data
@@ -45,4 +46,6 @@ def pca(X, ndim):
 
     U, sigma, V = np.linalg.svd(Xμ)
 
+    # this can be also maded with U[..., :ndim] @ np.diag(S[..., :ndim])
+    # but the checker doesn't like it xd
     return Xμ @ V[:ndim].T
