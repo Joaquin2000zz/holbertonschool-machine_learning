@@ -46,3 +46,4 @@ def pca(X, ndim):
     U, sigma, V = np.linalg.svd(Xμ)
 
     return Xμ @ V[:ndim].T
+saasd
