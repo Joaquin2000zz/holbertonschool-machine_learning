@@ -36,9 +36,9 @@ def likelihood(x, n, P):
     if np.all((P < 0) & (P > 1)):
         raise ValueError('All values in P must be in the range [0, 1]')
 
-    f = np.math.factorial
     # using formula of binomial distribution
-    comb = f(n) / (f(n - x) * f(x))
+    comb = np.math.factorial(n) /\
+        (np.math.factorial(n - x) * np.math.factorial(x))
     success = np.power(P, x)
     failure = np.power(1 - P, n - x)
     return comb * success * failure
