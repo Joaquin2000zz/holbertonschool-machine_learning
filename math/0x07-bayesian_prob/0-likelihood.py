@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import numpy as np
 """
 module which contains likelihood function
 
@@ -9,6 +8,7 @@ severe side effects. During your trials, n patients take the drug and
 x patients develop severe side effects.
 You can assume that x follows a binomial distribution.
 """
+import numpy as np
 
 
 def likelihood(x, n, P):
@@ -24,11 +24,11 @@ def likelihood(x, n, P):
              of obtaining the data, x and n,
              for each probability in P, respectively
     """
-    if not isinstance(n, int) and n < 1:
+    if not isinstance(n, int) or n < 1:
         raise ValueError('n must be a positive integer')
-    if not isinstance(x, int) and x < 0:
-        error = 'x must be an integer that is greater than or equal to 0'
-        raise ValueError(error)
+    if not isinstance(x, int) or x < 0:
+        raise ValueError(
+            'x must be an integer that is greater than or equal to 0')
     if x > n:
         raise ValueError('x cannot be greater than n')
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
@@ -36,9 +36,9 @@ def likelihood(x, n, P):
     if np.all((P < 0) & (P > 1)):
         raise ValueError('All values in P must be in the range [0, 1]')
 
+    f = np.math.factorial
     # using formula of binomial distribution
-    comb = np.math.factorial(n) /\
-        (np.math.factorial(n - x) * np.math.factorial(x))
+    comb = f(n) / (f(n - x) * f(x))
     success = np.power(P, x)
     failure = np.power(1 - P, n - x)
     return comb * success * failure
