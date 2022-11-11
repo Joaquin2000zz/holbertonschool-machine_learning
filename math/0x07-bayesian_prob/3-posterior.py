@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains intersection function
+module which contains posterior function
 """
 import numpy as np
 likelihood = __import__('0-likelihood').likelihood
@@ -8,16 +8,16 @@ likelihood = __import__('0-likelihood').likelihood
 
 def posterior(x, n, P, Pr):
     """
-    calculates the intersection of obtaining this data
-    with the various hypothetical probabilities:
+    calculates the posterior probability for the various hypothetical
+    probabilities of developing severe side effects given the data:
 
     - x is the number of patients that develop severe side effects
     - n is the total number of patients observed
     - P is a 1D numpy.ndarray containing the various hypothetical
       probabilities of developing severe side effects
     - Pr is a 1D numpy.ndarray containing the prior beliefs of P
-    Returns: a 1D numpy.ndarray containing the intersection of obtaining x
-             and n with each probability in P, respectively
+    Returns: the posterior probability of each probability
+             in P given x and n, respectively
     """
     if not isinstance(n, int) or n < 1:
         raise ValueError('n must be a positive integer')

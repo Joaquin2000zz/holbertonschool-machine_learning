@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains intersection function
+module which contains marginal function
 """
 import numpy as np
 intersection = __import__('1-intersection').intersection
@@ -8,16 +8,14 @@ intersection = __import__('1-intersection').intersection
 
 def marginal(x, n, P, Pr):
     """
-    calculates the intersection of obtaining this data
-    with the various hypothetical probabilities:
+    calculates the marginal probability of obtaining the data:
 
     - x is the number of patients that develop severe side effects
     - n is the total number of patients observed
     - P is a 1D numpy.ndarray containing the various hypothetical
       probabilities of developing severe side effects
     - Pr is a 1D numpy.ndarray containing the prior beliefs of P
-    Returns: a 1D numpy.ndarray containing the intersection of obtaining x
-             and n with each probability in P, respectively
+    Returns: the marginal probability of obtaining x and n
     """
     if not isinstance(n, int) or n < 1:
         raise ValueError('n must be a positive integer')
