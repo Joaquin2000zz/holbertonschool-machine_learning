@@ -18,7 +18,8 @@ def HP(Di, beta):
       for the Gaussian distribution
     Returns: (Hi, Pi)
       - Hi: the Shannon entropy of the points
-      - Pi: a numpy.ndarray of shape (n - 1,) containing the P affinities of the points
+      - Pi: a numpy.ndarray of shape (n - 1,) containing the P
+        affinities of the points
       - Hint: see page 4 of t-SNE
     """
     # https://nlml.github.io/in-raw-numpy/in-raw-numpy-t-sne/#eq1 for context
