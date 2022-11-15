@@ -49,7 +49,8 @@ def kmeans(X, k, iterations=1000):
         for i in range(k):
             # Updating Centroids by taking mean of Cluster it belongs to
             if X[clss == i].size == 0:
-                C[i] = np.random.uniform(low=min, high=max, size=(1, X.shape[1]))
+                C[i] = np.random.uniform(low=min, high=max,
+                                         size=(1, X.shape[1]))
             else:
                 C[i] = X[clss == i].mean(axis=0) 
           
