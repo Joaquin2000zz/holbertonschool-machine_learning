@@ -35,6 +35,8 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if not isinstance(iterations, int) or iterations < 1:
         return None, None
+    min = np.amin(X, axis=0)
+    max = np.amax(X, axis=0)
     C = np.random.uniform(low=min, high=max, size=(k, X.shape[1]))
     prev = None
     for _ in range(iterations):
