@@ -3,7 +3,6 @@
 module which contains kmeans function
 """
 import numpy as np
-initialize = __import__('0-initialize').initialize
 
 
 def kmeans(X, k, iterations=1000):
@@ -36,7 +35,7 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if not isinstance(iterations, int) or iterations < 1:
         return None, None
-    C = initialize(X, k)
+    C = np.random.uniform(low=min, high=max, size=(k, X.shape[1]))
     prev = None
     for _ in range(iterations):
         # computing euclidean distances from each point and the centroids
@@ -47,7 +46,7 @@ def kmeans(X, k, iterations=1000):
         for i in range(k):
             # Updating Centroids by taking mean of Cluster it belongs to
             if X[clss==i].size == 0:
-                C = initialize(X, k)
+                C = np.random.uniform(low=min, high=max, size=(k, X.shape[1]))
             else:
                 C[i] = X[clss==i].mean(axis=0) 
           
