@@ -27,37 +27,34 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         - d_vars is a list containing the difference in variance from
           the smallest cluster size for each cluster size
     """
-    try:
-        if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-            return None, None
-        if not isinstance(kmin, int) or kmin < 1 or kmin >= X.shape[0]:
-            return None, None
-        if isinstance(kmax, int):
-            if kmax < kmin or kmax > X.shape[0]:
-                return None, None
-        elif not kmax:
-            kmax = X.shape[0]
-        else:
-            return None, None
-        if not isinstance(iterations, int) or iterations < 1:
-            return None, None
-
-        results = []
-        d_vars = []
-        for k in range(kmin, kmax + 1):
-            # obtaining centroids means for each cluster
-            # and clss that contains the indexes of which
-            # cluster each data point belongs to
-            C, clss = kmeans(X, k, iterations)
-            results.append((C, clss))
-            # computing the variance which says
-            # how disperse the datapoints are
-            d_var = variance(X, C)
-            # obtaining first variance to compute
-            # the difference between k1 var and kth
-            if k == kmin:
-                min_var = d_var
-            d_vars.append(min_var - d_var)
-        return results, d_vars
-    except Exception:
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
+    if not isinstance(kmin, int) or kmin < 1 or kmin >= X.shape[0]:
+        return None, None
+    if isinstance(kmax, int):
+        if kmax < kmin or kmax > X.shape[0] or kmax < 1:
+            return None, None
+    elif not kmax:
+        kmax = X.shape[0]
+    else:
+        return None, None
+    if not isinstance(iterations, int) or iterations < 1:
+        return None, None
+
+    results = []
+    d_vars = []
+    for k in range(kmin, kmax + 1):
+        # obtaining centroids means for each cluster
+        # and clss that contains the indexes of which
+        # cluster each data point belongs to
+        C, clss = kmeans(X, k, iterations)
+        results.append((C, clss))
+        # computing the variance which says
+        # how disperse the datapoints are
+        d_var = variance(X, C)
+        # obtaining first variance to compute
+        # the difference between k1 var and kth
+        if k == kmin:
+            min_var = d_var
+        d_vars.append(min_var - d_var)
+    return results, d_vars
