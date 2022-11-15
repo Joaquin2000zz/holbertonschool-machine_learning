@@ -39,6 +39,7 @@ def kmeans(X, k, iterations=1000):
     max = np.amax(X, axis=0)
     C = np.random.uniform(low=min, high=max, size=(k, X.shape[1]))
     prev = None
+    
     for _ in range(iterations):
         # computing euclidean distances from each point and the centroids
         distances = np.linalg.norm(X - C[:, np.newaxis], axis=-1)
@@ -47,10 +48,10 @@ def kmeans(X, k, iterations=1000):
         clss = distances.argmin(axis=0)
         for i in range(k):
             # Updating Centroids by taking mean of Cluster it belongs to
-            if X[clss==i].size == 0:
-                C = np.random.uniform(low=min, high=max, size=(k, X.shape[1]))
+            if X[clss == i].size == 0:
+                C[i] = np.random.uniform(low=min, high=max, size=(1, X.shape[1]))
             else:
-                C[i] = X[clss==i].mean(axis=0) 
+                C[i] = X[clss == i].mean(axis=0) 
           
         distances = np.linalg.norm(X - C[:, np.newaxis], axis=-1)
         clss = np.argmin(distances, axis=0)
