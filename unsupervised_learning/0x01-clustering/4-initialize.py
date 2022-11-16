@@ -25,10 +25,10 @@ def initialize(X, k):
         return None, None, None
     if not isinstance(k, int) or k < 1:
         return None, None, None
-    # sum of prior equals 1
+    # sum of prior = 1
     pi = np.full((k,), 1 / k)
 
-    # obtaining centroids means for each cluster
+    # obtaining centroids means to each cluster
     m, _ = kmeans(X, k)
 
     _, d = X.shape
