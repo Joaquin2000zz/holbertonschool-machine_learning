@@ -26,15 +26,13 @@ def initialize(X, k):
     if not isinstance(k, int) or k < 1:
         return None, None, None
     # sum of prior = 1
-    pi = np.full((k,), 1 / k)
+    pi = None
 
     # obtaining centroids means for each cluster
-    # and clss that contains the indexes of which
-    # cluster each data point belongs to
-    m, _ = kmeans(X, k)
+    m, _ = None
 
     _, d = X.shape
     # creating S initialized as identity matrices
-    S = np.tile(np.identity(d), (k, 1, 1))
+    S = None
 
     return pi, m, S
