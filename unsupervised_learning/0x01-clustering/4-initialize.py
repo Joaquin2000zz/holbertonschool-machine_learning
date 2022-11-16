@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 module which contain initialize function
 """
@@ -26,7 +27,7 @@ def initialize(X, k):
         return None, None, None
     # sum of prior = 1
     pi = np.full((k,), 1 / k)
-    
+
     # obtaining centroids means for each cluster
     # and clss that contains the indexes of which
     # cluster each data point belongs to
