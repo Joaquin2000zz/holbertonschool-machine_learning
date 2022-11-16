@@ -9,7 +9,6 @@ kmeans = __import__('1-kmeans').kmeans
 def initialize(X, k):
     """
     initializes variables for a Gaussian Mixture Model:
-
     - X is a numpy.ndarray of shape (n, d) containing the data set
     - k is a positive integer containing the number of clusters
     - You are not allowed to use any loops
