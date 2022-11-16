@@ -22,7 +22,6 @@ def HP(Di, beta):
         affinities of the points
       - Hint: see page 4 of t-SNE
     """
-    # https://nlml.github.io/in-raw-numpy/in-raw-numpy-t-sne/#eq1 for context
     P = np.exp(-Di * beta)
     Pi = P / np.sum(P)
 
