@@ -33,6 +33,6 @@ def initialize(X, k):
 
     _, d = X.shape
     # creating S initialized as identity matrices
-    S = np.tile(np.identity(d), (k, 1)).reshape(k, d, d)
+    S = np.tile(np.identity(d), (k, 1, 1))
 
     return pi, m, S
