@@ -42,4 +42,4 @@ def pdf(X, m, S):
     exp = np.exp(-0.5 * np.sum(Xμ * np.matmul(Xμ, inv), axis=1))
 
     PDF = factor * exp
-    return PDF
+    return np.where(PDF < 1e-300, 1e-300, PDF)
