@@ -35,6 +35,8 @@ def expectation(X, pi, m, S):
         return None, None
     if not (pi.shape[0] == m.shape[0] == S.shape[0]):
         return None, None
+    if not np.isclose(pi.sum(), 1):
+        return None, None
 
     k = pi.shape[0]
     n = X.shape[0]
