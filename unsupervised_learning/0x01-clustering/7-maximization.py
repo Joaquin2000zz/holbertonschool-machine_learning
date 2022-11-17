@@ -15,7 +15,7 @@ def maximization(X, g):
     - You may use at most 1 loop
     Returns: pi, m, S, or None, None, None on failure
       - pi is a numpy.ndarray of shape (k,) containing the updated
-        priors for each cluster
+        priors to each cluster
       - m is a numpy.ndarray of shape (k, d) containing the updated
         centroid means for each cluster
       - S is a numpy.ndarray of shape (k, d, d) containing the updated
@@ -29,7 +29,7 @@ def maximization(X, g):
         return None, None
     if not (g.sum(axis=0).all() == 1):
         return None, None
-    
+
     _, d = X.shape
     k, n = g.shape
     sigma_g = g.sum(axis=1)
