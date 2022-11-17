@@ -34,11 +34,11 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None, None
-    if not isinstance(k, int) or k < 1:
+    if not isinstance(k, int) or k < 1 or k > X.shape[0]:
         return None, None, None, None, None
     if not isinstance(iterations, int) or iterations < 1:
         return None, None, None, None, None
-    if not isinstance(tol, float):
+    if not isinstance(tol, float) or tol < 0:
         return None, None, None, None, None
     if not isinstance(verbose, bool):
         return None, None, None, None, None
@@ -47,17 +47,28 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     # i.e. prior, mean and Covariance
     pi, m, S = initialize(X, k)
 
+    l0 = .0
+
     for i in range(iterations):
         # computing expectation. returns:
         # - g which are the posterior probabilities
         #   of each datapoint in each cluster
         # - l is the total log likelihood
         #   i.e. how well the model fits the data
-        g, l = expectation(X, pi, m, S)
+        g, l1 = expectation(X, pi, m, S)
         # computing maximitation. returns:
         # new prior, mean and covariance of each cluster
         pi, m, S = maximization(X, g)
         if verbose and i % 10 == 0:
             print('Log Likelihood after {} iterations: {}'.format(i,
-                                                                  l.round(5)))
-    return pi, m, S, g, l
+                                                                  l1.round(5)))
+        # if the difference is less than or equal
+        # the algorithm is stopped
+        if i > 0 and np.abs(l0 - l1) <= tol:
+            if verbose:
+                print('Log Likelihood after {} iterations: {}'.format(i,
+                                                                      l1.round(5)))
+            return pi, m, S, g, l1
+        l0 = l1
+
+    return pi, m, S, g, l1
