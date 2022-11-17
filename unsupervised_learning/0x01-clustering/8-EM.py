@@ -60,15 +60,21 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         # new prior, mean and covariance of each cluster
         pi, m, S = maximization(X, g)
         if verbose and i % 10 == 0:
-            print('Log Likelihood after {} iterations: {}'.format(i,
-                                                                  l1.round(5)))
+            msg = 'Log Likelihood after {} iterations: {}'.format(i,
+                                                                  l1.round(5))
+            print(msg)
         # if the difference is less than or equal
         # the algorithm is stopped
         if i > 0 and np.abs(l0 - l1) <= tol:
             if verbose:
-                print('Log Likelihood after {} iterations: {}'.format(i,
-                                                                      l1.round(5)))
+                xd = l1.round(5)
+                msg = 'Log Likelihood after {} iterations: {}'.format(i, xd)
+                print(msg)
             return pi, m, S, g, l1
         l0 = l1
-
+    g, l1 = expectation(X, pi, m, S)
+    if verbose:
+        msg = 'Log Likelihood after {} iterations: {}'.format(i,
+                                                              l1.round(5))
+        print(msg)
     return pi, m, S, g, l1
