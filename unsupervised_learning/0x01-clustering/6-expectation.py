@@ -39,11 +39,9 @@ def expectation(X, pi, m, S):
     k = pi.shape[0]
     n = X.shape[0]
     P = np.zeros(shape=(k, n))
-    l = []
     for i in range(k):
         # ith posterior probability it's the ith prior times the ith pdf
         P[i] = pi[i] * pdf(X, m[i], S[i])
-
     # adding up the stacked posterior probabilities
     p = P.sum(axis=0)
 
