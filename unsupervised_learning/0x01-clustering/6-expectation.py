@@ -24,17 +24,17 @@ def expectation(X, pi, m, S):
       - l is the total log likelihood
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
+        return None, None
     if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
-        return None
+        return None, None
     if not isinstance(m, np.ndarray) or len(m.shape) != 2:
-        return None
+        return None, None
     if not isinstance(S, np.ndarray) or len(S.shape) != 3:
-        return None
+        return None, None
     if not (X.shape[1] == m.shape[1] == S.shape[1] == S.shape[2]):
-        return None
+        return None, None
     if not (pi.shape[0] == m.shape[0] == S.shape[0]):
-        return None
+        return None, None
 
     k = pi.shape[0]
     n = X.shape[0]
