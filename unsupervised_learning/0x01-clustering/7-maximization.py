@@ -28,7 +28,7 @@ def maximization(X, g):
     if not (X.shape[0] == g.shape[1]):
         return None, None
     p = g.sum(axis=0)
-    if not (p.all() == 1) or p.sum() != X[0]:
+    if not (p.all() == 1) or p.sum() != X.shape[0]:
         return None, None
 
     _, d = X.shape
