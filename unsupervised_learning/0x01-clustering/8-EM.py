@@ -56,9 +56,6 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         # - l is the total log likelihood
         #   i.e. how well the model fits the data
         g, l1 = expectation(X, pi, m, S)
-        # computing maximitation. returns:
-        # new prior, mean and covariance of each cluster
-        pi, m, S = maximization(X, g)
         if verbose and i % 10 == 0:
             msg = 'Log Likelihood after {} iterations: {}'.format(i,
                                                                   l1.round(5))
@@ -71,10 +68,9 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
                 msg = 'Log Likelihood after {} iterations: {}'.format(i, xd)
                 print(msg)
             return pi, m, S, g, l1
+        # computing maximitation. returns:
+        # new prior, mean and covariance of each cluster
+        pi, m, S = maximization(X, g)
+
         l0 = l1
-    g, l1 = expectation(X, pi, m, S)
-    if verbose:
-        msg = 'Log Likelihood after {} iterations: {}'.format(i,
-                                                              l1.round(5))
-        print(msg)
     return pi, m, S, g, l1
