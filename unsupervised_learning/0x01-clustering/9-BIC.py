@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-
+module which contains BIC function
 """
 import numpy as np
 expectation_maximization = __import__('8-EM').expectation_maximization
@@ -43,19 +43,18 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         * l is the log likelihood of the model
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None, None, None, None
-    if not isinstance(kmin, int) or kmin < 1 or kmin >= X.shape[0]:
-        return None, None, None, None
-    if isinstance(kmax, int):
-        if kmax <= kmin or kmax > X.shape[0] or kmax < 1:
-            return None, None, None, None
-    elif not kmax:
-        kmax = X.shape[0]
-    if not isinstance(iterations, int) or iterations < 1:
-        return None, None, None, None
-    if not isinstance(tol, float) or tol < 0:
-        return None, None, None, None
-    if not isinstance(verbose, bool):
+        return (None, None, None, None)
+    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+        return (None, None, None, None)
+    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+        return (None, None, None, None)
+    if kmin >= kmax:
+        return (None, None, None, None)
+    if type(iterations) != int or iterations <= 0:
+        return (None, None, None, None)
+    if type(tol) != float or tol <= 0:
+        return (None, None, None, None)
+    if type(verbose) != bool:
         return None, None, None, None
 
     l, b, results, ks = [], [], [], []
