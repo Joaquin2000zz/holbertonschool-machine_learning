@@ -34,5 +34,7 @@ def markov_chain(P, s, t=1):
         return None
     if np.any(P.sum(axis=1) != 1):
         return None
+    if s.sum() != 1:
+        return None
 
     return s @ np.linalg.matrix_power(P, t)

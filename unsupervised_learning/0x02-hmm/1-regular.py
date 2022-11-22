@@ -20,6 +20,8 @@ def regular(P):
         return None
     if P.shape[0] != P.shape[1]:
         return None
+    if np.any(P.sum(axis=1) != 1):
+        return None
 
     n, n = P.shape
 
