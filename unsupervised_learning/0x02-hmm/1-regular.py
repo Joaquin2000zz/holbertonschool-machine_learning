@@ -38,4 +38,4 @@ def regular(P):
     if 0 in S:
         return None
 
-    return np.expand_dims(S, axis=0) if np.allclose(S @ P, S) else None
+    return S
