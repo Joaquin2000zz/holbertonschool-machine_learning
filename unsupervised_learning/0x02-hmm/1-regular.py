@@ -21,13 +21,19 @@ def regular(P):
     if P.shape[0] != P.shape[1]:
         return None
 
-    if np.any(P <= 0):
-        return None
     n, n = P.shape
 
     evals, evecs = np.linalg.eig(P.T)
     evec1 = evecs[:, np.isclose(evals, 1)]
-    evec1 = evec1[:, 0]
+
+    try:
+        evec1 = evec1[:, 0]
+    except Exception:
+        return None
 
     S = evec1 / evec1.sum()
+
+    if 0 in S:
+        return None
+
     return np.expand_dims(S, axis=0) if np.allclose(S @ P, S) else None
