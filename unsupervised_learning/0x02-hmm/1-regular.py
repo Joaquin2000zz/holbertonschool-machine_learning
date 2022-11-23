@@ -23,8 +23,6 @@ def regular(P):
     if np.any(P.sum(axis=1) != 1):
         return None
 
-    n, n = P.shape
-
     evals, evecs = np.linalg.eig(P.T)
     evec1 = np.argwhere(np.isclose(evals, 1))
 
