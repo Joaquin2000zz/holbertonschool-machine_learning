@@ -38,4 +38,4 @@ def regular(P):
     if 0 in S:
         return None
 
-    return S
+    return S[np.newaxis]
