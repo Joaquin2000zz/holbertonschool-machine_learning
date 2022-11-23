@@ -26,16 +26,16 @@ def regular(P):
     n, n = P.shape
 
     evals, evecs = np.linalg.eig(P.T)
-    evec1 = evecs[:, np.isclose(evals, 1)]
+    evec1 = np.argwhere(np.isclose(evals, 1))
 
-    try:
-        evec1 = evec1[:, 0]
-    except Exception:
+    if len(evec1) != 1:
         return None
+
+    evec1 = evecs[:, evec1[0]]
 
     S = evec1 / evec1.sum()
 
     if 0 in S:
         return None
 
-    return S[np.newaxis]
+    return S.T
