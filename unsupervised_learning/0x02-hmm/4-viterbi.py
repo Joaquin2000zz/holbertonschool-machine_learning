@@ -64,5 +64,4 @@ def viterbi(Observation, Emission, Transition, Initial):
             V[s, t] = np.amax(Vts)
     path = backPointer[V[:, T - 1].argmax()]
     P = np.amax(V[:, T - 1])
-
-    return path, P
+    return path.astype(int).tolist(), P
