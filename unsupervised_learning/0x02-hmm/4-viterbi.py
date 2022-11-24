@@ -23,7 +23,7 @@ def viterbi(Observation, Emission, Transition, Initial):
       * M is the number of all possible observations
     - Transition is a 2D numpy.ndarray of shape (N, N)
       containing the transition probabilities
-      * Transition[i, j] is the probability of transitioning from the 
+      * Transition[i, j] is the probability of transitioning from the
       hidden state i to j
     - Initial a numpy.ndarray of shape (N, 1) containing the probability
       of starting in a particular hidden state
