@@ -55,8 +55,9 @@ def forward(Observation, Emission, Transition, Initial):
 
     F = np.zeros(shape=(N, T))
 
-    for s in range(N):  # initialization step
-        F[s, 0] = Initial[s] * Emission[s, Observation[0]]
+    # initialization step vectorized
+    F[:, 0] = Initial.T * Emission[:, Observation[0]]
+
     for t in range(1, T):  # recursion step
         for s in range(N):
             F[s, t] = (F[:, t - 1] * Transition[:, s] *
