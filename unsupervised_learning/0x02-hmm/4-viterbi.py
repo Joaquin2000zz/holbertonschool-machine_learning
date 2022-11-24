@@ -52,16 +52,26 @@ def viterbi(Observation, Emission, Transition, Initial):
         return None, None
 
     V = np.zeros(shape=(N, T))
-    backPointer = np.zeros(shape=(N, T))
-    for s in range(N):  # initialization step
-        backPointer[s, 0] = 0
-        V[s, 0] = Initial[s] * Emission[s, Observation[0]]
+    backPointer = np.zeros(shape=(N, T), dtype=int)
+    # vectorized initialization step
+    V[:, 0] = Initial.T * Emission[:, Observation[0]]
+
     for t in range(1, T):  # recursion step
         for s in range(N):
             Vts = V[:, t - 1] * Transition[:, s] *\
                 Emission[s, Observation[t]]
-            backPointer[s, t] = np.argmax(Vts)
-            V[s, t] = np.amax(Vts)
-    path = backPointer[V[:, T - 1].argmax()]
-    P = np.amax(V[:, T - 1])
-    return path.astype(int).tolist(), P
+            backPointer[s, t - 1] = Vts.argmax()
+            V[s, t] = Vts.max()
+
+    # start of backtrace
+    path = np.zeros(shape=(T,)).tolist()
+    i = 0
+    # collecting final state
+    backtrace = V[:, T - 1].argmax()
+    path[T - 1] = backtrace
+    for t in range(T - 2, -1, -1):  # starting to collect the best path
+        path[t] = backPointer[backtrace, t]
+        backtrace = backPointer[backtrace, t]
+
+    P = V[:, T - 1].max()
+    return path, P
