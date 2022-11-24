@@ -59,8 +59,7 @@ def forward(Observation, Emission, Transition, Initial):
         F[s, 0] = Initial[s] * Emission[s, Observation[0]]
     for t in range(1, T):  # recursion step
         for s in range(N):
-            Fst = [F[s0, t - 1] * Transition[s0, s] *
-                   Emission[s, Observation[t]] for s0 in range(N)]
-            F[s, t] = np.sum(Fst)
+            F[s, t] = (F[:, t - 1] * Transition[:, s] *
+                       Emission[s, Observation[t]]).sum()
 
     return F[:, T - 1].sum(), F
