@@ -9,6 +9,8 @@ def backward(Observation, Emission, Transition, Initial):
     """
     performs the backward algorithm for a hidden markov model:
 
+    for more info: https://web.stanford.edu/~jurafsky/slp3/A.pdf
+
     - Observation is a numpy.ndarray of shape (T,)
       that contains the index of the observation
       * T is the number of observations

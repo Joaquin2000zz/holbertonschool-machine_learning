@@ -36,18 +36,18 @@ class NST:
 
         ndim = style_image.ndim
         shape = style_image.shape[2]
-        if type(style_image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(style_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('style_image {}'.format(error))
 
         ndim = content_image.ndim
         shape = content_image.shape[2]
-        if type(content_image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('content_image {}'.format(error))
 
-        if (type(alpha) is not int and type(alpha) is not float) or alpha < 0:
+        if (type(alpha) != int and type(alpha) != float) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
 
-        if (type(beta) is not int and type(beta) is not float) or beta < 0:
+        if (type(beta) != int and type(beta) != float) or beta < 0:
             raise TypeError('beta must be a non-negative number')
 
         self.style_image = self.scale_image(style_image)
@@ -56,6 +56,7 @@ class NST:
         self.beta = beta
         self.model = self.load_model()
         tf.enable_eager_execution()
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -75,7 +76,7 @@ class NST:
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
         ndim = image.ndim
         shape = image.shape[2]
-        if type(image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError("{}".format(error))
 
         # calculating rescaling
@@ -129,3 +130,81 @@ class NST:
         outputs = style_outputs + [content_output]
 
         return tf.keras.models.Model(vgg.input, outputs)
+
+
+    @staticmethod
+    def gram_matrix(input_layer):
+        """
+        * input_layer - an instance of tf.Tensor or tf.Variable of 
+                        shape (1, h, w, c) containing the layer output
+                        whose gram matrix should be calculated
+        * if input_layer is not an instance of tf.Tensor or tf.Variable of
+          rank 4, raise a TypeError with the message input_layer
+          must be a tensor of rank 4
+        Returns: a tf.Tensor of shape (1, c, c) containing
+                 the gram matrix of input_layer
+        """
+        if input_layer.shape.ndims != 4:
+            raise TypeError("input_layer must be a tensor of rank 4")
+        if not isinstance(input_layer, tf.Tensor):
+            raise TypeError("input_layer must be a tensor of rank 4")
+        if isinstance(input_layer, tf.Variable):
+            raise TypeError("input_layer must be a tensor of rank 4")
+
+        _, h, w, _ = input_layer.shape
+
+        # for more context visite
+        # https://www.tensorflow.org/tutorials/generative/style_transfer
+        result = tf.linalg.einsum('bijc,bijd->bcd', input_layer, input_layer)
+        num_locations = tf.cast(h * w, tf.float32)
+        
+        return result / num_locations
+
+    def generate_features(self):
+        """
+        extracts the features used to calculate neural style cost
+        * Sets the public instance attributes:
+            gram_style_features - a list of gram matrices calculated from
+                                  the style layer outputs of the style image
+            content_feature - the content layer output of the content image
+        """
+        s = self.style_image * 255
+        p = self.content_image * 255
+        prepro_style = tf.keras.applications.vgg19.preprocess_input(s)
+        prepro_content = tf.keras.applications.vgg19.preprocess_input(p)
+
+        style_ft = self.model(prepro_style)[:-1]
+
+        self.gram_style_features = [self.gram_matrix(i) for i in style_ft]
+        self.content_feature = self.model(prepro_content)[-1]
+
+    def layer_style_cost(self, style_output, gram_target):
+        """
+        Calculates the style cost for a single layer
+        * style_output - tf.Tensor of shape (1, h, w, c) containing
+                         the layer style output of the generated image
+        * gram_target - tf.Tensor of shape (1, c, c) the gram matrix
+                        of the target style output for that layer
+        Returns: the layer’s style cost
+        """
+
+        if not isinstance(style_output, tf.Tensor):
+            raise TypeError('style_output must be a tensor of rank 4')
+        if isinstance(style_output, tf.Variable):
+            raise TypeError('style_output must be a tensor of rank 4')
+        if style_output.shape.ndims != 4:
+            raise TypeError('style_output must be a tensor of rank 4')
+
+        c = style_output.shape[-1]
+        error = 'gram_target must be a tensor '
+        error += 'of shape [1, {}, {}]'.format(c, c)
+        if not isinstance(gram_target, tf.Tensor):
+            raise TypeError(error)
+        if isinstance(gram_target, tf.Variable):
+            raise TypeError(error)
+        if gram_target.shape.dims != [1, c, c]:
+            raise TypeError(error)
+
+        gram_style = self.gram_matrix(style_output)
+  
+        return tf.reduce_mean(tf.square(gram_style - gram_target))

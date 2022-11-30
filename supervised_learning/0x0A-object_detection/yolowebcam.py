@@ -436,8 +436,8 @@ class Yolo:
         predicts in real time
         """
         cap = cv2.VideoCapture(0)
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 450)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 550)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 650)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 750)
         if not cap.isOpened():
             print("Cannot open camera")
             exit()
@@ -449,7 +449,6 @@ class Yolo:
                 print("Can't receive frame (stream end?). Exiting ...")
                 break
             # Our operations on the frame come here
-            flag = True
             pimages, image_shapes = self.preprocess_images(images=[frame])
             results = self.model.predict(pimages)
 

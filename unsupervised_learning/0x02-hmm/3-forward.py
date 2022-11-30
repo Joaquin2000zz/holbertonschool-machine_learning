@@ -4,7 +4,6 @@ module which contains foward function
 """
 import numpy as np
 
-
 def forward(Observation, Emission, Transition, Initial):
     """
     performs the forward algorithm for a hidden markov model:
@@ -35,22 +34,30 @@ def forward(Observation, Emission, Transition, Initial):
       the previous observations
     """
     if not isinstance(Observation, np.ndarray) or len(Observation.shape) != 1:
+        print('entre al if 1')
         return None, None
     T = Observation.shape[0]
     if not isinstance(Emission, np.ndarray) or len(Emission.shape) != 2:
+        print('entre al if 2')
         return None, None
     N, M = Emission.shape
     if not isinstance(Transition, np.ndarray) or len(Transition.shape) != 2:
+        print('entre al if 3')
         return None, None
     if Transition.shape[0] != N or Transition.shape[1] != N:
+        print(f'entre al if 4 transition shape {Transition.shape} n {N}')
         return None, None
     if not np.all(Transition.sum(axis=1) == 1):
+        print('entre al if 5')
         return None, None
     if not isinstance(Initial, np.ndarray) or len(Initial.shape) != 2:
+        print('entre al if 6')
         return None, None
     if Initial.shape[0] != N or Initial.shape[1] != 1:
+        print('entre al if 7')
         return None, None
     if Initial.sum() != 1:
+        print('entre al if 8')
         return None, None
 
     F = np.zeros(shape=(N, T))

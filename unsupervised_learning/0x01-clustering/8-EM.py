@@ -42,7 +42,6 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None, None
     if not isinstance(verbose, bool):
         return None, None, None, None, None
-
     # initializing variables of Gaussian Mixture model
     # i.e. prior, mean and Covariance
     pi, m, S = initialize(X, k)

@@ -44,7 +44,7 @@ def kmeans(X, k, iterations=1000):
         # computing euclidean distances from each point and the centroids
         distances = np.linalg.norm(X - C[:, np.newaxis], axis=-1)
         prev = C.copy()
-
+        # computing the index of which cluster each data point belongs to
         clss = distances.argmin(axis=0)
         for i in range(k):
             # Updating Centroids by taking mean of Cluster it belongs to

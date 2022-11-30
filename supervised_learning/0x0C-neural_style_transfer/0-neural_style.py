@@ -53,7 +53,7 @@ class NST:
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        tf.compat.v1.enable_eager_execution()
+        tf.enable_eager_execution()
 
     @staticmethod
     def scale_image(image):

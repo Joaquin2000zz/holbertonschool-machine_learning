@@ -36,18 +36,18 @@ class NST:
 
         ndim = style_image.ndim
         shape = style_image.shape[2]
-        if type(style_image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(style_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('style_image {}'.format(error))
 
         ndim = content_image.ndim
         shape = content_image.shape[2]
-        if type(content_image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(content_image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError('content_image {}'.format(error))
 
-        if (type(alpha) is not int and type(alpha) is not float) or alpha < 0:
+        if (type(alpha) != int and type(alpha) != float) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
 
-        if (type(beta) is not int and type(beta) is not float) or beta < 0:
+        if (type(beta) != int and type(beta) != float) or beta < 0:
             raise TypeError('beta must be a non-negative number')
 
         self.style_image = self.scale_image(style_image)
@@ -75,7 +75,7 @@ class NST:
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
         ndim = image.ndim
         shape = image.shape[2]
-        if type(image) is not np.ndarray or ndim != 3 or shape != 3:
+        if type(image) != np.ndarray or ndim != 3 or shape != 3:
             raise TypeError("{}".format(error))
 
         # calculating rescaling
@@ -129,3 +129,32 @@ class NST:
         outputs = style_outputs + [content_output]
 
         return tf.keras.models.Model(vgg.input, outputs)
+
+
+    @staticmethod
+    def gram_matrix(input_layer):
+        """
+        * input_layer - an instance of tf.Tensor or tf.Variable of 
+                        shape (1, h, w, c) containing the layer output
+                        whose gram matrix should be calculated
+        * if input_layer is not an instance of tf.Tensor or tf.Variable of
+          rank 4, raise a TypeError with the message input_layer
+          must be a tensor of rank 4
+        Returns: a tf.Tensor of shape (1, c, c) containing
+                 the gram matrix of input_layer
+        """
+        if input_layer.shape.ndims != 4:
+            raise TypeError("input_layer must be a tensor of rank 4")
+        if not isinstance(input_layer, tf.Tensor):
+            raise TypeError("input_layer must be a tensor of rank 4")
+        if isinstance(input_layer, tf.Variable):
+            raise TypeError("input_layer must be a tensor of rank 4")
+
+        _, h, w, _ = input_layer.shape
+
+        # for more context visite
+        # https://www.tensorflow.org/tutorials/generative/style_transfer
+        result = tf.linalg.einsum('bijc,bijd->bcd', input_layer, input_layer)
+        num_locations = tf.cast(h * w, tf.float32)
+
+        return result / num_locations
