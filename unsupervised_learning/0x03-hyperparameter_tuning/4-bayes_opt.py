@@ -59,10 +59,10 @@ class BayesianOptimization:
         """
         mu, sigma = self.gp.predict(self.X_s)
 
-        sample_opt = self.gp.Y.min() if self.minimize else self.gp.Y.min()
+        sample = self.gp.Y.min() if self.minimize else self.gp.Y.min()
 
         with np.errstate(divide='warn'):
-            imp = mu - sample_opt - self.xsi
+            imp = sample - mu if self.minimize else mu - sample - self.xsi
             Z = imp / sigma
             EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
             EI[sigma == .0] = .0
