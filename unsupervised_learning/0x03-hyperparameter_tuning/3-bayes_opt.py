@@ -19,8 +19,8 @@ class BayesianOptimization:
         - Y_init is a numpy.ndarray of shape (t, 1)
           representing black-box function's outputs for each input in X_init
           * t is the number of initial samples
-        - bounds is a tuple of (min, max) representing the bounds of the space
-          in which to look for the optimal point
+        - bounds is a tuple of (min, max) representing the bounds
+          of the space in which to look for the optimal point
         - ac_samples is the number of samples that
           should be analyzed during acquisition
         - l is the length parameter for the kernel
