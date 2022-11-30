@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+module which contains BayesianOptimization's class
 """
 import numpy as np
 GP = __import__('2-gp').GaussianProcess
