@@ -41,7 +41,7 @@ class BayesianOptimization:
         self.f = f
         self.gp = GP(X_init, Y_init, l, sigma_f)
         low, high = bounds
-        self.X_s = np.random.uniform(low=low, high=high,
-                                     size=(ac_samples, 1))
+        self.X_s = np.linspace(start=low, stop=high,
+                               num=ac_samples)[np.newaxis].T
         self.xsi = xsi
         self.minimize = minimize
