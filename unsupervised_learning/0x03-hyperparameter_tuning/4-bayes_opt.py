@@ -39,6 +39,24 @@ class BayesianOptimization:
           * xsi: the exploration-exploitation factor
           * minimize: a bool for minimization versus maximization
         """
+        self.f = f
+        self.gp = GP(X_init, Y_init, l, sigma_f)
+        low, high = bounds
+        self.X_s = np.linspace(start=low, stop=high,
+                               num=ac_samples)[np.newaxis].T
+        self.xsi = xsi
+        self.minimize = minimize
+
+    def acquisition(self):
+        """
+        - calculates the next best sample location:
+        - Uses the Expected Improvement acquisition function
+        Returns: X_next, EI
+        - X_next is a numpy.ndarray of shape (1,)
+          representing the next best sample point
+        - EI is a numpy.ndarray of shape (ac_samples,)
+          containing the expected improvement of each potential sample
+        """
         mu, sigma = self.gp.predict(self.X_s)
 
         if self.minimize is True:
