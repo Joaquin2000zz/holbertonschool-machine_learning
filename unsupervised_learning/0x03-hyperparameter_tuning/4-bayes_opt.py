@@ -57,24 +57,23 @@ class BayesianOptimization:
         - EI is a numpy.ndarray of shape (ac_samples,)
           containing the expected improvement of each potential sample
         """
-
         mu, sigma = self.gp.predict(self.X_s)
 
         if self.minimize is True:
             Y_sample = np.min(self.gp.Y)
-            imp = Y_sample - mu - self.xsi
+            im = Y_sample - mu - self.xsi
         else:
             Y_sample = np.max(self.gp.Y)
-            imp = mu - Y_sample - self.xsi
+            im = mu - Y_sample - self.xsi
 
-        n = sigma.shape[0]
-        Z = np.zeros(n)
-        for i in range(n):
+        ss = sigma.shape[0]
+        Z = np.zeros(ss)
+        for i in range(ss):
             if sigma[i] > 0:
-                Z[i] = imp[i] / sigma[i]
+                Z[i] = im[i] / sigma[i]
             else:
                 Z[i] = 0
-            EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
+            EI = im * norm.cdf(Z) + sigma * norm.pdf(Z)
 
         X_next = self.X_s[np.argmax(EI)]
 
