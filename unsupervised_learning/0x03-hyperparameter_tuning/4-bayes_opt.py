@@ -40,11 +40,14 @@ class BayesianOptimization:
           * minimize: a bool for minimization versus maximization
         """
         self.f = f
+
         self.gp = GP(X_init, Y_init, l, sigma_f)
-        low, high = bounds
-        self.X_s = np.linspace(start=low, stop=high,
-                               num=ac_samples)[np.newaxis].T
+
+        X_s = np.linspace(bounds[0], bounds[1], num=ac_samples)
+        self.X_s = X_s.reshape(-1, 1)
+
         self.xsi = xsi
+
         self.minimize = minimize
 
     def acquisition(self):
