@@ -5,6 +5,7 @@ module which contains BayesianOptimization's class
 import numpy as np
 from scipy.stats import norm
 GP = __import__('2-gp').GaussianProcess
+
 class BayesianOptimization:
     """
     performs Bayesian optimization on a noiseless 1D Gaussian process
@@ -43,6 +44,7 @@ class BayesianOptimization:
                                num=ac_samples)[np.newaxis].T
         self.xsi = xsi
         self.minimize = minimize
+
     def acquisition(self):
         """
         - calculates the next best sample location:
