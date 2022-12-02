@@ -37,19 +37,12 @@ class BayesianOptimization:
           * minimize: a bool for minimization versus maximization
         """
         self.f = f
-
         self.gp = GP(X_init, Y_init, l, sigma_f)
         low, high = bounds
         self.X_s = np.linspace(start=low, stop=high,
-                               num=ac_samples).reshape(-1, 1)
-
-        X_s = np.linspace(bounds[0], bounds[1], num=ac_samples)
-        self.X_s = X_s.reshape(-1, 1)
-
+                               num=ac_samples)[np.newaxis].T
         self.xsi = xsi
-
         self.minimize = minimize
-
     def acquisition(self):
         """
         - calculates the next best sample location:
@@ -61,20 +54,14 @@ class BayesianOptimization:
           containing the expected improvement of each potential sample
         """
         mu, sigma = self.gp.predict(self.X_s)
-        if self.minimize is True:
-            Y_sample = np.min(self.gp.Y)
-            im = Y_sample - mu - self.xsi
-        else:
-            Y_sample = np.max(self.gp.Y)
-            im = mu - Y_sample - self.xsi
 
-        N = sigma.shape[0]
-        Z = np.zeros(N)
-        for i in range(N):
-            if sigma[i] > 0:
-                Z[i] = im[i] / sigma[i]
-            else:
-                Z[i] = 0
-            EI = im * norm.cdf(Z) + sigma * norm.pdf(Z)
-        X_next = self.X_s[np.argmax(EI)]
+        sample = self.gp.Y.min() if self.minimize else self.gp.Y.max()
+
+        with np.errstate(divide='warn'):
+            imp = sample - mu - self.xsi if self.minimize else \
+                mu - sample - self.xsi
+            Z = imp / sigma
+            EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
+            EI[sigma == .0] = .0
+        X_next = self.X_s[EI.argmax()]
         return X_next, EI
