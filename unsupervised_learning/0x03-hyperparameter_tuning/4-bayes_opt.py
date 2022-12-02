@@ -39,33 +39,24 @@ class BayesianOptimization:
           * xsi: the exploration-exploitation factor
           * minimize: a bool for minimization versus maximization
         """
-        self.f = f
-        self.gp = GP(X_init, Y_init, l, sigma_f)
-        low, high = bounds
-        self.X_s = np.linspace(start=low, stop=high,
-                               num=ac_samples)[np.newaxis].T
-        self.xsi = xsi
-        self.minimize = minimize
-
-    def acquisition(self):
-        """
-        - calculates the next best sample location:
-        - Uses the Expected Improvement acquisition function
-        Returns: X_next, EI
-        - X_next is a numpy.ndarray of shape (1,)
-          representing the next best sample point
-        - EI is a numpy.ndarray of shape (ac_samples,)
-          containing the expected improvement of each potential sample
-        """
         mu, sigma = self.gp.predict(self.X_s)
 
-        sample = self.gp.Y.min() if self.minimize else self.gp.Y.max()
+        if self.minimize is True:
+            Y_sample = np.min(self.gp.Y)
+            im = Y_sample - mu - self.xsi
+        else:
+            Y_sample = np.max(self.gp.Y)
+            im = mu - Y_sample - self.xsi
 
-        with np.errstate(divide='warn'):
-            imp = sample - mu - self.xsi if self.minimize else \
-                mu - sample - self.xsi
-            Z = imp / sigma
-            EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
-            EI[sigma == .0] = .0
-        X_next = self.X_s[EI.argmax()]
-        return X_next, EI
+        ss = sigma.shape[0]
+        Z = np.zeros(ss)
+        for i in range(ss):
+            if sigma[i] > 0:
+                Z[i] = im[i] / sigma[i]
+            else:
+                Z[i] = 0
+            expo = im * norm.cdf(Z) + sigma * norm.pdf(Z)
+
+        X_next = self.X_s[np.argmax(expo)]
+
+        return X_next, expo
