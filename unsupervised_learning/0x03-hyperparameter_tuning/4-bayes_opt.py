@@ -60,7 +60,8 @@ class BayesianOptimization:
         mu, sigma = self.gp.predict(self.X_s)
 
         sample = self.gp.Y.min() if self.minimize else self.gp.Y.max()
-        imp = sample - mu - self.xsi if self.minimize else mu - sample - self.xsi
+        imp = sample - mu - self.xsi if self.minimize else \
+            mu - sample - self.xsi
 
         with np.errstate(divide='warn'):
             Z = imp / sigma
