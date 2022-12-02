@@ -60,18 +60,22 @@ class BayesianOptimization:
         
         mu, sigma = self.gp.predict(self.X_s)
 
-        if self.minimize is True:
-            sample = self.gp.Y.min()
-            imp = sample - mu - self.xsi
+        if self.minimize:
+            Y_sample = np.min(self.gp.Y)
+            imp = Y_sample - mu - self.xsi
         else:
-            sample = self.gp.Y.max()
-            imp = mu - sample - self.xsi
+            Y_sample = np.max(self.gp.Y)
+            imp = mu - Y_sample - self.xsi
 
         n = sigma.shape[0]
         Z = np.zeros(n)
         for i in range(n):
-            Z[i] = imp[i] / sigma[i] if sigma[i] > 0 else 0
+            if sigma[i] > 0:
+                Z[i] = imp[i] / sigma[i]
+            else:
+                Z[i] = 0
             EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
 
-        X_next = self.X_s[EI.argmax()]
+        X_next = self.X_s[np.argmax(EI)]
+
         return X_next, EI
