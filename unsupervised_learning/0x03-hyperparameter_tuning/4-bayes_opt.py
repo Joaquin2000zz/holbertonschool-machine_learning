@@ -43,7 +43,7 @@ class BayesianOptimization:
         self.gp = GP(X_init, Y_init, l, sigma_f)
         low, high = bounds
         self.X_s = np.linspace(start=low, stop=high,
-                               num=ac_samples)[np.newaxis].T
+                               num=ac_samples).reshape(-1, 1)
         self.xsi = xsi
         self.minimize = minimize
 
@@ -57,10 +57,10 @@ class BayesianOptimization:
         - EI is a numpy.ndarray of shape (ac_samples,)
           containing the expected improvement of each potential sample
         """
-        
+
         mu, sigma = self.gp.predict(self.X_s)
 
-        if self.minimize:
+        if self.minimize is True:
             Y_sample = np.min(self.gp.Y)
             imp = Y_sample - mu - self.xsi
         else:
