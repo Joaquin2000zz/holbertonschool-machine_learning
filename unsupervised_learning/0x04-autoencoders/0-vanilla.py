@@ -33,7 +33,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     # bottle neck
     Y = keras.layers.Dense(units=latent_dims, activation='relu')(Y)
 
-    encoder = keras.Model(X, Y) # f(x)
+    encoder = keras.Model(X, Y)  # f(x)
 
     xD = keras.Input(shape=(latent_dims,))
 
@@ -42,7 +42,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Y = keras.layers.Dense(units=l, activation='relu')(Y)
     Y = keras.layers.Dense(units=input_dims, activation='sigmoid')(Y)
 
-    decoder = keras.Model(xD, Y) # g(h)
+    decoder = keras.Model(xD, Y)  # g(h)
 
     # by definition: autoencoder -> x = g(f(x))
     auto = keras.Model(X, decoder(encoder(X)))
