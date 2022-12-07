@@ -44,7 +44,6 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
 
     Y = xD
     for l in reversed(hidden_layers):
-        import tensorflow as tf
         Y = keras.layers.Dense(units=l, activation='relu',
                                activity_regularizer=l1)(Y)
     Y = keras.layers.Dense(units=input_dims, activation='sigmoid',
