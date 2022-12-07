@@ -31,8 +31,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     X = keras.Input(shape=(input_dims,))
     Y = X
     for l in hidden_layers:
-        Y = keras.layers.Dense(units=l, activation='relu',
-                               activity_regularizer=l1)(Y)
+        Y = keras.layers.Dense(units=l, activation='relu')(Y)
 
     # bottle neck
     Y = keras.layers.Dense(units=latent_dims, activation='relu',
@@ -44,10 +43,8 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
 
     Y = xD
     for l in reversed(hidden_layers):
-        Y = keras.layers.Dense(units=l, activation='relu',
-                               activity_regularizer=l1)(Y)
-    Y = keras.layers.Dense(units=input_dims, activation='sigmoid',
-                           activity_regularizer=l1)(Y)
+        Y = keras.layers.Dense(units=l, activation='relu')(Y)
+    Y = keras.layers.Dense(units=input_dims, activation='sigmoid')(Y)
 
     decoder = keras.Model(xD, Y)  # g(h)
 
