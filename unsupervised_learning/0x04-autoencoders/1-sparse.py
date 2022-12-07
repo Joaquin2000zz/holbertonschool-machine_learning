@@ -27,7 +27,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
       in the decoder, which should use sigmoid
     """
 
-    l1 = keras.regularizers.L1(lambtha)
+    l1 = keras.regularizers.l1(lambtha)
     X = keras.Input(shape=(input_dims,))
     Y = X
     for l in hidden_layers:
