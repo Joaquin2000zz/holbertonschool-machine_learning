@@ -72,9 +72,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         # computes Kullback-Leibler divergece loss function
         exp_stddev = keras.backend.exp(log_stddev)
         sigma = keras.backend.mean(1 + log_stddev -
-                                  keras.backend.square(mean) -
-                                  keras.backend.square(exp_stddev),
-                                  axis=-1)
+                                   keras.backend.square(mean) -
+                                   keras.backend.square(exp_stddev),
+                                   axis=-1)
         kl_loss = -0.5 * sigma
         total_loss = recon_loss + kl_loss
         return total_loss
