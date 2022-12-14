@@ -23,7 +23,6 @@ def rnn(rnn_cell, X, h_0):
     """
     h_prev = h_0
     t, _, _ = X.shape
-    #H, Y = np.zeros(shape=(t, )), np.zeros(shape=(t, ))
     H, Y = [h_0], []
     for x in X:
         h_prev, y = rnn_cell.forward(h_prev, x)
