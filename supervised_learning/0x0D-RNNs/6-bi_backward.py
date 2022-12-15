@@ -69,4 +69,3 @@ class BidirectionalCell:
         h_next = np.tanh(Z)
 
         return h_next
-
