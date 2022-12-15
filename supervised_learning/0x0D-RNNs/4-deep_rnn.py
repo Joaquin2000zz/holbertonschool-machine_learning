@@ -27,7 +27,6 @@ def deep_rnn(rnn_cells, X, h_0):
 
     H = np.zeros(shape=(T + 1, L, M, H))
     H[0] = h_0
-    print(T, H.shape)
     for t in range(T):
         x = X[t]
         for l in range(L):

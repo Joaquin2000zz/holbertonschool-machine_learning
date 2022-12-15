@@ -9,6 +9,7 @@ class GRUCell:
     """
     represents a gated recurrent unit
     """
+
     def __init__(self, i, h, o):
         """
         class constructor

@@ -9,7 +9,7 @@ class LSTMCell:
     """
     represents an long-short term memory unit
     """
-    
+
     def __init__(self, i, h, o):
         """
         class constructor
@@ -75,5 +75,5 @@ class LSTMCell:
 
         yt = (h_next @ self.Wy) + self.by
         yexp = np.exp(yt)
-        
+
         return h_next, c_next, yexp / yexp.sum(axis=1, keepdims=True)
