@@ -29,13 +29,13 @@ class LSTMCell:
         - The biases should be initialized as zeros
         """
         self.Wf = np.random.normal(size=(i + h, h))
-        self.bf = np.zeros(shape=(1, i))
+        self.bf = np.zeros(shape=(1, h))
         self.Wu = np.random.normal(size=(i + h, h))
-        self.bu = np.zeros(shape=(1, i))
+        self.bu = np.zeros(shape=(1, h))
         self.Wc = np.random.normal(size=(i + h, h))
-        self.bc = np.zeros(shape=(1, i))
+        self.bc = np.zeros(shape=(1, h))
         self.Wo = np.random.normal(size=(i + h, h))
-        self.bo = np.zeros(shape=(1, i))
+        self.bo = np.zeros(shape=(1, h))
         self.Wy = np.random.normal(size=(h, o))
         self.by = np.zeros(shape=(1, o))
 

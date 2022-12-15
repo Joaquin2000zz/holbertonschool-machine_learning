@@ -28,11 +28,11 @@ class GRUCell:
         - The biases should be initialized as zeros
         """
         self.Wz = np.random.normal(size=(i + h, h))
-        self.bz = np.zeros(shape=(1, i))
+        self.bz = np.zeros(shape=(1, h))
         self.Wr = np.random.normal(size=(i + h, h))
-        self.br = np.zeros(shape=(1, i))
+        self.br = np.zeros(shape=(1, h))
         self.Wh = np.random.normal(size=(i + h, h))
-        self.bh = np.zeros(shape=(1, i))
+        self.bh = np.zeros(shape=(1, h))
         self.Wy = np.random.normal(size=(h, o))
         self.by = np.zeros(shape=(1, o))
 
