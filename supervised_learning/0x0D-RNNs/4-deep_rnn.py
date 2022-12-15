@@ -22,17 +22,17 @@ def deep_rnn(rnn_cells, X, h_0):
     - H is a numpy.ndarray containing all of the hidden states
     - Y is a numpy.ndarray containing all of the outputs
     """
-    T, M, I = X.shape
+    T, M, _ = X.shape
     L, M, H = h_0.shape
 
     H = np.zeros(shape=(T + 1, L, M, H))
     H[0] = h_0
     for t in range(T):
         x = X[t]
-        for l in range(L):
-            x, yl = rnn_cells[l].forward(H[t, l], x)
-            H[t + 1, l] = x
-            if l == L - 1:
+        for layer in range(L):
+            x, yl = rnn_cells[layer].forward(H[t, layer], x)
+            H[t + 1, layer] = x
+            if layer == L - 1:
                 if t == 0:
                     h, w = yl.shape
                     Y = np.zeros(shape=(T, h, w))
