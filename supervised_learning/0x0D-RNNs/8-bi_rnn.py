@@ -25,7 +25,7 @@ def bi_rnn(bi_cell, X, h_0, h_t):
     -  Y is a numpy.ndarray containing all of the outputs
     """
 
-    T, M, _= X.shape
+    T, M, _ = X.shape
     _, H = h_0.shape
     H_f, H_b = np.zeros(shape=(T, M, H)), np.zeros(shape=(T, M, H))
 
@@ -38,5 +38,5 @@ def bi_rnn(bi_cell, X, h_0, h_t):
 
     H = np.concatenate((H_f, H_b), axis=-1)
     Y = bi_cell.output(H)
-    
+
     return H, Y
