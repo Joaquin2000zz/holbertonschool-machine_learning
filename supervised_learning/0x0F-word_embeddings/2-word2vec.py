@@ -29,3 +29,4 @@ def word2vec_model(sentences, size=100, min_count=5, window=5, negative=5,
                      negative=negative, iter=iterations, sg=1 if cbow else 0)
     model.train(sentences, total_examples=model.corpus_count, epochs=model.epochs)
     return model
+    
