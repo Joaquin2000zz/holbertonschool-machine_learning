@@ -12,7 +12,6 @@ def n_gram(sentence, n):
     ngram = []
     m = len(sentence)
     for i in range(m - 1):
-        print(i + n)
         new = ' '.join(sentence[i: i + n])
         if new not in ngram:
             ngram.append(new)
