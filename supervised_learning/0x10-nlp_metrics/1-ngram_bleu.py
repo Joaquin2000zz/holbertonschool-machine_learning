@@ -4,6 +4,7 @@ module which contains ngram_bleu function
 """
 import numpy as np
 
+
 def n_gram(sentence, n):
     """
     generates ngram segmentation 
@@ -16,6 +17,7 @@ def n_gram(sentence, n):
         if new not in ngram:
             ngram.append(new)
     return ngram
+
 
 def ngram_bleu(references, sentence, n):
     """
@@ -32,7 +34,6 @@ def ngram_bleu(references, sentence, n):
     m = len(sentence)
     ngram = n_gram(sentence, n)
     gram_refs = [n_gram(ref, n) for ref in references]
-    print(ngram)
     for word in ngram:
         count_clip += np.max([ref.count(word) for ref in gram_refs])
         count += ngram.count(word)
