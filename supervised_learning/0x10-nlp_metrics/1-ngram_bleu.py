@@ -7,7 +7,7 @@ import numpy as np
 
 def n_gram(sentence, n):
     """
-    generates ngram segmentation 
+    generates ngram segmentation
     """
     ngram = []
     m = len(sentence)

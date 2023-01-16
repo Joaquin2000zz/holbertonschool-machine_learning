@@ -1,30 +1,45 @@
 #!/usr/bin/env python3
 """
-module which contains uni_bleu function
+module which contains ngram_bleu function
 """
 import numpy as np
 
 
-def uni_bleu(references, sentence):
+def n_gram(sentence, n=1):
     """
-    calculates the unigram BLEU score for a sentence:
+    generates ngram segmentation
+    """
+    ngram = []
+    m = len(sentence)
+    for i in range(m - 1):
+        new = ' '.join(sentence[i: i + n])
+        if new not in ngram:
+            ngram.append(new)
+    return ngram
+
+
+def ngram_bleu(references, sentence):
+    """
+    calculates the n-gram BLEU score for a sentence:
 
     - references: is a list of reference translations
       * each reference translation is a list of the words in the translation
     - sentence: is a list containing the model proposed sentence
-    Returns: the unigram BLEU score
+    - n: size of the n-gram to use for evaluation
+    Returns: the n-gram BLEU score
     """
     count_clip = 0
     count = 0
-    n = 0
-    for word in sentence:
-        count_clip += np.max([ref.count(word) for ref in references])
-        count += sentence.count(word)
-        n += 1
+    m = len(sentence)
+    ngram = n_gram(sentence)
+    gram_refs = [n_gram(ref) for ref in references]
+    for word in ngram:
+        count_clip += np.max([ref.count(word) for ref in gram_refs])
+        count += ngram.count(word)
 
-    r = len(references[np.argmin([abs(len(x) - n) for x in references])])
-    if n > r:
+    r = len(references[np.argmin([abs(len(x) - m) for x in references])])
+    if m > r:
         brevity_penalty = 1
     else:
-        brevity_penalty = np.exp(1 - (r / n))
+        brevity_penalty = np.exp(1 - (r / m))
     return brevity_penalty * (count_clip / count)
