@@ -40,6 +40,7 @@ def ngram_bleu(references, sentence, n):
 
     return count_clip / count
 
+
 def cumulative_bleu(references, sentence, n):
     """
     calculates the cumulative n-gram BLEU score for a sentence:
@@ -54,11 +55,11 @@ def cumulative_bleu(references, sentence, n):
     m = len(sentence)
 
     cum_bleu = [ngram_bleu(references, sentence, i) for i in range(1, n + 1)]
-    
+
     r = len(references[np.argmin([abs(len(x) - m) for x in references])])
     if m > r:
         brevity_penalty = 1
     else:
         brevity_penalty = np.exp(1 - (r / m))
-    
+
     return brevity_penalty * np.sum(np.log(np.exp(cum_bleu)) / n)
