@@ -11,14 +11,14 @@ def n_gram(sentence, n=1):
     """
     ngram = []
     m = len(sentence)
-    for i in range(m - 1):
+    for i in range(m):
         new = ' '.join(sentence[i: i + n])
         if new not in ngram:
             ngram.append(new)
     return ngram
 
 
-def ngram_bleu(references, sentence):
+def uni_bleu(references, sentence):
     """
     calculates the n-gram BLEU score for a sentence:
 
@@ -32,6 +32,7 @@ def ngram_bleu(references, sentence):
     count = 0
     m = len(sentence)
     ngram = n_gram(sentence)
+    print(ngram)
     gram_refs = [n_gram(ref) for ref in references]
     for word in ngram:
         count_clip += np.max([ref.count(word) for ref in gram_refs])
