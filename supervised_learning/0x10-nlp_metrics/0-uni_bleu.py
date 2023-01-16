@@ -32,7 +32,6 @@ def uni_bleu(references, sentence):
     count = 0
     m = len(sentence)
     ngram = n_gram(sentence)
-    print(ngram)
     gram_refs = [n_gram(ref) for ref in references]
     for word in ngram:
         count_clip += np.max([ref.count(word) for ref in gram_refs])
