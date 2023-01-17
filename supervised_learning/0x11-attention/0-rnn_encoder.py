@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains  function
+module which contains RNNEncoder class
 """
 import tensorflow as tf
 
