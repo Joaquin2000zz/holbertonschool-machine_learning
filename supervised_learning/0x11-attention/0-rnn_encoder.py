@@ -43,29 +43,9 @@ class RNNEncoder(tf.keras.layers.Layer):
             input_length=None,
         )
         self.gru = tf.keras.layers.GRU(units,
-                                       activation='tanh',
-                                       recurrent_activation='sigmoid',
-                                       use_bias=True,
                                        kernel_initializer='glorot_uniform',
-                                       recurrent_initializer='orthogonal',
-                                       bias_initializer='zeros',
-                                       kernel_regularizer=None,
-                                       recurrent_regularizer=None,
-                                       bias_regularizer=None,
-                                       activity_regularizer=None,
-                                       kernel_constraint=None,
-                                       recurrent_constraint=None,
-                                       bias_constraint=None,
-                                       dropout=0.0,
-                                       recurrent_dropout=0.0,
                                        return_sequences=True,
-                                       return_state=True,
-                                       go_backwards=False,
-                                       stateful=False,
-                                       unroll=False,
-                                       time_major=False,
-                                       reset_after=True,
-                                       )
+                                       return_state=True)
 
     def initialize_hidden_state(self):
         """
