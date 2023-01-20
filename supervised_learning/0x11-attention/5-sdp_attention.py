@@ -31,7 +31,8 @@ def sdp_attention(Q, K, V, mask=None):
     scaling_factor = tf.sqrt(tf.cast(dk, dtype=tf.float32))
     scaled = QKT / scaling_factor
     if mask:
-        scaled += tf.cast(-1e9, dtype=tf.float32) * mask
+        mask *= tf.cast(-1e9, dtype=tf.float32)
+        scaled += mask
     weights = tf.nn.softmax(scaled, axis=-1)
     outputs = tf.matmul(weights, V)
 
