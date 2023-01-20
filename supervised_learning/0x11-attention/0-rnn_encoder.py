@@ -43,7 +43,7 @@ class RNNEncoder(tf.keras.layers.Layer):
             input_length=None,
         )
         self.gru = tf.keras.layers.GRU(units,
-                                       kernel_initializer='glorot_uniform',
+                                       recurrent_initializer='glorot_uniform',
                                        return_sequences=True,
                                        return_state=True)
 
@@ -67,6 +67,6 @@ class RNNEncoder(tf.keras.layers.Layer):
           - hidden: is a tensor of shape (batch, units)
               containing the last hidden state of the encoder
         """
-        outputs, state = self.gru(self.embedding(x), initial_state=initial)
+        outputs, hidden = self.gru(self.embedding(x), initial_state=initial)
 
-        return outputs, state
+        return outputs, hidden
