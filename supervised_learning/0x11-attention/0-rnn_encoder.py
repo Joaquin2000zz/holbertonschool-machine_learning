@@ -53,7 +53,7 @@ class RNNEncoder(tf.keras.layers.Layer):
         Returns: a tensor of shape (batch, units)
             containing the initialized hidden states
         """
-        return tf.initializers.zeros()(shape=(self.batch, self.units))
+        return tf.keras.initializers.Zeros()(shape=(self.batch, self.units))
 
     def call(self, x, initial):
         """
