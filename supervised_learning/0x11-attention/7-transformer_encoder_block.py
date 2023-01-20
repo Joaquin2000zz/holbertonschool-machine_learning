@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-module which contains  class
+module which contains EncoderBlock class
 """
 import tensorflow as tf
 MultiHeadAttention = __import__('6-multihead_attention').MultiHeadAttention
+
 
 class EncoderBlock(tf.keras.layers.Layer):
     """

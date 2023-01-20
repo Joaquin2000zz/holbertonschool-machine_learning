@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-module which contains class
+module which contains DecoderBlock class
 """
 import tensorflow as tf
 MultiHeadAttention = __import__('6-multihead_attention').MultiHeadAttention
@@ -43,9 +43,10 @@ class DecoderBlock(tf.keras.layers.Layer):
         self.dropout2 = tf.keras.layers.Dropout(drop_rate)
         self.dropout3 = tf.keras.layers.Dropout(drop_rate)
 
-    def call(self, x, encoder_output, training, look_ahead_mask, padding_mask):
+    def call(self, x, encoder_output, training,
+             look_ahead_mask, padding_mask):
         """
-        x: a tensor of shape (batch, target_seq_len, dm)containing
+        x: a tensor of shape (batch, target_seq_len, dm) containing
             the input to the decoder block
         encoder_output: a tensor of shape (batch, input_seq_len, dm)
             containing the output of the encoder
