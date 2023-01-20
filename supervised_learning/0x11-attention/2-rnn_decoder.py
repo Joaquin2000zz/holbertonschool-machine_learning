@@ -36,12 +36,7 @@ class RNNDecoder(tf.keras.layers.Layer):
             embeddings_initializer='uniform',
         )
         self.gru = tf.keras.layers.GRU(units,
-                                       activation='tanh',
-                                       recurrent_activation='sigmoid',
-                                       use_bias=True,
-                                       kernel_initializer='glorot_uniform',
-                                       recurrent_initializer='orthogonal',
-                                       bias_initializer='zeros',
+                                       recurrent_initializer='glorot_uniform',
                                        return_sequences=True,
                                        return_state=True
                                        )
