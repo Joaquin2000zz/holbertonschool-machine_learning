@@ -30,9 +30,9 @@ class MultiHeadAttention(tf.keras.layers.Layer):
               the attention output
         """
         super(MultiHeadAttention, self).__init__()
-        self.dm = dm
         self.h = h
-        self.depth = int(dm / h)
+        self.dm = dm
+        self.depth = dm // h
         self.Wq = tf.keras.layers.Dense(dm)
         self.Wk = tf.keras.layers.Dense(dm)
         self.Wv = tf.keras.layers.Dense(dm)
