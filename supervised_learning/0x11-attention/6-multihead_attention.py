@@ -38,19 +38,15 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         self.Wv = tf.keras.layers.Dense(dm)
         self.linear = tf.keras.layers.Dense(dm)
 
-    def reshape_tensor(self, x, batch, flag=True):
+    def reshape_tensor(self, x, batch):
         """
         reshapes the linearity projected queries, keys, and values
         in such a manner as to allow the attention heads
         to be computed in parallel
         """
-        if flag:
-            x = tf.reshape(x, shape=(batch, -1, self.h, self.depth))
-            x = tf.transpose(x, perm=[0, 2, 1, 3])
-        else:
-            x = tf.transpose(x, perm=[0, 2, 1, 3])
-            x = tf.reshape(x, shape=(batch, -1, self.dm))
-        return x
+        x = tf.reshape(x, (batch, -1, self.h, self.depth))
+        return tf.transpose(x, perm=[0, 2, 1, 3])
+
 
     def call(self, Q, K, V, mask):
         """
@@ -67,13 +63,16 @@ class MultiHeadAttention(tf.keras.layers.Layer):
           * weights: a tensor with its last three dimensions as
               (..., h, seq_len_q, seq_len_v) containing the attention weights
         """
-        batch = tf.shape(Q)[0]
-        # reshape data into desired shape
-        Q = self.reshape_tensor(self.Wq(Q), batch)
-        K = self.reshape_tensor(self.Wk(K), batch)
-        V = self.reshape_tensor(self.Wv(V), batch)
-        outputs, weights = sdp_attention(Q, K, V, mask)
-
-        outputs = self.reshape_tensor(outputs, batch, False)
-
-        return self.linear(outputs), weights
+        batch_size = tf.shape(Q)[0]
+        Q = self.Wq(Q)
+        K = self.Wk(K)
+        V = self.Wv(V)
+        Q = self.reshape_tensor(Q, batch_size)
+        K = self.reshape_tensor(K, batch_size)
+        V = self.reshape_tensor(V, batch_size)
+        output, weights = sdp_attention(Q, K, V, mask)
+        output = tf.transpose(output, perm=[0, 2, 1, 3])
+        concat_attention = tf.reshape(output,
+                                      (batch_size, -1, self.dm))
+        output = self.linear(concat_attention)
+        return output, weights
