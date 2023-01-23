@@ -60,20 +60,17 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         V = self.reshape_tensor(self.Wv(V), batch)
         outputs, weights = sdp_attention(Q, K, V, mask)
 
-        outputs = self.reshape_tensor(outputs, batch, False)
+        outputs = tf.transpose(outputs, perm=[0, 2, 1, 3])
+        outputs = tf.reshape(outputs, shape=(batch, -1, self.dm))
 
         return self.linear(outputs), weights
 
-    def reshape_tensor(self, x, batch, flag=True):
+    def reshape_tensor(self, x, batch):
         """
         reshapes the linearity projected queries, keys, and values
         in such a manner as to allow the attention heads
         to be computed in parallel
         """
-        if flag:
-            x = tf.reshape(x, shape=(batch, -1, self.h, self.depth))
-            x = tf.transpose(x, perm=[0, 2, 1, 3])
-        else:
-            x = tf.transpose(x, perm=[0, 2, 1, 3])
-            x = tf.reshape(x, shape=(batch, -1, self.dm))
+        x = tf.reshape(x, shape=(batch, -1, self.h, self.depth))
+        x = tf.transpose(x, perm=[0, 2, 1, 3])
         return x
