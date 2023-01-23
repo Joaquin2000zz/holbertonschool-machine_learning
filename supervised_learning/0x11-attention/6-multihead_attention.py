@@ -55,9 +55,12 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         """
         batch = tf.shape(Q)[0]
         # reshape data into desired shape
-        Q = self.reshape_tensor(self.Wq(Q), batch)
-        K = self.reshape_tensor(self.Wk(K), batch)
-        V = self.reshape_tensor(self.Wv(V), batch)
+        Q = self.Wq(Q)
+        K = self.Wk(K)
+        V = self.Wv(V)
+        Q = self.reshape_tensor(Q, batch)
+        K = self.reshape_tensor(K, batch)
+        V = self.reshape_tensor(V, batch)
         outputs, weights = sdp_attention(Q, K, V, mask)
 
         outputs = tf.transpose(outputs, perm=[0, 2, 1, 3])
