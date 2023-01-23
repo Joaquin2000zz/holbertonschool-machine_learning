@@ -38,16 +38,6 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         self.Wv = tf.keras.layers.Dense(dm)
         self.linear = tf.keras.layers.Dense(dm)
 
-    def reshape_tensor(self, x, batch):
-        """
-        reshapes the linearity projected queries, keys, and values
-        in such a manner as to allow the attention heads
-        to be computed in parallel
-        """
-        x = tf.reshape(x, (batch, -1, self.h, self.depth))
-        return tf.transpose(x, perm=[0, 2, 1, 3])
-
-
     def call(self, Q, K, V, mask):
         """
         Q: is a tensor of shape (batch, seq_len_q, dk)
@@ -63,17 +53,27 @@ class MultiHeadAttention(tf.keras.layers.Layer):
           * weights: a tensor with its last three dimensions as
               (..., h, seq_len_q, seq_len_v) containing the attention weights
         """
-        batch_size = tf.shape(Q)[0]
+        batch = tf.shape(Q)[0]
+        # reshape data into desired shape
         Q = self.Wq(Q)
         K = self.Wk(K)
         V = self.Wv(V)
-        Q = self.reshape_tensor(Q, batch_size)
-        K = self.reshape_tensor(K, batch_size)
-        V = self.reshape_tensor(V, batch_size)
-        output, weights = sdp_attention(Q, K, V, mask)
-        output = tf.transpose(output, perm=[0, 2, 1, 3])
-        concat_attention = tf.reshape(output,
-                                      (batch_size, -1, self.dm))
-        output = self.linear(concat_attention)
-        return output, weights
+        Q = self.reshape_tensor(Q, batch)
+        K = self.reshape_tensor(K, batch)
+        V = self.reshape_tensor(V, batch)
+        outputs, weights = sdp_attention(Q, K, V, mask)
 
+        outputs = tf.transpose(outputs, perm=[0, 2, 1, 3])
+        outputs = tf.reshape(outputs, (batch, -1, self.dm))
+
+        return self.linear(outputs), weights
+
+    def reshape_tensor(self, x, batch):
+        """
+        reshapes the linearity projected queries, keys, and values
+        in such a manner as to allow the attention heads
+        to be computed in parallel
+        """
+        x = tf.reshape(x, shape=(batch, -1, self.h, self.depth))
+        x = tf.transpose(x, perm=[0, 2, 1, 3])
+        return x
