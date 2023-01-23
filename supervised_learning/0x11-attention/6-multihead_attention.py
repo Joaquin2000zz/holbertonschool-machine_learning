@@ -76,3 +76,4 @@ class MultiHeadAttention(tf.keras.layers.Layer):
                                       (batch_size, -1, self.dm))
         output = self.linear(concat_attention)
         return output, weights
+
