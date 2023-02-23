@@ -48,7 +48,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     """
     initial_epsilon = epsilon
     s, a = Q.shape
-    elegibility_trace = np.zeros(shape=(s, a))
+    elegibility_trace = np.zeros(shape=(s, a)) # Et(s, a) = 0
     for _ in range(episodes):
         s = env.reset()
         action = epsilon_greedy(Q, s, epsilon)
@@ -58,10 +58,12 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             new_s, reward, done, info = env.step(new_action)
             # δ = R(t+1) + γQ(St+1, At+1) - Q(St, At)
             direction = Q[new_s, new_action] - Q[s, action]
-            delta_t = reward + gamma * direction
-            # Et = γλEt-1(s) + Q(St+1, At+1) - Q(St, At)
+            delta_t = reward + (gamma * direction)
+            # Et(s, a) = 1(St=s, At=a)
             elegibility_trace[s, action] += 1
+            # For all s ∈ S, a ∈ A(s):
             # Q(St) = Q(St) + αδEt(s)
+            # Et = γλEt-1(s)
             Q += alpha * delta_t * elegibility_trace
             elegibility_trace *= (gamma * lambtha)
             action = new_action
