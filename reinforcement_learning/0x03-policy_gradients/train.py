@@ -18,7 +18,7 @@ def train(env, nb_episodes, alpha=.000045, gamma=.98,
     Return: all values of the score
             (sum of all rewards during one episode loop)
     """
-    n, m = env.reset().shape[0], 2
+    n, m = env.observation_space.shape[0], env.action_space.n
     w = np.random.rand(n, m)
     scores = []
     for episode in range(nb_episodes + 1):
