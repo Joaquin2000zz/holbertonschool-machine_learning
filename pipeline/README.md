@@ -1,0 +1,1 @@
+this folder contains all the stuff I learned in holberton school about pipelines
