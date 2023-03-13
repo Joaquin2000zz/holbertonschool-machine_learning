@@ -3,15 +3,14 @@ module which contains sentientPlanets function
 """
 import requests
 
-def navigate(R, f, d, s, I=['unknown']):
+
+def navigate(R, f, s, ignore=['unknown']):
     """
     given @R list, navigate into it's dictionaries
 
     """
     obtained = []
     for r in R:
-        if r.get('designation') != d:
-            continue
         this = r.get(f)
         if not this:
             continue
@@ -25,18 +24,21 @@ def navigate(R, f, d, s, I=['unknown']):
         if not json_response:
             return []
         this = json_response.get(s)
-        if this and this not in I:
+        if this and this not in ignore:
             obtained.append(this)
 
     return obtained
-        
-def sentientPlanets(designation='sentient', follow='homeworld', search='name'):
+
+
+def sentientPlanets(designation='sentient',
+                    follows='homeworld', searched='name'):
     """
-    By using the Swapi API, creates a method that returns
-    the list of names of the home planets of all
-    species with sentient @designation from species route.
+    By using the Swapi API, creates a method that
+    @follows the home planets and returns a list with the @searched values
+    with the given designation from species route.
     """
-    url = 'https://swapi-api.hbtn.io/api/species/'
+    url = 'https://swapi-api.hbtn.io/api/species/?designation='
+    url += designation
     response = requests.get(url)
     if not isinstance(response, requests.Response):
         return []
@@ -50,7 +52,7 @@ def sentientPlanets(designation='sentient', follow='homeworld', search='name'):
     results = json_response.get('results')
     if not results:
         return []
-    new = navigate(R=results, f=follow, d=designation, s=search)
+    new = navigate(R=results, f=follows, s=searched)
     if not new:
         return []
     listShips = new
@@ -67,7 +69,7 @@ def sentientPlanets(designation='sentient', follow='homeworld', search='name'):
         results = json_response.get('results')
         if not results:
             return listShips
-        new = navigate(R=results, f=follow, d=designation, s=search)
+        new = navigate(R=results, f=follows, s=searched)
         if not new:
             return listShips
         listShips += new
