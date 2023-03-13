@@ -11,7 +11,7 @@ def availableShips(passengerCount):
     Returns: the @listShips that can hold a given number of passengers
     """
     if not isinstance(passengerCount, int):
-        return None
+        return []
     url = 'https://swapi-api.hbtn.io/api/starships/?passengers='
     url += str(passengerCount)
     response = requests.get(url)
