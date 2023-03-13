@@ -16,7 +16,9 @@ def availableShips(passengerCount):
     url += str(passengerCount)
     response = requests.get(url)
     if not isinstance(response, requests.Response):
-        raise Exception
+        return []
+    if response.status_code != 200:
+        return []
 
     D = response.json()
     r = D.get('results')
@@ -26,9 +28,7 @@ def availableShips(passengerCount):
     D = response.json()
     next = D.get('next')
 
-    while response and isinstance(listShips, list):
-        if not next:
-            return listShips
+    while response and isinstance(listShips, list) and next:
         response = requests.get(next)
         D = response.json()
         r = D.get('results')
