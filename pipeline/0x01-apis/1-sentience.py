@@ -30,13 +30,15 @@ def navigate(R, f, s, ignore=['unknown']):
     return obtained
 
 
-def sentientPlanets(designation='sentient',
-                    follows='homeworld', searched='name'):
+def sentientPlanets():
     """
     By using the Swapi API, creates a method that
     @follows the home planets and returns a list with the @searched values
     with the given designation from species route.
     """
+    designation='sentient'
+    follows='homeworld'
+    searched='name'
     url = 'https://swapi-api.hbtn.io/api/species/?designation='
     url += designation
     response = requests.get(url)
