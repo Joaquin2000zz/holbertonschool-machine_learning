@@ -20,10 +20,17 @@ if __name__ == '__main__':
         indexes = {}
         for i, d in enumerate(r_json):
             date = d.get('date_unix')
-            date = datetime.utcfromtimestamp(date).strftime(
+            date = datetime.fromtimestamp(float(date)).strftime(
                 '%Y-%m-%dT%H:%M:%S.%f%z'
                 )
-            indexes[date] = i
+            check = indexes.get(date)
+            if check:
+                if not isinstance(check, list):
+                    indexes[date] = [check, i]
+                else:
+                    indexes[date].append(i)
+            else:
+                indexes[date] = i
             choose.append(date)
             choose.sort()
         date = choose[::-1][0]
@@ -34,7 +41,7 @@ if __name__ == '__main__':
         date = r_json.get('date_unix')
         if not isinstance(date, int):
             exit()
-        date = datetime.utcfromtimestamp(date).strftime(
+        date = datetime.fromtimestamp(float(date)).strftime(
             '%Y-%m-%dT%H:%M:%S.%f%z'
             )
     launch_name = r_json.get('name')
