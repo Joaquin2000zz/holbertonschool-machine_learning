@@ -20,6 +20,9 @@ def availableShips(passengerCount):
         return []
 
     d = response.json()
+    if not d:
+        return []
+
     r = d.get('results')
     f = [None, 'n/a', 'unknown'] + [str(x) for x in range(0, passengerCount)]
     n, p = 'name', 'passengers'
@@ -30,6 +33,8 @@ def availableShips(passengerCount):
     while response and isinstance(listShips, list) and next:
         response = requests.get(next)
         d = response.json()
+        if not d:
+            return listShips
         r = d.get('results')
         listShips += [x.get(n) for x in r if x.get(n) and x.get(p) not in f]
         next = d.get('next')
