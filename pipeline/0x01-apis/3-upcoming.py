@@ -28,9 +28,6 @@ if __name__ == '__main__':
         date = choose[0]
         r_json = r_json[indexes.get(date)]
 
-
-
-    
     launch_name, date = r_json.get('name'), r_json.get('date_unix')
     if not launch_name or not date:
         exit()
