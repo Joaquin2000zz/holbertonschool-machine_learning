@@ -30,7 +30,7 @@ def availableShips(passengerCount):
     n, p = 'name', 'passengers'
     new = [x.get(n) for x in r if x.get(n) and x.get(p) not in f]
     if not new:
-        return None
+        return []
     listShips = new
     d = response.json()
     next = d.get('next')
