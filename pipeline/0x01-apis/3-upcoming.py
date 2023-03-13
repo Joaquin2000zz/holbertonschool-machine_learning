@@ -10,7 +10,7 @@ import requests
 
 if __name__ == '__main__':
     url_base = 'https://api.spacexdata.com/v4/'
-    response = requests.get(url_base + 'launches')
+    response = requests.get(url_base + 'launches/')
     if response.status_code != 200:
         exit()
     r_json = response.json()
@@ -39,7 +39,9 @@ if __name__ == '__main__':
         exit()
     if not choose:
         date = r_json.get('date_unix')
-        if not isinstance(date, int):
+
+
+        if not isinstance(date, (int, float)):
             exit()
         date = datetime.fromtimestamp(float(date)).strftime(
             '%Y-%m-%dT%H:%M:%S.%f%z'
@@ -60,6 +62,7 @@ if __name__ == '__main__':
         exit()
     rocket_name, launchpad_name = rocket.get('name'), launchpad.get('name')
     launchpad_locality = launchpad.get('locality')
+
     msg = "{} ({}) {} - {} ({})"
     print(msg.format(launch_name,
                      date, rocket_name,
