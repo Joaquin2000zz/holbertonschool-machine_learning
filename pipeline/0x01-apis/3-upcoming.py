@@ -40,7 +40,7 @@ if __name__ == '__main__':
     launch_name = r_json.get('name')
     if not launch_name or not date:
         exit()
-    
+
     rocket_id, launchpad_id = r_json.get('rocket'), r_json.get('launchpad')
     if not rocket_id or not launchpad_id:
         exit()
