@@ -40,7 +40,6 @@ if __name__ == '__main__':
     if not choose:
         date = r_json.get('date_unix')
 
-
         if not isinstance(date, (int, float)):
             exit()
         date = datetime.fromtimestamp(float(date)).strftime(
