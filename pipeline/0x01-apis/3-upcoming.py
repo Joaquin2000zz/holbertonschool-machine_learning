@@ -14,6 +14,7 @@ if __name__ == '__main__':
     if response.status_code != 200:
         exit()
     r_json = response.json()
+    choose = False
     if isinstance(r_json, list):
         choose = []
         indexes = {}
@@ -27,11 +28,19 @@ if __name__ == '__main__':
             choose.sort()
         date = choose[::-1][0]
         r_json = r_json[indexes.get(date)]
-
-    launch_name, date = r_json.get('name'), r_json.get('date_unix')
+    if not isinstance(r_json, dict):
+        exit()
+    if not choose:
+        date = r_json.get('date_unix')
+        if not isinstance(date, int):
+            exit()
+        date = datetime.utcfromtimestamp(date).strftime(
+            '%Y-%m-%dT%H:%M:%S.%f%z'
+            )
+    launch_name = r_json.get('name')
     if not launch_name or not date:
         exit()
-    date = datetime.utcfromtimestamp(date).strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+    
     rocket_id, launchpad_id = r_json.get('rocket'), r_json.get('launchpad')
     if not rocket_id or not launchpad_id:
         exit()
