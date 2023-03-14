@@ -4,7 +4,7 @@ module which contains sentientPlanets function
 import requests
 
 
-def navigate(R, f, s, ignore=['unknown']):
+def navigate(R, f, s):
     """
     given @R list, navigate into it's dictionaries
 
@@ -19,12 +19,11 @@ def navigate(R, f, s, ignore=['unknown']):
             return []
         if response.status_code != 200:
             return []
-
         json_response = response.json()
         if not json_response:
             return []
         this = json_response.get(s)
-        if this and this not in ignore:
+        if this:
             obtained.append(this)
 
     return obtained
