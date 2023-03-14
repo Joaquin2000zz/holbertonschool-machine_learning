@@ -35,9 +35,9 @@ def sentientPlanets():
     @follows the home planets and returns a list with the @searched values
     with the given designation from species route.
     """
-    designation='sentient'
-    follows='homeworld'
-    searched='name'
+    designation = 'sentient'
+    follows = 'homeworld'
+    searched = 'name'
     url = 'https://swapi-api.hbtn.io/api/species/?designation='
     url += designation
     response = requests.get(url)
