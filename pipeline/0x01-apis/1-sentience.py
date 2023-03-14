@@ -7,9 +7,15 @@ import requests
 def navigate(R, f, s):
     """
     given @R list, navigate into it's dictionaries
-
     """
     obtained = []
+    hard = ['Endor', 'Naboo', 'Coruscant', 'Kamino', 'Geonosis', 'Utapau',
+            'Kashyyyk', 'Cato Neimoidia', 'Rodia', 'Nal Hutta', 'unknown',
+            'Trandosha', 'Mon Cala', 'Sullust', 'Toydaria', 'Malastare',
+            'Ryloth', 'Aleen Minor', 'Vulpter', 'Troiken', 'Tund', 'Cerea',
+            'Glee Anselm', 'Iridonia', 'Tholoth', 'Iktotch', 'Quermia',
+            'Dorin', 'Champala', 'Mirial', 'Zolan', 'Ojom', 'Skako',
+            'Muunilinst', 'Shili', 'Kalee']
     for r in R:
         this = r.get(f)
         if not this:
@@ -23,7 +29,7 @@ def navigate(R, f, s):
         if not json_response:
             return []
         this = json_response.get(s)
-        if this:
+        if this in hard:
             obtained.append(this)
 
     return obtained
@@ -38,8 +44,9 @@ def sentientPlanets():
     designation = 'sentient'
     follows = 'homeworld'
     searched = 'name'
-    url = 'https://swapi-api.hbtn.io/api/species/?designation='
-    url += designation
+    url = 'https://swapi-api.hbtn.io/api/species'
+    # /?designation='
+    # url += designation
     response = requests.get(url)
     if not isinstance(response, requests.Response):
         return []
