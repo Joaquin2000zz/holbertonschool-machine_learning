@@ -35,8 +35,8 @@ if __name__ == '__main__':
 
     def custom(x):
         """
-        function to filter first numerically descending
-        and then filter alphabetically ascending
+        function to sort first numerically descending
+        and then sort alphabetically ascending
         """
         a = re.search('[0-9]', x)
         a = -int(a.group(0)) if a else float('+inf')
