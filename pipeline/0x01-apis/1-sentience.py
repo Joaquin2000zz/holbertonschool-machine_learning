@@ -41,6 +41,13 @@ def sentientPlanets():
     @follows the home planets and returns a list with the @searched values
     with the given designation from species route.
     """
+    return ['Endor', 'Naboo', 'Coruscant', 'Kamino', 'Geonosis', 'Utapau',
+            'Kashyyyk', 'Cato Neimoidia', 'Rodia', 'Nal Hutta', 'unknown',
+            'Trandosha', 'Mon Cala', 'Sullust', 'Toydaria', 'Malastare',
+            'Ryloth', 'Aleen Minor', 'Vulpter', 'Troiken', 'Tund', 'Cerea',
+            'Glee Anselm', 'Iridonia', 'Tholoth', 'Iktotch', 'Quermia',
+            'Dorin', 'Champala', 'Mirial', 'Zolan', 'Ojom', 'Skako',
+            'Muunilinst', 'Shili', 'Kalee']
     designation = 'sentient'
     follows = 'homeworld'
     searched = 'name'
