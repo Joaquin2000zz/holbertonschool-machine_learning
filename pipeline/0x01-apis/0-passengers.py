@@ -5,6 +5,19 @@ function which contains aviableShips fuction
 import requests
 
 
+def parse(r, n, p, f, pc):
+    """
+    parse dict to get the ships
+    """
+    ships = []
+    for x in r:
+        xp = x.get(p)
+        if x.get(n) and xp not in f:
+            if int(xp.replace(',', '')) >= pc:
+                ships.append(x.get(n))
+    return ships
+
+
 def availableShips(passengerCount):
     """
     given the @passengerCount, uses Swapi's API to create a method that
@@ -26,9 +39,9 @@ def availableShips(passengerCount):
     r = d.get('results')
     if not r:
         return []
-    f = [None, 'n/a', 'unknown'] + [str(x) for x in range(0, passengerCount)]
+    f = [None, 'n/a', 'unknown']
     n, p = 'name', 'passengers'
-    new = [x.get(n) for x in r if x.get(n) and x.get(p) not in f]
+    new = parse(r, n, p, f, passengerCount)
     if not new:
         return []
     listShips = new
@@ -43,10 +56,9 @@ def availableShips(passengerCount):
         r = d.get('results')
         if not r:
             return listShips
-        new = [x.get(n) for x in r if x.get(n) and x.get(p) not in f]
+        new = parse(r, n, p, f, passengerCount)
         if not new:
             return listShips
         listShips += new
         next = d.get('next')
-
     return listShips
