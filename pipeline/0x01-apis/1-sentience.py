@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 module which contains sentientPlanets function
 """
