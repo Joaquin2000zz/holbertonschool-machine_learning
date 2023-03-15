@@ -2,7 +2,7 @@
 """
 module which prints the location of a specific user
 """
-import json as js
+from datetime import datetime
 import sys
 import requests
 
@@ -20,9 +20,12 @@ if __name__ == '__main__':
         exit()
     if response.status_code != 200:
         if response.status_code == 403:
-            print('Reset in X min')
+            X_RateLimit_Reset = response.headers.get('X-RateLimit-Reset')
+            now = datetime.now().timestamp()
+            distance = (int(X_RateLimit_Reset) - str(now)) / 60
+            print('Reset in {distance} min'.format(int(distance)))
             exit()
-    parsed = js.loads(response.text)
+    parsed = response.json()
     if not parsed:
         print('Not Found')
         exit()
