@@ -21,7 +21,6 @@ if __name__ == '__main__':
         if response:
             if response.status_code == 200:
                 parsed = response.json()
-                print(parsed, parsed)
                 message = parsed.get('message')
                 if message == 'Not Found':
                     print(message)
@@ -29,10 +28,10 @@ if __name__ == '__main__':
                     print(
                         parsed.get('location')
                     )
-            if response.status_code == 403:
-                X_RateLimit_Reset = response.headers.get(
-                    'X-RateLimit-Reset'
-                )
-                now = datetime.now().timestamp()
-                distance = (int(X_RateLimit_Reset) - str(now)) / 60
-                print('Reset in {distance} min'.format(int(distance)))
+        if response.status_code == 403:
+            X_RateLimit_Reset = response.headers.get(
+                'X-RateLimit-Reset'
+            )
+            now = datetime.now().timestamp()
+            distance = (int(X_RateLimit_Reset) - str(now)) / 60
+            print('Reset in {distance} min'.format(int(distance)))
