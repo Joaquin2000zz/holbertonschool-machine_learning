@@ -20,7 +20,6 @@ if __name__ == '__main__':
             print('Not Found')
         if response.status_code == 200:
             parsed = response.json()
-            print(parsed, parsed)
             message = parsed.get('message')
             if message == 'Not Found':
                 print(message)
