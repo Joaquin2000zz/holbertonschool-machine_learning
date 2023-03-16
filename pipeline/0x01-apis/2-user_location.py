@@ -32,5 +32,5 @@ if __name__ == '__main__':
                 'X-RateLimit-Reset'
             )
             now = datetime.now().timestamp()
-            distance = (int(X_RateLimit_Reset) - str(now)) / 60
-            print('Reset in {distance} min'.format(int(distance)))
+            distance = (int(X_RateLimit_Reset) - int(now)) / 60
+            print('Reset in {} min'.format(int(distance)))
