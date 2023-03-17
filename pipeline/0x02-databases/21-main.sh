@@ -11,7 +11,6 @@ then
     cat $table.sql | mysql -h $host -u root -p $db
 fi
 cat $file | mysql -h $host -u root -p $db
-cat 20-main.sql | mysql $host -u root -p $db
 echo "SELECT (a / b) FROM numbers;" | mysql -h $host -r root -p $db
 echo "--------------------------------------------"
 echo "SELECT SafeDiv(a, b) FROM numbers;" | mysql -h $host -r root -p $db
