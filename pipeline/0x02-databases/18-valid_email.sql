@@ -6,6 +6,7 @@
 --         user email validation - distribute the logic
 --         to the database itself!
 --
+DROP TRIGGER IF EXISTS `validate`;
 CREATE TRIGGER IF NOT EXISTS `validate`
 BEFORE UPDATE ON `users`
 FOR EACH ROW

@@ -10,6 +10,7 @@
 -- - score, the score value for the correction
 -- - Context: Write code in SQL is a nice level up!
 --
+DROP PROCEDURE IF EXISTS `AddBonus`;
 DELIMITER $$
 CREATE PROCEDURE IF NOT EXISTS `AddBonus` (IN `user_id` INT,
                                            `project_name` VARCHAR(256),

@@ -11,11 +11,11 @@
 -- - And returns a / b or 0 if b == 0
 --
 DROP FUNCTION IF EXISTS `SafeDiv`;
-DELIMTER $$
+DELIMITER $$
 CREATE FUNCTION IF NOT EXISTS `SafeDiv` (`a` INT, `b` INT)
-RETURNS FLOAT
+RETURNS FLOAT DETERMINISTIC
 BEGIN
-    DECLARE `res` FLOAT DETERMINISTIC;
+    DECLARE `res` FLOAT;
     IF `b` <> 0 THEN
         SET `res` = `a` / `b`;
     ELSE

@@ -7,6 +7,7 @@
 -- - Procedure ComputeAverageScoreForUser is taking 1 input:
 -- - user_id, a users.id value (you can assume user_id is linked to an existing users)
 --
+DROP FUNCTION IF EXISTS `ComputeAverageScoreForUser`;
 DELIMITER $$
 CREATE PROCEDURE IF NOT EXISTS `ComputeAverageScoreForUser` (IN `user_id` INT)
 BEGIN
