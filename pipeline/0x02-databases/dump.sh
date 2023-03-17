@@ -1,0 +1,2 @@
+echo "CREATE DATABASE IF NOT EXISTS hbtn_0d_tvshows;" | mysql -u root -p
+curl "https://s3.eu-west-3.amazonaws.com/hbtn.intranet.project.files/holbertonschool-higher-level_programming+/274/hbtn_0d_tvshows.sql" -s | mysql -uroot -p hbtn_0d_tvshows
