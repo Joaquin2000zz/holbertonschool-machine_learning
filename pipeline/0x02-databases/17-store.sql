@@ -9,6 +9,7 @@
 --            network disconnection, crash, etc… to keep your data
 --            in a good shape, let MySQL do it for you!
 --
+DROP TRIGGER IF EXISTS `decrease`;
 CREATE TRIGGER IF NOT EXISTS `decrease`
 AFTER INSERT ON `orders`
 FOR EACH ROW
