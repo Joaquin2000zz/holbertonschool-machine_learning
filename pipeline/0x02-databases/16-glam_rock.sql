@@ -10,13 +10,13 @@
 -- * Your script can be executed on any database
 -- 
 SELECT
-    band_name,
+    `band_name`,
     (CASE WHEN 
-        split IS NULL THEN (2020 - formed)
-     ELSE (split - formed) END) AS lifespan
+        `split` IS NULL THEN (2020 - `formed`)
+     ELSE (`split` - `formed`) END) AS `lifespan`
 FROM
-    metal_bands
+    `metal_bands`
 WHERE (
-    style LIKE '%Glam rock%'
+    `style` LIKE '%Glam rock%'
     )
-ORDER BY lifespan DESC, band_name DESC;
+ORDER BY `lifespan` DESC, `band_name` DESC;

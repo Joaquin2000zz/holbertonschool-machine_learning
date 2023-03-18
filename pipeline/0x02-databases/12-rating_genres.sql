@@ -5,9 +5,9 @@
 -- You can use only one SELECT statement
 -- The database name will be passed as an argument of the mysql command
 --
-SELECT g.name, SUM(r.rate) AS rating
-FROM tv_show_ratings as r
-INNER JOIN tv_show_genres AS sg ON (r.show_id = sg.show_id)
-INNER JOIN tv_genres AS g ON (g.id = sg.genre_id)
-WHERE (r.rate IS NOT NULL)
-GROUP BY g.name ORDER BY rating DESC;
+SELECT `g`.`name`, SUM(`r`.`rate`) AS `rating`
+FROM `tv_show_ratings` AS `r`
+INNER JOIN `tv_show_genres` AS `sg` ON (`r`.`show_id` = `sg`.`show_id`)
+INNER JOIN `tv_genres` AS `g` ON (`g`.`id` = `sg`.`genre_id`)
+WHERE (`r`.`rate` IS NOT NULL)
+GROUP BY `g`.`name` ORDER BY `rating` DESC;

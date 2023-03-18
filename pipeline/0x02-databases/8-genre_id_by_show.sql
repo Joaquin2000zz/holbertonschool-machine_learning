@@ -7,8 +7,8 @@
 -- You can use only one SELECT statement
 -- The database name will be passed as an argument of the mysql command
 --
-SELECT t1.title, t2.id AS genre_id
-FROM (tv_shows AS t1, tv_genres AS t2)
-INNER JOIN tv_show_genres AS t3
-ON (t1.id = t3.show_id) WHERE (t2.id = t3.genre_id)
-ORDER BY t1.title, t3.genre_id ASC;
+SELECT `ts`.`title`, `tg`.`id` AS `genre_id`
+FROM (`tv_shows` AS `ts`, `tv_genres` AS `tg`)
+INNER JOIN `tv_show_genres` AS `tsg`
+ON (`ts`.`id` = `tsg`.`show_id`) WHERE (`tg`.`id` = `tsg`.`genre_id`)
+ORDER BY `ts`.`title`, `tsg`.`genre_id` ASC;

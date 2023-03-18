@@ -8,8 +8,8 @@
 -- - You can use only one SELECT statement
 -- - The database name will be passed as an argument of the mysql command
 --
-SELECT t1.title, t2.genre_id AS genre_id
-FROM (tv_shows AS t1)
-LEFT JOIN tv_show_genres AS t2
-ON (t1.id = t2.show_id) WHERE (t2.show_id IS NULL)
-ORDER BY t1.title ASC;
+SELECT `ts`.`title`, `tsg`.`genre_id` AS `genre_id`
+FROM (`tv_shows` AS `ts`)
+LEFT JOIN `tv_show_genres` AS `tsg`
+ON (`ts`.`id` = `tsg`.`show_id`) WHERE (`tsg`.`show_id` IS NULL)
+ORDER BY `ts`.`title` ASC;
