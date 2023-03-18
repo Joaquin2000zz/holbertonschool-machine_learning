@@ -16,7 +16,7 @@ BEGIN
     FROM `corrections` WHERE (`user_id` = `user_id`);
     UPDATE `users`
     SET
-        `average_score` = mean
+        `average_score` = `mean`
     WHERE
         `id` = `user_id`;
 END$$
