@@ -1,3 +1,2 @@
 // create a new database called my_db
-use my_db\
-db.user.insert({})
+use my_db
