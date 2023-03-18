@@ -10,7 +10,7 @@
 -- - You can use only one SELECT statement
 -- - The database name will be passed as an argument of the mysql command
 --
-SELECT `g`.`name`, COUNT(*) AS `number_of_shows`
+SELECT `g`.`name` AS `genre`, COUNT(*) AS `number_of_shows`
 FROM (`tv_genres` AS `g`)
 INNER JOIN `tv_show_genres` AS `sg`
 ON (`g`.`id` = `sg`.`genre_id`) WHERE (`sg`.`genre_id` IS NOT NULL)
