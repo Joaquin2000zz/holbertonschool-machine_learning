@@ -32,3 +32,7 @@ if __name__ == '__main__':
     for b in boundaries:
         print('\tmethod {}:'.format(b),
               methods.get(b) if methods.get(b) else 0)
+    check = collection.aggregate([{'$match': {'path': '/status'}},
+                                  {'$count': "check"}])
+    check = list(check._CommandCursor__data)[0].get('check')
+    print(check, 'status check')
