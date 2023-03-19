@@ -11,16 +11,12 @@ import re
 if __name__ == '__main__':
     url_base = 'https://api.spacexdata.com/v3/'
     response = requests.get(url_base + 'launches/')
-    if response.status_code != 200:
-        exit()
     r_list = js.loads(response.content)
     if isinstance(r_list, list):
         choose = []
         times = {}
         for d in r_list:
             rocket_name = d.get('rocket').get('rocket_name')
-            if not rocket_name:
-                exit()
             if not times.get(rocket_name):
                 times[rocket_name] = 1
             else:
