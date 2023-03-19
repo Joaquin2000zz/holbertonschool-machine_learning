@@ -4,7 +4,6 @@ displays the lastest launch information from unofficial SpaceX API
 format:
 <launch name> (<date>) <rocket name> - <launchpad name> (<launchpad locality>)
 """
-from datetime import datetime
 import requests
 
 
@@ -14,42 +13,17 @@ if __name__ == '__main__':
     if response.status_code != 200:
         exit()
     r_json = response.json()
-    choose = False
-    if isinstance(r_json, list):
-        choose = []
-        indexes = {}
-        for i, d in enumerate(r_json):
-            date = d.get('date_unix')
-            date = datetime.fromtimestamp(float(date)).strftime(
-                '%Y-%m-%dT%H:%M:%S.%f%z'
-                )
-            check = indexes.get(date)
-            if check:
-                if not isinstance(check, list):
-                    indexes[date] = [check, i]
-                else:
-                    indexes[date].append(i)
-            else:
-                indexes[date] = i
-            choose.append(date)
-            choose.sort()
-        date = choose[::-1][0]
-        r_json = r_json[indexes.get(date)]
-    if not isinstance(r_json, dict):
-        exit()
-    if not choose:
-        date = r_json.get('date_unix')
+    response_sorted = sorted(r_json,
+                             key=lambda x: x.get('date_unix'),
+                             reverse=True)
+    choose = response_sorted[0]
 
-        if not isinstance(date, (int, float)):
-            exit()
-        date = datetime.fromtimestamp(float(date)).strftime(
-            '%Y-%m-%dT%H:%M:%S.%f%z'
-            )
-    launch_name = r_json.get('name')
+    date = choose.get('date_local')
+    launch_name = choose.get('name')
     if not launch_name or not date:
         exit()
 
-    rocket_id, launchpad_id = r_json.get('rocket'), r_json.get('launchpad')
+    rocket_id, launchpad_id = choose.get('rocket'), choose.get('launchpad')
     if not rocket_id or not launchpad_id:
         exit()
     rocket = requests.get(url_base + 'rockets/' + rocket_id)
