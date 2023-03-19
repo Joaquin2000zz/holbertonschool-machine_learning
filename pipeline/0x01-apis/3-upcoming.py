@@ -10,7 +10,7 @@ import requests
 
 if __name__ == '__main__':
     url_base = 'https://api.spacexdata.com/v4/'
-    response = requests.get(url_base + 'launches/')
+    response = requests.get(url_base + 'launches/upcoming')
     if response.status_code != 200:
         exit()
     r_json = response.json()
