@@ -15,8 +15,7 @@ def rotate_image(image, k: int=1):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3 and n != 4:
-        msg = 'flip_left_right accepts whether:'
-        msg += '\n3D [height, width, chanels] '
-        msg += 'or 4D [batch, height, width, chanels] tensor'
+        msg = 'flip_left_right accepts a '
+        msg += '3D [height, width, chanels] tensor'
         raise TypeError(msg)
     return tf.image.rot90(image, k=k)

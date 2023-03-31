@@ -16,7 +16,7 @@ def change_hue(image, delta):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3:
-        msg = 'change_hue accepts 3D [height, width, chanels] '
+        msg = 'change_hue accepts a 3D [height, width, chanels] tensor'
         raise TypeError(msg)
     if not isinstance(delta, float):
         raise TypeError('delta must be a float')

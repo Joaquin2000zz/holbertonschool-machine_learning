@@ -16,7 +16,7 @@ def crop_image(image, size):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3 and n != 4:
-        msg = 'random_crop accepts a 3D [height, width, chanels]'
+        msg = 'random_crop accepts a 3D [height, width, chanels] tensor'
         raise TypeError(msg)
     n = len(size)
     if n != 3:

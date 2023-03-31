@@ -16,7 +16,7 @@ def shear_image(image, intensity):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3:
-        msg = 'random_shear accepts 3D [height, width, chanels] '
+        msg = 'random_shear accepts a 3D [height, width, chanels] tensor'
         raise TypeError(msg)
     if not isinstance(intensity, int):
         raise TypeError('intensity must be an integer')

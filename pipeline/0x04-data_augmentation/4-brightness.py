@@ -16,7 +16,7 @@ def change_brightness(image, max_delta):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3:
-        msg = 'random_brightness accepts 3D [height, width, chanels] '
+        msg = 'random_brightness accepts a 3D [height, width, chanels] tensor'
         raise TypeError(msg)
     if not isinstance(max_delta, float):
         raise TypeError('max_delta must be a float')
