@@ -5,7 +5,7 @@ module which contains the flip_image function
 import tensorflow as tf
 
 
-def flip_image(image):
+def flip_image(image: tf.Tensor) -> tf.Tensor:
     """
     rotates an image horizontally
     @image: 3D tf.Tensor of shape (w, h, 3) containing the image to flip

@@ -2,10 +2,12 @@
 """
 module which contains change_hue function
 """
+import numpy as np
 import tensorflow as tf
 
 
-def change_hue(image, delta):
+def change_hue(image: tf.Tensor,
+               delta: float=-np.random.uniform(0, .5)) -> tf.Tensor:
     """
     changes the hue in an image in a factor of delta
     @image: 3D tf.Tensor of shape (w, h, 3) to transform
@@ -16,7 +18,7 @@ def change_hue(image, delta):
         raise TypeError('image must be a tf.Tensor')
     n = len(image.shape)
     if n != 3:
-        msg = 'change_hue accepts a 3D [height, width, chanels] tensor'
+        msg = 'random_brightness accepts 3D [height, width, chanels] '
         raise TypeError(msg)
     if not isinstance(delta, float):
         raise TypeError('delta must be a float')
