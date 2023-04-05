@@ -5,7 +5,7 @@ module which contains the crop_image function
 import tensorflow as tf
 
 
-def crop_image(image, size: tuple=(200, 200, 3)) -> tf.Tensor:
+def crop_image(image, size: tuple=()) -> tf.Tensor:
     """
     makes a random crop in given an image and size
     @image: tf.Tensor of shape (w, h, 3) containing the image
@@ -20,10 +20,10 @@ def crop_image(image, size: tuple=(200, 200, 3)) -> tf.Tensor:
         msg += '\n3D [height, width, chanels] '
         msg += 'or 4D [batch, height, width, chanels] tensor'
         raise TypeError(msg)
+    if not size:
+        w, h, c = image.shape
+        size = (w // 2, h // 2, c)
     n = len(size)
     if n != 3:
         raise TypeError('size must be a 1D tensor length 3')
-    try:
-      return tf.image.random_crop(image, size)
-    except:
-      return False
+    return tf.image.random_crop(image, size)
